@@ -25,6 +25,7 @@ Output:
 
 import csv
 import json
+import re
 import os
 import time
 from datetime import datetime, timedelta, timezone
@@ -66,12 +67,15 @@ IG_ID = get_secret("IG_ID")
 
 # ---------- campaigns ----------
 def load_campaigns():
-    """Read campaigns.json: a list of {"id", "brand", "category", "en", "es"}. Missing or broken file = no campaigns."""
+    """Read campaigns.json: one entry per brand:
+         {"brand", "match": [words to look for in her captions], "category", "en", "es"}
+       optional "posts": [links or IDs] to name the exact posts instead of matching captions.
+    Missing or broken file = no campaigns."""
     if not CAMPAIGNS_FILE.exists():
         return []
     try:
         rows = json.loads(CAMPAIGNS_FILE.read_text(encoding="utf-8"))
-        return [r for r in rows if isinstance(r, dict) and r.get("id")]
+        return [r for r in rows if isinstance(r, dict) and r.get("brand") and (r.get("match") or r.get("posts"))]
     except Exception as e:
         print(f"  ! campaigns.json could not be read ({e}); skipping brand results")
         return []
@@ -105,7 +109,14 @@ def load_pinned():
 CAMPAIGNS = load_campaigns()
 PINNED = load_pinned()
 HIDDEN = load_hidden()
-CAMPAIGN_IDS = {str(c["id"]) for c in CAMPAIGNS}
+def post_key(value):
+    """A post ID stays as is; an Instagram link (…/p/ABC123/?igsh=…) becomes its code, ABC123."""
+    v = str(value).strip()
+    parts = [x for x in v.split("?")[0].split("/") if x]
+    return parts[-1] if "instagram.com" in v and parts else v
+
+
+
 
 
 # ---------- API helper ----------
@@ -253,6 +264,24 @@ print(f"  found {len(all_media)} posts: {len(public_ids)} on her profile, {not_f
       f"{len(HIDDEN & {m['id'] for m in all_media})} hidden by hand")
 print(f"  her profile's own post count: {profile.get('media_count')}")
 
+
+def shortcode_of(m):
+    return ([x for x in (m.get("permalink") or "").split("/") if x][-1:] or [""])[0]
+
+
+# brand campaigns come only from her own posts: posts on her profile whose caption mentions the brand
+# (trial reels are skipped, so the numbers match what people see on her profile)
+campaign_ids = []
+for c in CAMPAIGNS:
+    named = {post_key(x) for x in c.get("posts", [])}
+    terms = [t.lower() for t in c.get("match", []) if t]
+    if named:
+        ids = [m["id"] for m in all_media if m["id"] in named or shortcode_of(m) in named]
+    else:
+        ids = [m["id"] for m in all_media if on_profile(m) and any(t in (m.get("caption") or "").lower() for t in terms)]
+    campaign_ids.append(ids)
+CAMPAIGN_IDS = {i for ids in campaign_ids for i in ids}
+
 # old posts barely change, so: newest posts and campaign posts every day, everything once a week (and on the very first run)
 first_run = not (HISTORY_DIR / "daily_posts.csv").exists()
 full_refresh = first_run or datetime.now(timezone(timedelta(hours=-6))).weekday() == FULL_REFRESH_DAY
@@ -264,8 +293,8 @@ all_posts = []
 for i, m in enumerate(all_media):
     posted = m.get("timestamp")
     posted_dt = datetime.fromisoformat(posted.replace("+0000", "+00:00")) if posted else None
-    shortcode = [x for x in (m.get("permalink") or "").split("/") if x][-1:] or [""]
-    is_campaign = m["id"] in CAMPAIGN_IDS or m["id"] in PINNED or shortcode[0] in PINNED  # pinned posts get the same daily care
+    shortcode = [shortcode_of(m)]
+    is_campaign = bool({m["id"], shortcode[0]} & (CAMPAIGN_IDS | set(PINNED)))  # pinned posts get the same daily care
     shown = m["id"] in show_ids
     refresh = full_refresh or shown or is_campaign or (posted_dt and posted_dt >= recent_cutoff)
     stats = {}
@@ -319,24 +348,37 @@ for i, m in enumerate(all_media):
 public_posts = [p for p in all_posts if p["on_profile"]]
 posts = public_posts[:DISPLAY_POSTS]  # what the website shows: newest posts that are actually on her profile
 
-# ---------- 4b. brand campaigns: live numbers for each post listed in campaigns.json ----------
+# ---------- 4b. brand campaigns: every matching post on her profile, added up per brand ----------
 by_id = {p["id"]: p for p in all_posts}
+SUM = ("views", "reach", "likes", "comments", "saves", "shares", "interactions")
 campaigns = []
-for c in CAMPAIGNS:
-    p = by_id.get(str(c["id"]))
-    if not p:
-        print(f"  ! campaign post {c['id']} ({c.get('brand')}) not found on her account; left off the site")
+for c, ids in zip(CAMPAIGNS, campaign_ids):
+    ps = [by_id[i] for i in ids if i in by_id]
+    if not ps:
+        print(f"  ! {c['brand']}: no posts on her profile matched {c.get('match') or c.get('posts')}; left off the site")
         continue
+    top = max(ps, key=lambda p: p["views"])
+    dates = sorted(p["posted"] for p in ps if p["posted"])
     campaigns.append({
-        "id": p["id"],
-        "brand": c.get("brand", ""),
-        "category": c.get("category", ""),
-        "en": c.get("en", ""),
-        "es": c.get("es", ""),
-        **{k: p[k] for k in ("posted", "permalink", "thumb", "views", "reach", "likes", "comments", "saves", "shares", "interactions", "avg_watch_s")},
+        "brand": c["brand"], "category": c.get("category", ""), "en": c.get("en", ""), "es": c.get("es", ""),
+        "post_count": len(ps),
+        "first_posted": dates[0] if dates else None, "last_posted": dates[-1] if dates else None,
+        "id": top["id"], "permalink": top["permalink"], "thumb": top["thumb"],  # the best-performing post represents the card
+        **{k: sum(p[k] or 0 for p in ps) for k in SUM},
+        "post_links": [p["permalink"] for p in sorted(ps, key=lambda p: p["views"], reverse=True)],
     })
 campaigns.sort(key=lambda r: r["views"], reverse=True)
 print(f"  {len(campaigns)} of {len(CAMPAIGNS)} campaigns found")
+
+# brands she @mentions that aren't campaigns yet, to help spot ones worth adding
+covered = [t.lower() for c in CAMPAIGNS for t in c.get("match", [])]
+mention_counts = {}
+for p in public_posts:
+    for h in set(re.findall(r"@([A-Za-z0-9._]+)", p["caption"])):
+        h = h.rstrip(".").lower()
+        if h and not any(h in t or t.lstrip("@#") in h for t in covered):
+            mention_counts[h] = mention_counts.get(h, 0) + 1
+top_mentions = sorted(mention_counts.items(), key=lambda kv: -kv[1])[:15]
 
 # ---------- 4c. the three phones at the top of the site: her pinned posts (or newest, if pinned.json is empty) ----------
 pinned = []
@@ -515,4 +557,8 @@ top = engaged_by_country or followers_by_country
 if top:
     print("  Top countries: " + ", ".join(f"{r['country']} {r['share']}%" for r in top[:5]))
 for c in campaigns:
-    print(f"  Campaign {c['brand']}: {c['views']:,} views, {c['likes']:,} likes, {c['comments']:,} comments")
+    print(f"  Campaign {c['brand']}: {c['post_count']} post(s), {c['views']:,} views, {c['likes']:,} likes, {c['comments']:,} comments")
+    for link in c["post_links"]:
+        print(f"      {link}")
+if top_mentions:
+    print("  Other accounts she @mentions most (possible campaigns): " + ", ".join(f"@{h} ({n})" for h, n in top_mentions))

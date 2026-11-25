@@ -1,8 +1,8 @@
 [
-  {"id": "18075678866218259", "brand": "Acqua Bistecca", "category": "food", "en": "Restaurant launch", "es": "Lanzamiento de restaurante"},
-  {"id": "18121875160887469", "brand": "Victoria's Secret", "category": "events", "en": "Fashion show coverage", "es": "Cobertura del desfile"},
-  {"id": "17983039247809383", "brand": "Skyscanner", "category": "travel", "en": "Travel storytelling", "es": "Historia de viaje"},
-  {"id": "18087359048164225", "brand": "Toastique", "category": "food", "en": "Spring menu", "es": "Menú de primavera"},
-  {"id": "17916653913406307", "brand": "Morphe", "category": "beauty", "en": "Lip combo reel", "es": "Reel de combinación de labios"},
-  {"id": "18128544187711542", "brand": "ZEELOOL", "category": "life", "en": "Eyewear reel", "es": "Reel de lentes"}
+  {"brand": "Acqua Bistecca", "match": ["acquabistecca", "acqua bistecca"], "category": "food", "en": "Restaurant launch", "es": "Lanzamiento de restaurante"},
+  {"brand": "Victoria's Secret", "match": ["victoriassecret", "victoria's secret", "victoria’s secret", "victorias secret"], "category": "events", "en": "Fashion show coverage", "es": "Cobertura del desfile"},
+  {"brand": "Skyscanner", "match": ["skyscanner"], "category": "travel", "en": "Travel storytelling", "es": "Historia de viaje"},
+  {"brand": "Toastique", "match": ["toastique"], "category": "food", "en": "Spring menu", "es": "Menú de primavera"},
+  {"brand": "Morphe", "match": ["morphe"], "category": "beauty", "en": "Lip combo reel", "es": "Reel de combinación de labios"},
+  {"brand": "ZEELOOL", "match": ["zeelool"], "category": "life", "en": "Eyewear reel", "es": "Reel de lentes"}
 ]
