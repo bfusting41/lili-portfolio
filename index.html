@@ -5,38 +5,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lili Magaña Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,700;1,6..96,500&family=DM+Sans:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..700,0..100;1,9..144,400..700,0..100&family=DM+Sans:wght@400;500;700&display=swap">
+<script>document.documentElement.classList.add("js")</script>
 <style>
 /* VOICE occasion: a creator's press kit, polished and feminine, quiet luxury
    IDEA a beauty-counter lookbook crossed with an event credential: blush fields, vertical reels, a VIP pass for inquiries
-   PICTURE three fanned 9:16 reels (beauty, race weekend, travel) drawn as scenes, then a filterable reel wall
+   PICTURE three fanned 9:16 reels on a soft rotating petal blob, then a filterable reel wall
    COLOUR always light: white ground, blush fields, petal pink contact band, plum ink, rose accent (same in dark mode)
-   TYPE Bodoni Moda display + DM Sans text
-   LAYOUT laptop: name + intro left, fanned reels right on a blush band; phone: name, reels, buttons stacked */
-:root,:root[data-theme=dark],:root[data-theme=light]{color-scheme:light;--bg:#ffffff;--ink:#3a1f2b;--mute:#86606f;--blush:#fbe1e9;--soft:#fff5f8;--rose:#d14d78;--line:#f2cfda;--card:#ffffff;--pink:#f6bfd0}
+   TYPE Fraunces (soft, low-contrast) display + DM Sans text
+   LAYOUT soft wave edges between bands, rounded cards; content glides up into place as you scroll, slow and calm */
+:root,:root[data-theme=dark],:root[data-theme=light]{color-scheme:light;--bg:#ffffff;--ink:#3a1f2b;--mute:#7a5262;--blush:#fbe1e9;--soft:#fff5f8;--rose:#d14d78;--line:#f2cfda;--card:#ffffff;--pink:#f6bfd0;--ease:cubic-bezier(.22,.61,.36,1);--dur:.9s;--wv:clamp(36px,5.5vw,84px);--shadow:0 16px 34px -24px rgba(209,77,120,.55)}
 *{box-sizing:border-box;min-width:0}
 html{scroll-behavior:smooth;scroll-padding-top:76px}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "DM Sans",system-ui,sans-serif;overflow-x:clip}
-h1,h2,h3{font-family:"Bodoni Moda",Georgia,serif;font-weight:500;line-height:1.05;letter-spacing:-.02em;margin:0;text-wrap:balance}
+h1,h2,h3{font-variation-settings:"opsz" 30,"SOFT" 60;font-family:"Fraunces",Georgia,serif;font-weight:560;line-height:1.05;letter-spacing:-.02em;margin:0;text-wrap:balance}
 h2{font-size:clamp(32px,4.4vw,48px)}
+h2::after{content:"";display:block;width:120px;height:12px;margin-top:12px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12'%3E%3Cpath d='M2 7c10-6 18-6 28 0s18 6 28 0 18-6 28 0 18 6 28 0' fill='none' stroke='%23d14d78' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat;transition:clip-path 1.3s var(--ease) .4s}
+.js h2::after{clip-path:inset(0 100% 0 0)}
+.js .in h2::after,.js h2.in::after{clip-path:inset(0 0 0 0)}
 p{margin:0}
 a{color:inherit}
-.band{padding-block:clamp(36px,5vw,72px);padding-left:max(5vw,16px);padding-right:max(5vw,16px)}
+.band{position:relative;padding-block:clamp(36px,5vw,72px);padding-left:max(5vw,16px);padding-right:max(5vw,16px)}
+.band.wv{padding-top:calc(clamp(36px,5vw,72px) + var(--wv))}
+.wave{position:absolute;left:0;top:-1px;width:100%;height:var(--wv);display:block;pointer-events:none}
 .wrap{max-width:1240px;margin:0 auto}
-header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);box-shadow:0 10px 28px -24px rgba(209,77,120,.6)}
 .nav{display:flex;align-items:center;gap:20px;flex-wrap:wrap;max-width:1240px;margin:0 auto;padding:12px max(5vw,16px)}
-.mark{font:italic 500 28px/1 "Bodoni Moda",Georgia,serif;text-decoration:none;margin-right:auto}
+.mark{font:italic 600 28px/1 "Fraunces",Georgia,serif;font-variation-settings:"opsz" 30,"SOFT" 60;text-decoration:none;margin-right:auto}
 .links{display:flex;gap:18px;flex-wrap:wrap}
 .links a{text-decoration:none;font-size:15px;color:var(--mute)}
 .links a:hover{color:var(--rose)}
-.lang{display:flex;border:1px solid var(--line);border-radius:99px;padding:3px}
+.lang{display:flex;background:var(--soft);border-radius:99px;padding:3px}
 .lang button{border:0;background:none;color:var(--mute);font:700 13px "DM Sans",sans-serif;padding:8px 12px;border-radius:99px;cursor:pointer;min-height:36px}
 .lang button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 22px;border-radius:99px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);font:700 15px "DM Sans",sans-serif;text-decoration:none;cursor:pointer}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 24px;border-radius:99px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);font:700 15px "DM Sans",sans-serif;text-decoration:none;cursor:pointer;transition:background .4s,border-color .4s,color .4s,transform .4s var(--ease)}
 .btn.ghost{background:transparent;color:var(--ink)}
-.btn:hover{background:var(--rose);border-color:var(--rose);color:#fff}
+.btn:hover{background:var(--rose);border-color:var(--rose);color:#fff;transform:translateY(-2px)}
 :focus-visible{outline:3px solid var(--rose);outline-offset:3px}
-.hero{background:var(--blush)}
+.hero{background:radial-gradient(55% 60% at 0% 0%,#fff3f7 0,transparent 70%),var(--blush)}
 .hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(24px,4vw,56px);align-items:center}
 .name{font-size:clamp(60px,8.6vw,124px);font-style:italic;line-height:.92}.name span{display:block;font-style:normal;color:var(--rose)}
 .lede{font-size:clamp(18px,1.8vw,21px);max-width:30em;margin-top:18px}
@@ -44,68 +50,103 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 9
 .facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
 .facts span{background:var(--bg);border-radius:99px;padding:6px 14px;font-size:14px}
 .fig{position:relative;aspect-ratio:1.05}
-.fig svg{position:absolute;inset:0;width:100%;height:100%}
+.fig svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.blob{transform-box:fill-box;transform-origin:center;animation:drift 38s linear infinite}
+.blob.b2{animation-duration:52s;animation-direction:reverse}
+@keyframes drift{to{transform:rotate(360deg)}}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 26px}
-.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:0 16px;min-height:44px;font:500 15px "DM Sans",sans-serif;cursor:pointer}
-.chip[aria-pressed=true]{background:var(--rose);border-color:var(--rose);color:#fff}
+.chip{border:0;background:var(--soft);color:var(--ink);border-radius:99px;padding:0 18px;min-height:44px;font:500 15px "DM Sans",sans-serif;cursor:pointer;transition:background .4s,color .4s}
+.chip:hover{background:var(--blush)}
+.chip[aria-pressed=true]{background:var(--rose);color:#fff}
 .head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap}
 .head p{color:var(--mute);max-width:34em}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:18px}
 .tile{border:0;padding:0;background:none;color:var(--ink);text-align:left;cursor:pointer;font:inherit}
-.thumb{position:relative;aspect-ratio:9/16;border-radius:18px;overflow:hidden;box-shadow:0 1px 0 var(--line)}
+.thumb{position:relative;aspect-ratio:9/16;border-radius:24px;overflow:hidden;box-shadow:var(--shadow);transition:transform .6s var(--ease),box-shadow .6s var(--ease)}
 .thumb svg,.thumb img{position:absolute;inset:0;width:100%;height:100%}
 .thumb img{object-fit:cover;background:var(--blush)}
 .play{position:absolute;left:12px;bottom:12px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.9);display:grid;place-items:center}
 .play::after{content:"";border-left:12px solid #2e1621;border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:3px}
 .views{position:absolute;right:10px;top:10px;background:rgba(58,31,43,.6);color:#fff;font-size:13px;padding:3px 9px;border-radius:99px;white-space:nowrap}
-.tile h3{font:700 15px/1.3 "DM Sans",sans-serif;letter-spacing:0;margin-top:10px}
+.tile h3{font:700 15px/1.3 "DM Sans",sans-serif;letter-spacing:0;margin-top:12px}
 .tile small{color:var(--mute);font-size:13px}
 .tile h3{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 #dDesc{max-height:9em;overflow:auto;white-space:pre-line}
-.tile:hover .thumb{outline:3px solid var(--rose)}
+.tile:hover .thumb,.tile:focus-visible .thumb{transform:translateY(-6px) rotate(-1.2deg);box-shadow:0 26px 40px -26px rgba(209,77,120,.75)}
 .note{font-size:13px;color:var(--mute);margin-top:18px}
-.aud{background:var(--soft)}
+.aud{background:radial-gradient(40% 50% at 100% 30%,#fde3eb 0,transparent 70%),radial-gradient(35% 40% at 0% 55%,#fdeaf0 0,transparent 70%),var(--soft)}
 .two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);margin-top:28px}
 .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px}
-.stat b{display:block;font:500 clamp(34px,4vw,46px)/1 "Bodoni Moda",Georgia,serif}
+.stat{background:var(--card);border-radius:26px;padding:22px;box-shadow:var(--shadow)}
+.stat b{display:block;font:600 clamp(34px,4vw,46px)/1 "Fraunces",Georgia,serif;font-variation-settings:"opsz" 30,"SOFT" 60;font-variant-numeric:tabular-nums}
 .stat span{color:var(--mute);font-size:14px}
 .rows{display:grid;gap:14px}
 .row{display:grid;grid-template-columns:8.5em minmax(0,1fr) 3em;gap:12px;align-items:center}
 .bar{height:14px;border-radius:99px;background:var(--line);overflow:hidden}
-.bar i{display:block;height:100%;background:var(--rose);border-radius:99px}
+.bar i{display:block;height:100%;width:var(--w);background:linear-gradient(90deg,var(--pink),var(--rose));border-radius:99px}
+.js .rows .bar i{width:0;transition:width 1.3s var(--ease) calc(var(--i,0)*.13s + .3s)}
+.js .rows.in .bar i{width:var(--w)}
 .row em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums}
-.callout{background:var(--blush);border-radius:18px;padding:18px 20px;margin-top:20px}
+.plat{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;align-items:center}
+.plat span{background:var(--card);border-radius:99px;padding:8px 16px;font-size:14px;color:var(--mute);box-shadow:var(--shadow)}
+.plat strong{color:var(--ink);font-size:16px;margin-right:4px}
+.plat .tot{background:var(--ink);color:#fff}.plat .tot strong{color:#fff}
+.res{background:radial-gradient(45% 55% at 100% 0%,#fff0f5 0,transparent 70%),var(--blush)}
+.cases{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:18px;margin-top:28px}
+.case{display:grid;grid-template-columns:96px minmax(0,1fr);gap:18px;align-items:center;background:var(--card);border-radius:30px 30px 30px 10px;padding:16px;box-shadow:var(--shadow)}
+.case:nth-child(even){border-radius:30px 30px 10px 30px}
+.case .thumb{border-radius:18px;box-shadow:none}
+.case small{color:var(--rose);font-weight:700;font-size:13px}
+.case h3{font-size:24px;margin:2px 0 2px}
+.case p{color:var(--mute);font-size:14px}
+.case b{display:block;font:600 30px/1 "Fraunces",Georgia,serif;font-variation-settings:"opsz" 30,"SOFT" 60;margin-top:10px}
+.case b span{font:500 14px "DM Sans",sans-serif;color:var(--mute);margin-left:4px}
+.case a{font-size:14px;font-weight:700;color:var(--rose);display:inline-block;margin-top:6px}
+.total{font:italic 600 clamp(20px,2.2vw,24px)/1.3 "Fraunces",Georgia,serif;color:var(--rose);margin-top:8px}
+.marquee{display:grid;gap:6px;margin-top:22px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.track{display:flex;width:max-content;animation:slide 80s linear infinite}
+.track.rev{animation-direction:reverse;animation-duration:95s}
+.marquee:hover .track{animation-play-state:paused}
+.track span{display:flex;align-items:center;gap:28px;padding:12px 14px;white-space:nowrap;font:600 clamp(22px,2.6vw,30px)/1 "Fraunces",Georgia,serif;font-variation-settings:"opsz" 30,"SOFT" 60;color:var(--ink);opacity:.82}
+.track span:nth-child(3n+2){font-style:italic;color:var(--rose);opacity:1}
+.track span::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--pink)}
+@keyframes slide{to{transform:translateX(-50%)}}
+.callout{background:var(--blush);border-radius:26px 26px 26px 8px;padding:18px 22px;margin-top:22px}
 .svc{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:28px}
-.svc div{border-top:2px solid var(--ink);padding-top:16px}
+.svc div{background:var(--soft);border-radius:30px 30px 30px 10px;padding:24px}
+.svc div:nth-child(even){border-radius:30px 30px 10px 30px;background:var(--blush)}
 .svc h3{font-size:24px;margin-bottom:8px}
 .svc p{color:var(--mute)}
-.partners{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:24px}
-.partners span{border:1px dashed var(--line);border-radius:14px;min-height:72px;display:grid;place-items:center;color:var(--mute);font-size:14px;text-align:center;padding:8px}
-.contact{background:linear-gradient(160deg,var(--blush),var(--pink));color:var(--ink)}
+.contact{background:linear-gradient(160deg,var(--blush),var(--pink));color:var(--ink);padding-bottom:calc(clamp(36px,5vw,72px) + 30px);border-radius:0 0 50% 50%/0 0 var(--wv) var(--wv)}
 .contact .two{align-items:start}
 .contact p{opacity:.85}
-.pass{background:var(--bg);color:var(--ink);border-radius:22px;box-shadow:0 18px 40px -24px rgba(209,77,120,.55);padding:clamp(20px,3vw,32px);position:relative}
+.pass{background:var(--bg);color:var(--ink);border-radius:30px;box-shadow:0 22px 44px -24px rgba(209,77,120,.6);padding:clamp(20px,3vw,32px);position:relative}
 .pass::before{content:"";position:absolute;top:-10px;left:50%;width:70px;height:20px;margin-left:-35px;border-radius:10px;background:var(--rose)}
 .pass h3{font-size:28px;margin-bottom:16px}
 label{display:block;font-size:14px;font-weight:700;margin:14px 0 6px}
-input,select,textarea{width:100%;font:16px "DM Sans",sans-serif;color:var(--ink);background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-height:46px}
+input,select,textarea{width:100%;font:16px "DM Sans",sans-serif;color:var(--ink);background:var(--soft);border:1px solid transparent;border-radius:16px;padding:12px 14px;min-height:46px;transition:border-color .3s,background .3s}
+input:focus,select:focus,textarea:focus{border-color:var(--pink);background:#fff}
 textarea{min-height:110px;resize:vertical}
 .pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 12px}
-.done{display:none;background:var(--blush);border-radius:14px;padding:16px;margin-top:16px}
+.done{display:none;background:var(--blush);border-radius:20px;padding:16px;margin-top:16px}
 .done.on{display:block}
 .done pre{white-space:pre-wrap;font:14px/1.5 "DM Sans",sans-serif;margin:10px 0}
 .flags{display:flex;flex-direction:column;gap:12px;margin-top:22px}
-footer{padding:28px max(5vw,16px);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--mute);font-size:14px;border-top:1px solid var(--line)}
-dialog{border:0;border-radius:22px;padding:0;max-width:min(440px,92vw);width:100%;background:var(--card);color:var(--ink)}
+footer{padding:28px max(5vw,16px);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--mute);font-size:14px}
+dialog{border:0;border-radius:30px;padding:0;max-width:min(440px,92vw);width:100%;background:var(--card);color:var(--ink)}
 dialog::backdrop{background:rgba(30,10,20,.6)}
 .dlg{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr);gap:18px;padding:20px}
-.dlg .thumb{border-radius:14px}
+.dlg .thumb{border-radius:20px}
 .x{position:absolute;right:10px;top:10px;width:44px;height:44px;border-radius:50%;border:0;background:var(--soft);color:var(--ink);font-size:22px;cursor:pointer}
 @keyframes float{50%{transform:translateY(-8px)}}
 .reel{animation:float 6s ease-in-out infinite}
-.reel:nth-child(2){animation-delay:-2s}.reel:nth-child(3){animation-delay:-4s}
-@media(prefers-reduced-motion:reduce){.reel{animation:none}html{scroll-behavior:auto}}
+.reel:nth-child(4){animation-delay:-2s}.reel:nth-child(5){animation-delay:-4s}
+/* scroll reveal: one at a time, slow and soft */
+.js .rv{opacity:0;transform:translateY(30px);transition:opacity var(--dur) var(--ease),transform var(--dur) var(--ease)}
+.js .rv.in{opacity:1;transform:none}
+.js .rv-kids>*{opacity:0;transform:translateY(24px);transition:opacity var(--dur) var(--ease) calc(var(--i,0)*.13s),transform var(--dur) var(--ease) calc(var(--i,0)*.13s)}
+.js .rv-kids.in>*{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reel,.blob{animation:none}.track{animation:none;flex-wrap:wrap;width:auto}.track [aria-hidden]{display:none}html{scroll-behavior:auto}.js .rv,.js .rv-kids>*{opacity:1;transform:none;transition:none}.js .rows .bar i{width:var(--w);transition:none}.js h2::after{clip-path:none;transition:none}.thumb,.btn{transition:none}}
 @media(max-width:820px){.links{display:none}}
 @media(max-width:700px){.hero .wrap,.two{grid-template-columns:minmax(0,1fr)}.fig{order:-1;aspect-ratio:1.25}.hero .copy{order:1}}
 @media(max-width:600px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.pair{grid-template-columns:minmax(0,1fr)}.row{grid-template-columns:7em minmax(0,1fr) 2.8em}.dlg{grid-template-columns:minmax(0,1fr)}.dlg .thumb{max-width:170px}}
@@ -117,6 +158,7 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
     <a class="mark" href="#top">Lili Magaña</a>
     <div class="links">
       <a href="#work" data-t="navWork">Work</a>
+      <a href="#results" data-t="navRes">Results</a>
       <a href="#audience" data-t="navAud">Audience</a>
       <a href="#services" data-t="navSvc">Collaborations</a>
       <a href="#contact" data-t="navContact">Contact</a>
@@ -131,64 +173,82 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
 <section class="band hero" id="top">
   <div class="wrap">
     <div class="copy">
-      <h1 class="name">Lili <span>Magaña</span></h1>
-      <p class="lede" data-t="lede">Beauty and live-event creator. I turn launches, race weekends, hotels and dinners into short videos people actually watch to the end.</p>
-      <div class="cta">
+      <h1 class="name rv">Lili <span>Magaña</span></h1>
+      <p class="lede rv" data-t="lede">Beauty and live-event creator. I turn launches, race weekends, hotels and dinners into short videos people actually watch to the end.</p>
+      <div class="cta rv">
         <a class="btn" href="#contact" data-t="ctaWork">Work with me</a>
         <a class="btn ghost" href="#work" data-t="ctaReels">Watch the reels</a>
       </div>
-      <div class="facts">
+      <div class="facts rv">
         <span data-t="f1">Based in Austin, Texas</span>
         <span data-t="f2">Creates in English and Spanish</span>
         <span data-t="f3">Audience: USA and Latin America</span>
       </div>
     </div>
-    <div class="fig" aria-hidden="true"><svg id="heroSvg" viewBox="0 0 420 400" preserveAspectRatio="xMidYMid meet"></svg></div>
+    <div class="fig rv" aria-hidden="true"><svg id="heroSvg" viewBox="0 0 420 400" preserveAspectRatio="xMidYMid meet"></svg></div>
   </div>
 </section>
 
-<section class="band" id="work">
+<section class="band wv" id="work">
+  <svg class="wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0H1440V38C1260 78 1080 82 900 58S540 6 360 22 120 70 0 52Z" fill="#fbe1e9"/></svg>
   <div class="wrap">
-    <div class="head">
+    <div class="head rv">
       <h2 data-t="workH">Selected work</h2>
       <p data-t="workP">Beauty and events lead the way, with travel, restaurants and hospitality close behind. Tap any reel to see the details.</p>
     </div>
-    <div class="chips" id="chips" role="group" aria-label="Filter"></div>
+    <div class="chips rv" id="chips" role="group" aria-label="Filter"></div>
     <div class="grid" id="grid"></div>
     <p class="note" id="noteWork" data-t="sampleWork">Sample reels and view counts shown until her real videos are added.</p>
   </div>
 </section>
 
-<section class="band aud" id="audience">
+<section class="band res wv" id="results">
+  <svg class="wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0H1440V44C1220 80 1010 74 820 46S420 2 220 26 60 64 0 50Z" fill="#ffffff"/></svg>
   <div class="wrap">
-    <h2 data-t="audH">A bilingual audience across the Americas</h2>
+    <div class="head rv">
+      <h2 data-t="resH">Brand results</h2>
+      <p data-t="resP">Real numbers from recent brand campaigns on Instagram.</p>
+    </div>
+    <p class="total rv" id="total"></p>
+    <div class="cases" id="cases"></div>
+    <p class="note" id="noteRes" data-t="sampleRes">Figures from her media kit until the next daily update.</p>
+  </div>
+</section>
+
+<section class="band aud wv" id="audience">
+  <svg class="wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0H1440V54C1230 20 1020 18 800 44S380 86 190 62 40 30 0 36Z" fill="#fbe1e9"/></svg>
+  <div class="wrap">
+    <h2 class="rv" data-t="audH">A bilingual audience across the Americas</h2>
+    <div class="plat rv" id="plat"></div>
     <div class="two">
-      <div class="stats" id="stats"></div>
+      <div class="stats rv-kids" id="stats"></div>
       <div>
-        <h3 style="font-size:24px;margin-bottom:18px" data-t="topC">Top countries by engagement</h3>
-        <div class="rows" id="rows"></div>
-        <div class="callout" data-t="callout">Most of her engaged audience is in the USA, and nearly a quarter is in El Salvador, Puerto Rico and Mexico, so campaigns can run in English, Spanish or both.</div>
+        <h3 class="rv" style="font-size:24px;margin-bottom:18px" data-t="topC">Top countries by engagement</h3>
+        <div class="rows rv-kids" id="rows"></div>
+        <div class="callout rv" id="callout" data-t="callout">Most of her engaged audience is in the USA, and nearly a quarter is in El Salvador, Puerto Rico and Mexico, so campaigns can run in English, Spanish or both.</div>
       </div>
     </div>
     <p class="note" id="noteAud" data-t="sampleAud">Sample figures shown; these will be replaced with her live Instagram and TikTok numbers.</p>
   </div>
 </section>
 
-<section class="band" id="services">
+<section class="band wv" id="services">
+  <svg class="wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0H1440V30C1280 64 1100 76 880 50S470 8 280 30 80 72 0 60Z" fill="#fff5f8"/></svg>
   <div class="wrap">
-    <div class="head">
+    <div class="head rv">
       <h2 data-t="svcH">Ways to collaborate</h2>
       <p data-t="svcP">Every partnership is tailored. Rates are shared on request.</p>
     </div>
-    <div class="svc" id="svc"></div>
-    <h3 style="font-size:24px;margin-top:48px" data-t="brandsH">Brands and venues she has worked with</h3>
-    <div class="partners" id="partners"></div>
+    <div class="svc rv-kids" id="svc"></div>
+    <h3 class="rv" style="font-size:24px;margin-top:48px" data-t="brandsH">Brands and venues she has worked with</h3>
+    <div class="marquee rv" id="marquee"></div>
   </div>
 </section>
 
-<section class="band contact" id="contact">
+<section class="band contact wv" id="contact">
+  <svg class="wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0H1440V48C1200 84 980 70 760 40S300 4 0 44Z" fill="#ffffff"/></svg>
   <div class="wrap two">
-    <div>
+    <div class="rv">
       <h2 data-t="cH">Let's create something together</h2>
       <p style="margin-top:16px;max-width:30em" data-t="cP">Tell me about your launch, venue or event. I'll reply with ideas and rates within two business days.</p>
       <div class="flags">
@@ -196,7 +256,7 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
         <p><a href="https://www.instagram.com/lilimagana16/" target="_blank" rel="noopener">Instagram: @lilimagana16</a></p>
       </div>
     </div>
-    <form class="pass" id="form" novalidate>
+    <form class="pass rv" id="form" novalidate>
       <h3 data-t="fH">Collaboration inquiry</h3>
       <div class="pair">
         <div><label for="fn" data-t="fName">Your name</label><input id="fn" autocomplete="name" required></div>
@@ -242,21 +302,32 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
 <script>
 {
 const T={
-en:{navWork:"Work",navAud:"Audience",navSvc:"Collaborations",navContact:"Contact",lede:"Beauty and live-event creator. I turn launches, race weekends, hotels and dinners into short videos people actually watch to the end.",ctaWork:"Work with me",ctaReels:"Watch the reels",f1:"Based in Austin, Texas",f2:"Creates in English and Spanish",f3:"Audience: USA and Latin America",workH:"Selected work",workP:"Beauty and events lead the way, with travel, restaurants and hospitality close behind. Tap any reel to see the details.",sampleWork:"Sample reels and view counts shown until her real videos are added.",audH:"A bilingual audience across the Americas",topC:"Top countries by engagement",callout:"Most of her engaged audience is in the USA, and nearly a quarter is in El Salvador, Puerto Rico and Mexico, so campaigns can run in English, Spanish or both.",sampleAud:"Sample figures shown; these will be replaced with her live Instagram and TikTok numbers.",svcH:"Ways to collaborate",svcP:"Every partnership is tailored. Rates are shared on request.",brandsH:"Brands and venues she has worked with",cH:"Let's create something together",cP:"Tell me about your launch, venue or event. I'll reply with ideas and rates within two business days.",c1:"Email: hello@lili-sample.com",fH:"Collaboration inquiry",fName:"Your name",fBrand:"Brand or venue",fEmail:"Email",fType:"Type of project",fDate:"Date or timeframe",fMsg:"Tell me about it",fSend:"Send inquiry",dH:"Thanks! Here is your inquiry.",dCopy:"Copy text",copied:"Copied",dNote:"On the live site this goes straight to her inbox. In this preview nothing is sent.",foot:"Beauty · Events · Travel · Food · Hospitality",dVid:"Her video will play here once it's uploaded.",need:"Please add your name and a valid email.",views:"views",logo:"Partner logo",all:"All",
+en:{navWork:"Work",navRes:"Results",navAud:"Audience",resH:"Brand results",resP:"Real numbers from recent brand campaigns on Instagram.",total:" views across these campaigns",sampleRes:"Figures from her media kit until the next daily update.",ytNote:" YouTube and TikTok counts as of November 2026.",calloutLive:(top,share,rest,restShare)=>`${share}% of her engaged audience is in ${top}, and another ${restShare}% is in ${rest}, so campaigns can run in English, Spanish or both.`,likes:"likes",comments:"comments",platTot:"followers in total",platNote:"",navSvc:"Collaborations",navContact:"Contact",lede:"Beauty and live-event creator. I turn launches, race weekends, hotels and dinners into short videos people actually watch to the end.",ctaWork:"Work with me",ctaReels:"Watch the reels",f1:"Based in Austin, Texas",f2:"Creates in English and Spanish",f3:"Audience: USA and Latin America",workH:"Selected work",workP:"Beauty and events lead the way, with travel, restaurants and hospitality close behind. Tap any reel to see the details.",sampleWork:"Sample reels and view counts shown until her real videos are added.",audH:"A bilingual audience across the Americas",topC:"Top countries by engagement",callout:"Most of her engaged audience is in the USA, and nearly a quarter is in El Salvador, Puerto Rico and Mexico, so campaigns can run in English, Spanish or both.",sampleAud:"Sample figures shown; these will be replaced with her live Instagram and TikTok numbers.",svcH:"Ways to collaborate",svcP:"Every partnership is tailored. Rates are shared on request.",brandsH:"Brands and venues she has worked with",cH:"Let's create something together",cP:"Tell me about your launch, venue or event. I'll reply with ideas and rates within two business days.",c1:"Email: hello@lili-sample.com",fH:"Collaboration inquiry",fName:"Your name",fBrand:"Brand or venue",fEmail:"Email",fType:"Type of project",fDate:"Date or timeframe",fMsg:"Tell me about it",fSend:"Send inquiry",dH:"Thanks! Here is your inquiry.",dCopy:"Copy text",copied:"Copied",dNote:"On the live site this goes straight to her inbox. In this preview nothing is sent.",foot:"Beauty · Events · Travel · Food · Hospitality",dVid:"Her video will play here once it's uploaded.",need:"Please add your name and a valid email.",views:"views",logo:"Partner logo",all:"All",
 cats:{beauty:"Beauty",events:"Events",travel:"Travel",food:"Restaurants",hosp:"Hospitality",life:"Lifestyle"},
 stats:[["Instagram followers","and growing"],["Views","last 30 days"],["Accounts reached","last 30 days"],["Profile visits","last 30 days"]],live:"Live from Instagram, updated ",watch:"Watch on Instagram",other:"Other",reel:"Reel",
 countries:["USA","El Salvador","Mexico","Guatemala","Other"],
-svc:[["Beauty reviews and tutorials","Honest first impressions, get-ready-with-me videos and before-and-after looks, filmed in natural light."],["Live event coverage","Race weekends, launches and galas captured from arrival to after-party, posted the same day."],["Hotels and restaurants","Stays and tasting menus told as a story: the room, the view, the plate, the people."],["Content for your channels","Polished vertical video you own and can run as ads or on your own page, in English or Spanish."]],
+svc:[["Beauty reviews and tutorials","Honest first impressions, get-ready-with-me videos and before-and-after looks, filmed in natural light."],["Live event coverage","Race weekends, launches and galas captured from arrival to after-party, posted the same day."],["Hotels and restaurants","Stays and tasting menus told as a story: the room, the view, the plate, the people."],["UGC for your channels","Polished vertical video you own and can run as ads or on your own page, in English or Spanish."]],
 types:["Beauty or skincare","Event coverage","Hotel or travel","Restaurant","Content for your channels","Something else"]},
-es:{navWork:"Trabajo",navAud:"Audiencia",navSvc:"Colaboraciones",navContact:"Contacto",lede:"Creadora de belleza y eventos en vivo. Convierto lanzamientos, fines de semana de carreras, hoteles y cenas en videos cortos que la gente ve hasta el final.",ctaWork:"Trabaja conmigo",ctaReels:"Ver los reels",f1:"Desde Austin, Texas",f2:"Crea en inglés y español",f3:"Audiencia: EE. UU. y Latinoamérica",workH:"Trabajo destacado",workP:"La belleza y los eventos van al frente, seguidos de viajes, restaurantes y hotelería. Toca cualquier reel para ver los detalles.",sampleWork:"Reels y vistas de muestra hasta que se agreguen sus videos reales.",audH:"Una audiencia bilingüe en las Américas",topC:"Países con mayor interacción",callout:"La mayor parte de su audiencia activa está en EE. UU., y casi una cuarta parte en El Salvador, Puerto Rico y México, así que cada campaña puede ir en inglés, en español o en ambos.",sampleAud:"Cifras de muestra; se reemplazarán con sus números reales de Instagram y TikTok.",svcH:"Formas de colaborar",svcP:"Cada colaboración es a la medida. Las tarifas se comparten a solicitud.",brandsH:"Marcas y lugares con los que ha trabajado",cH:"Creemos algo juntos",cP:"Cuéntame sobre tu lanzamiento, lugar o evento. Te responderé con ideas y tarifas en dos días hábiles.",c1:"Correo: hello@lili-sample.com",fH:"Solicitud de colaboración",fName:"Tu nombre",fBrand:"Marca o lugar",fEmail:"Correo",fType:"Tipo de proyecto",fDate:"Fecha o plazo",fMsg:"Cuéntame más",fSend:"Enviar solicitud",dH:"¡Gracias! Aquí está tu solicitud.",dCopy:"Copiar texto",copied:"Copiado",dNote:"En el sitio real esto llega directo a su correo. En esta vista previa no se envía nada.",foot:"Belleza · Eventos · Viajes · Comida · Hotelería",dVid:"Su video se reproducirá aquí cuando se suba.",need:"Agrega tu nombre y un correo válido.",views:"vistas",logo:"Logo de marca",all:"Todo",
+es:{navWork:"Trabajo",navRes:"Resultados",navAud:"Audiencia",resH:"Resultados con marcas",resP:"Números reales de campañas recientes con marcas en Instagram.",total:" vistas en estas campañas",sampleRes:"Cifras de su media kit hasta la próxima actualización diaria.",ytNote:" Seguidores de YouTube y TikTok a noviembre de 2026.",calloutLive:(top,share,rest,restShare)=>`El ${share}% de su audiencia activa está en ${top} y otro ${restShare}% en ${rest}, así que cada campaña puede ir en inglés, en español o en ambos.`,likes:"me gusta",comments:"comentarios",platTot:"seguidores en total",platNote:"",navSvc:"Colaboraciones",navContact:"Contacto",lede:"Creadora de belleza y eventos en vivo. Convierto lanzamientos, fines de semana de carreras, hoteles y cenas en videos cortos que la gente ve hasta el final.",ctaWork:"Trabaja conmigo",ctaReels:"Ver los reels",f1:"Desde Austin, Texas",f2:"Crea en inglés y español",f3:"Audiencia: EE. UU. y Latinoamérica",workH:"Trabajo destacado",workP:"La belleza y los eventos van al frente, seguidos de viajes, restaurantes y hotelería. Toca cualquier reel para ver los detalles.",sampleWork:"Reels y vistas de muestra hasta que se agreguen sus videos reales.",audH:"Una audiencia bilingüe en las Américas",topC:"Países con mayor interacción",callout:"La mayor parte de su audiencia activa está en EE. UU., y casi una cuarta parte en El Salvador, Puerto Rico y México, así que cada campaña puede ir en inglés, en español o en ambos.",sampleAud:"Cifras de muestra; se reemplazarán con sus números reales de Instagram y TikTok.",svcH:"Formas de colaborar",svcP:"Cada colaboración es a la medida. Las tarifas se comparten a solicitud.",brandsH:"Marcas y lugares con los que ha trabajado",cH:"Creemos algo juntos",cP:"Cuéntame sobre tu lanzamiento, lugar o evento. Te responderé con ideas y tarifas en dos días hábiles.",c1:"Correo: hello@lili-sample.com",fH:"Solicitud de colaboración",fName:"Tu nombre",fBrand:"Marca o lugar",fEmail:"Correo",fType:"Tipo de proyecto",fDate:"Fecha o plazo",fMsg:"Cuéntame más",fSend:"Enviar solicitud",dH:"¡Gracias! Aquí está tu solicitud.",dCopy:"Copiar texto",copied:"Copiado",dNote:"En el sitio real esto llega directo a su correo. En esta vista previa no se envía nada.",foot:"Belleza · Eventos · Viajes · Comida · Hotelería",dVid:"Su video se reproducirá aquí cuando se suba.",need:"Agrega tu nombre y un correo válido.",views:"vistas",logo:"Logo de marca",all:"Todo",
 cats:{beauty:"Belleza",events:"Eventos",travel:"Viajes",food:"Restaurantes",hosp:"Hotelería",life:"Estilo de vida"},
 stats:[["Seguidores en Instagram","y creciendo"],["Vistas","últimos 30 días"],["Cuentas alcanzadas","últimos 30 días"],["Visitas al perfil","últimos 30 días"]],live:"En vivo desde Instagram, actualizado ",watch:"Ver en Instagram",other:"Otros",reel:"Reel",
 countries:["EE. UU.","El Salvador","México","Guatemala","Otros"],
-svc:[["Reseñas y tutoriales de belleza","Primeras impresiones honestas, videos de arréglate conmigo y looks de antes y después, con luz natural."],["Cobertura de eventos en vivo","Carreras, lanzamientos y galas desde la llegada hasta el after, publicados el mismo día."],["Hoteles y restaurantes","Estancias y menús de degustación contados como historia: la habitación, la vista, el plato, la gente."],["Contenido para tus canales","Video vertical pulido que es tuyo para usar en anuncios o en tu página, en inglés o español."]],
+svc:[["Reseñas y tutoriales de belleza","Primeras impresiones honestas, videos de arréglate conmigo y looks de antes y después, con luz natural."],["Cobertura de eventos en vivo","Carreras, lanzamientos y galas desde la llegada hasta el after, publicados el mismo día."],["Hoteles y restaurantes","Estancias y menús de degustación contados como historia: la habitación, la vista, el plato, la gente."],["UGC para tus canales","Video vertical pulido que es tuyo para usar en anuncios o en tu página, en inglés o español."]],
 types:["Belleza o cuidado de la piel","Cobertura de evento","Hotel o viaje","Restaurante","Contenido para tus canales","Otro"]}
 };
-const STATS=["12.4K","180K","52K","4.1K"];
+const STATS=["5.5K","180K","52K","4.1K"];
 let LIVE=null,CATMAP={};
+/* From her Beacons media kit (Nov 2026). YouTube and TikTok are fixed; Instagram uses the live count when available. */
+const PLAT={youtube:13300,tiktok:3100,instagram:5500};
+/* Shown only until stats.json has live campaign numbers (from campaigns.json via the daily script). */
+const CASES=[
+{id:"18075678866218259",brand:"Acqua Bistecca",category:"food",en:"Restaurant launch",es:"Lanzamiento de restaurante",views:19000,likes:419,comments:15,posted:"2026-02-15"},
+{id:"18121875160887469",brand:"Victoria's Secret",category:"events",en:"Fashion show coverage",es:"Cobertura del desfile",views:17500,likes:512,comments:10},
+{id:"17983039247809383",brand:"Skyscanner",category:"travel",en:"Travel storytelling",es:"Historia de viaje",views:7200,likes:226,comments:26,posted:"2026-04-15"},
+{id:"18087359048164225",brand:"Toastique",category:"food",en:"Spring menu",es:"Menú de primavera",views:3600,likes:89,comments:9},
+{id:"17916653913406307",brand:"Morphe",category:"beauty",en:"Lip combo reel",es:"Reel de combinación de labios",views:3000,likes:89,comments:12},
+{id:"18128544187711542",brand:"ZEELOOL",category:"life",en:"Eyewear reel",es:"Reel de lentes",views:2600,likes:59,comments:20,posted:"2026-07-10"}];
+const BRANDS=["Formula 1","Ulta Beauty","Yves Saint Laurent","L'Oréal","Maybelline New York","Garnier","Victoria's Secret","Morphe","Batiste","Skyscanner","Victoria's Secret Beauty","DRMTLGY","ZEELOOL","Toastique","Acqua Bistecca","Morange Collection","Missguided"];
 const SHARE=[38,38,9,6,9];
 const WORK=[
 {c:"beauty",v:"212K",en:["Five-minute glam for race day","Get ready with me"],es:["Glam de cinco minutos para día de carrera","Arréglate conmigo"],d:{en:"A quick, sweat-proof look built for a long day outdoors.",es:"Un look rápido y resistente al sudor para un día largo al aire libre."}},
@@ -286,9 +357,11 @@ let lang="en",filt="all";
 try{const st=localStorage.getItem("lili-lang");if(st==="es"||st==="en")lang=st;}catch(e){}
 const $=id=>document.getElementById(id);
 const order=["all","beauty","events","travel","food","hosp","life"];
+const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
 function hero(){
   const r=[["travel",-14,70,40],["beauty",0,155,10],["events",14,240,40]];
-  $("heroSvg").innerHTML=r.map(([c,rot,x,y],i)=>`<g class="reel"><g transform="translate(${x} ${y}) rotate(${rot} 55 170)"><rect x="8" y="14" width="110" height="340" rx="20" fill="#d14d78" opacity=".22"/><rect width="110" height="340" rx="20" fill="#fff"/><svg x="6" y="6" width="98" height="328" viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice"><clipPath id="hc${i}"><rect width="90" height="160" rx="9"/></clipPath><g clip-path="url(#hc${i})">${motif(c)}</g></svg><rect x="40" y="14" width="30" height="5" rx="2.5" fill="#fff"/></g></g>`).join("");
+  const blobs=`<path class="blob" d="M214 22C312 16 404 88 402 190C400 300 318 380 214 378C108 376 22 306 18 206C14 104 118 28 214 22Z" fill="#f6bfd0" opacity=".55"/><path class="blob b2" d="M226 64C300 70 360 120 354 204C348 286 284 340 206 334C130 328 70 270 76 190C82 112 150 58 226 64Z" fill="#ffffff" opacity=".45"/>`;
+  $("heroSvg").innerHTML=blobs+r.map(([c,rot,x,y],i)=>`<g class="reel"><g transform="translate(${x} ${y}) rotate(${rot} 55 170)"><rect x="8" y="14" width="110" height="340" rx="22" fill="#d14d78" opacity=".22"/><rect width="110" height="340" rx="22" fill="#fff"/><svg x="6" y="6" width="98" height="328" viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice"><clipPath id="hc${i}"><rect width="90" height="160" rx="10"/></clipPath><g clip-path="url(#hc${i})">${motif(c)}</g></svg><rect x="40" y="14" width="30" height="5" rx="2.5" fill="#fff"/></g></g>`).join("");
 }
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
 const fmt=n=>{try{return new Intl.NumberFormat(lang==="es"?"es":"en",{notation:"compact",maximumFractionDigits:1}).format(+n||0)}catch(e){return String(n)}};
@@ -306,28 +379,81 @@ function render(){
   if(live){
     const list=livePosts().map((p,i)=>({p,i})).filter(o=>filt==="all"||CATMAP[o.p.id]===filt);
     $("grid").innerHTML=list.map(({p,i})=>{const cat=t.cats[CATMAP[p.id]];const when=p.posted?new Date(p.posted).toLocaleDateString(lang,{month:"short",day:"numeric"}):"";
-      return `<button class="tile" data-p="${i}"><div class="thumb"><img src="${esc(p.thumb)}" alt="" loading="lazy"><span class="views">${fmt(p.views)} ${t.views}</span><span class="play"></span></div><h3>${esc(p.title||t.reel)}</h3><small>${esc(cat?cat+" · "+when:when)}</small></button>`}).join("");
+      return `<button class="tile rv" data-p="${i}"><div class="thumb"><img src="${esc(p.thumb)}" alt="" loading="lazy"><span class="views">${fmt(p.views)} ${t.views}</span><span class="play"></span></div><h3>${esc(p.title||t.reel)}</h3><small>${esc(cat?cat+" · "+when:when)}</small></button>`}).join("");
   }else{
     const list=WORK.map((w,i)=>({...w,i})).filter(w=>filt==="all"||w.c===filt);
-    $("grid").innerHTML=list.map(w=>`<button class="tile" data-i="${w.i}"><div class="thumb"><svg viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice">${motif(w.c)}</svg><span class="views">${w.v} ${t.views}</span><span class="play"></span></div><h3>${w[lang][0]}</h3><small>${t.cats[w.c]} · ${w[lang][1]}</small></button>`).join("");
+    $("grid").innerHTML=list.map(w=>`<button class="tile rv" data-i="${w.i}"><div class="thumb"><svg viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice">${motif(w.c)}</svg><span class="views">${w.v} ${t.views}</span><span class="play"></span></div><h3>${w[lang][0]}</h3><small>${t.cats[w.c]} · ${w[lang][1]}</small></button>`).join("");
   }
   const l30=(LIVE&&LIVE.last_30_days)||{},prof=(LIVE&&LIVE.profile)||{};
   const vals=LIVE?[fmt(prof.followers),fmt(l30.views),fmt(l30.reach),fmt(l30.profile_views)]:STATS;
-  $("stats").innerHTML=t.stats.map((x,i)=>`<div class="stat"><b>${esc(vals[i])}</b><span>${x[0]}<br>${x[1]}</span></div>`).join("");
+  $("stats").innerHTML=t.stats.map((x,i)=>`<div class="stat" style="--i:${i}"><b>${esc(vals[i])}</b><span>${x[0]}<br>${x[1]}</span></div>`).join("");
   let rows=t.countries.map((c,i)=>({name:c,share:SHARE[i]}));
   const aud=LIVE&&LIVE.audience?(LIVE.audience.engaged_by_country&&LIVE.audience.engaged_by_country.length?LIVE.audience.engaged_by_country:LIVE.audience.followers_by_country):null;
   if(aud&&aud.length){const top=aud.slice(0,4).map(r=>({name:place(r.country),share:+r.share||0}));const rest=Math.max(0,Math.round((100-top.reduce((a,r)=>a+r.share,0))*10)/10);rows=top.concat(rest>0?[{name:t.other,share:rest}]:[]);}
   const mx=Math.max(...rows.map(r=>r.share),1);
-  $("rows").innerHTML=rows.map(r=>`<div class="row"><span>${esc(r.name)}</span><div class="bar"><i style="width:${r.share/mx*100}%"></i></div><em>${Math.round(r.share)}%</em></div>`).join("");
+  $("rows").innerHTML=rows.map((r,i)=>`<div class="row" style="--i:${i}"><span>${esc(r.name)}</span><div class="bar"><i style="--w:${r.share/mx*100}%"></i></div><em>${Math.round(r.share)}%</em></div>`).join("");
   const upd=LIVE&&LIVE.updated?t.live+new Date(LIVE.updated).toLocaleDateString(lang,{month:"long",day:"numeric",year:"numeric"}):"";
-  if(LIVE){$("noteAud").textContent=upd;}
+  if(LIVE){$("noteAud").textContent=upd+"."+t.ytNote;}
+  if(aud&&aud.length>=2){const nxt=aud.slice(1,4),lf=(()=>{try{return new Intl.ListFormat(lang,{type:"conjunction"})}catch(e){return{format:a=>a.join(", ")}}})();
+    $("callout").textContent=t.calloutLive(lang==="en"&&({US:"the USA",GB:"the UK"})[aud[0].country]||place(aud[0].country),Math.round(+aud[0].share||0),lf.format(nxt.map(r=>place(r.country))),Math.round(nxt.reduce((a,r)=>a+(+r.share||0),0)));}
   if(live){$("noteWork").textContent=upd;}
-  $("svc").innerHTML=t.svc.map(x=>`<div><h3>${x[0]}</h3><p>${x[1]}</p></div>`).join("");
-  $("partners").innerHTML=Array.from({length:6},()=>`<span>${t.logo}</span>`).join("");
+  $("svc").innerHTML=t.svc.map((x,i)=>`<div style="--i:${i}"><h3>${x[0]}</h3><p>${x[1]}</p></div>`).join("");
+  const half=Math.ceil(BRANDS.length/2),rowsB=[BRANDS.slice(0,half),BRANDS.slice(half)];
+  if(!$("marquee").childElementCount)$("marquee").innerHTML=rowsB.map((r,k)=>{const one=r.map(x=>`<span>${esc(x)}</span>`).join(""),two=r.map(x=>`<span aria-hidden="true">${esc(x)}</span>`).join("");return `<div class="track${k?" rev":""}">${one}${two}</div>`}).join("");
+  const igF=LIVE&&prof.followers?+prof.followers:PLAT.instagram;
+  $("plat").innerHTML=`<span class="tot"><strong>${fmt(igF+PLAT.youtube+PLAT.tiktok)}</strong> ${t.platTot}</span><span><strong>${fmt(PLAT.youtube)}</strong> YouTube</span><span><strong>${fmt(igF)}</strong> Instagram</span><span><strong>${fmt(PLAT.tiktok)}</strong> TikTok</span>`;
+  const liveC=LIVE&&Array.isArray(LIVE.campaigns)&&LIVE.campaigns.length?LIVE.campaigns:null,cl=liveC||CASES;
+  $("total").textContent=fmt(cl.reduce((a,x)=>a+(+x.views||0),0))+t.total;
+  $("cases").innerHTML=cl.map(x=>{const lp=livePosts().find(p=>p.id===x.id),thumb=x.thumb||(lp&&lp.thumb),perm=x.permalink||(lp&&lp.permalink);
+    const pic=thumb?`<img src="${esc(thumb)}" alt="" loading="lazy">`:`<svg viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice">${motif(PAL[x.category]?x.category:"life")}</svg>`;
+    const link=perm&&/^https:\/\/(www\.)?instagram\.com\//.test(perm)?`<a href="${esc(perm)}" target="_blank" rel="noopener">${t.watch}</a>`:"";
+    const when=x.posted?new Date(x.posted.replace("+0000","Z")).toLocaleDateString(lang,{month:"short",year:"numeric"}):"";
+    const cat=t.cats[x.category]||"";
+    return `<article class="case rv"><div class="thumb">${pic}</div><div><small>${esc([cat,when].filter(Boolean).join(" · "))}</small><h3>${esc(x.brand)}</h3><p>${esc(x[lang]||x.en||"")}</p><b>${fmt(x.views)}<span>${t.views}</span></b><p>${fmt(x.likes)} ${t.likes} · ${fmt(x.comments)} ${t.comments}</p>${link}</div></article>`}).join("");
+  if(liveC)$("noteRes").textContent=upd;
   const sel=$("ft"),cur=sel.selectedIndex;
   sel.innerHTML=t.types.map(x=>`<option>${x}</option>`).join("");
   if(cur>0)sel.selectedIndex=cur;
+  watch();
 }
+/* Scroll reveal. Items that come into view together are queued and shown one after another,
+   GAP ms apart, so nothing fires all at once, even at the bottom of the page. */
+const GAP=180,queue=[];let busy=false,counted=false;
+function countUp(){
+  if(counted||RM)return;counted=true;
+  document.querySelectorAll("#stats b").forEach((b,k)=>{
+    const fin=b.textContent,m=fin.match(/^([\d.,]+)(.*)$/);if(!m)return;
+    const raw=m[1],sep=raw.includes(",")?",":".",dec=(raw.split(/[.,]/)[1]||"").length,n=parseFloat(raw.replace(",","."));
+    if(!isFinite(n))return;
+    const dur=1600,start=performance.now()+k*130;
+    const tick=now=>{if(!b.isConnected)return;const p=Math.min(1,Math.max(0,(now-start)/dur)),e=1-Math.pow(1-p,3);
+      b.textContent=p>=1?fin:(n*e).toFixed(dec).replace(".",sep)+m[2];if(p<1)requestAnimationFrame(tick);};
+    b.textContent=(0).toFixed(dec).replace(".",sep)+m[2];requestAnimationFrame(tick);
+  });
+}
+function pump(){
+  if(busy)return;const el=queue.shift();if(!el)return;
+  el.classList.add("in");if(el.id==="stats")countUp();
+  busy=true;setTimeout(()=>{busy=false;pump();},GAP);
+}
+function enqueue(list){
+  list.forEach(el=>{if(!el.classList.contains("in")&&!queue.includes(el))queue.push(el);});
+  queue.sort((a,b)=>a.compareDocumentPosition(b)&4?-1:1);pump();
+}
+const io="IntersectionObserver" in window?new IntersectionObserver(es=>{
+  const hit=es.filter(e=>e.isIntersecting).map(e=>e.target);hit.forEach(el=>io.unobserve(el));if(hit.length)enqueue(hit);
+},{rootMargin:"0px 0px -8% 0px",threshold:.12}):null;
+function watch(){
+  document.querySelectorAll(".rv:not([data-w]),.rv-kids:not([data-w])").forEach(el=>{
+    el.dataset.w="1";
+    if(RM||!io){el.classList.add("in");if(el.id==="stats")countUp();}else io.observe(el);
+  });
+}
+addEventListener("scroll",()=>{
+  if(innerHeight+scrollY<document.documentElement.scrollHeight-6)return;
+  const left=[...document.querySelectorAll("[data-w]:not(.in)")].filter(el=>el.getBoundingClientRect().top<innerHeight);
+  left.forEach(el=>io&&io.unobserve(el));if(left.length)enqueue(left);
+},{passive:true});
 function setLang(l){lang=l;try{localStorage.setItem("lili-lang",l)}catch(e){}render();}
 $("l-en").addEventListener("click",()=>setLang("en"));
 $("l-es").addEventListener("click",()=>setLang("es"));

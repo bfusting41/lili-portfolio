@@ -11,9 +11,12 @@ Where the secrets come from:
     and turn on "Notebook access" for both.
   - GitHub Actions (step 3): repository secrets, passed in as environment variables.
 
+Reads (optional):
+  campaigns.json    - brand campaigns for the "Brand results" section: post ID + brand + label
+
 Output:
   stats.json        - everything the website needs
-  thumbs/<id>.jpg   - cover images for her recent reels (Instagram's own image links expire)
+  thumbs/<id>.jpg   - cover images for her recent reels and campaign posts (Instagram's own image links expire)
 """
 
 import csv
@@ -32,6 +35,7 @@ FULL_REFRESH_DAY = 6 # Sunday: refresh stats for every post she has ever made (0
 OUT_FILE = Path("stats.json")
 THUMB_DIR = Path("thumbs")
 HISTORY_DIR = Path("history")  # dated copies kept forever, for the future Statistics tab
+CAMPAIGNS_FILE = Path("campaigns.json")  # brand campaigns shown on the site; edit this file to add or remove one
 
 
 # ---------- secrets ----------
@@ -52,6 +56,23 @@ def get_secret(name):
 
 TOKEN = get_secret("IG_TOKEN")
 IG_ID = get_secret("IG_ID")
+
+
+# ---------- campaigns ----------
+def load_campaigns():
+    """Read campaigns.json: a list of {"id", "brand", "category", "en", "es"}. Missing or broken file = no campaigns."""
+    if not CAMPAIGNS_FILE.exists():
+        return []
+    try:
+        rows = json.loads(CAMPAIGNS_FILE.read_text(encoding="utf-8"))
+        return [r for r in rows if isinstance(r, dict) and r.get("id")]
+    except Exception as e:
+        print(f"  ! campaigns.json could not be read ({e}); skipping brand results")
+        return []
+
+
+CAMPAIGNS = load_campaigns()
+CAMPAIGN_IDS = {str(c["id"]) for c in CAMPAIGNS}
 
 
 # ---------- API helper ----------
@@ -157,27 +178,28 @@ while True:
         break
 print(f"  found {len(all_media)} posts")
 
-# old posts barely change, so: newest posts every day, everything once a week (and on the very first run)
+# old posts barely change, so: newest posts and campaign posts every day, everything once a week (and on the very first run)
 first_run = not (HISTORY_DIR / "daily_posts.csv").exists()
 full_refresh = first_run or datetime.now(timezone(timedelta(hours=-6))).weekday() == FULL_REFRESH_DAY
 recent_cutoff = now - timedelta(days=RECENT_DAYS)
-print("  refreshing stats for " + ("every post (weekly full refresh)" if full_refresh else f"posts from the last {RECENT_DAYS} days"))
+print("  refreshing stats for " + ("every post (weekly full refresh)" if full_refresh else f"posts from the last {RECENT_DAYS} days + campaign posts"))
 
 THUMB_DIR.mkdir(exist_ok=True)
 all_posts = []
 for i, m in enumerate(all_media):
     posted = m.get("timestamp")
     posted_dt = datetime.fromisoformat(posted.replace("+0000", "+00:00")) if posted else None
-    refresh = full_refresh or i < DISPLAY_POSTS or (posted_dt and posted_dt >= recent_cutoff)
+    is_campaign = m["id"] in CAMPAIGN_IDS
+    refresh = full_refresh or i < DISPLAY_POSTS or is_campaign or (posted_dt and posted_dt >= recent_cutoff)
     stats = {}
     if refresh:
         stats = total_value(call(f"{m['id']}/insights", metric="views,reach,saved,shares,total_interactions"))
         time.sleep(0.2)  # stay well under Instagram's rate limits
 
-    # cover images only for the posts shown on the site (Instagram's image links expire after a few days)
+    # cover images only for posts shown on the site (Instagram's image links expire after a few days)
     thumb_file = None
     thumb_url = m.get("thumbnail_url") or m.get("media_url")
-    if i < DISPLAY_POSTS and thumb_url and (m.get("thumbnail_url") or m.get("media_type") != "VIDEO"):
+    if (i < DISPLAY_POSTS or is_campaign) and thumb_url and (m.get("thumbnail_url") or m.get("media_type") != "VIDEO"):
         try:
             img = requests.get(thumb_url, timeout=30)
             if img.ok:
@@ -208,8 +230,27 @@ for i, m in enumerate(all_media):
 
 posts = all_posts[:DISPLAY_POSTS]  # what the website shows
 
+# ---------- 4b. brand campaigns: live numbers for each post listed in campaigns.json ----------
+by_id = {p["id"]: p for p in all_posts}
+campaigns = []
+for c in CAMPAIGNS:
+    p = by_id.get(str(c["id"]))
+    if not p:
+        print(f"  ! campaign post {c['id']} ({c.get('brand')}) not found on her account; left off the site")
+        continue
+    campaigns.append({
+        "id": p["id"],
+        "brand": c.get("brand", ""),
+        "category": c.get("category", ""),
+        "en": c.get("en", ""),
+        "es": c.get("es", ""),
+        **{k: p[k] for k in ("posted", "permalink", "thumb", "views", "reach", "likes", "comments", "saves", "shares", "interactions")},
+    })
+campaigns.sort(key=lambda r: r["views"], reverse=True)
+print(f"  {len(campaigns)} of {len(CAMPAIGNS)} campaigns found")
+
 # remove cover images for posts that dropped off the website
-keep = {p["thumb"] for p in posts if p["thumb"]}
+keep = {p["thumb"] for p in posts + campaigns if p["thumb"]}
 for f in THUMB_DIR.glob("*.jpg"):
     if f"thumbs/{f.name}" not in keep:
         f.unlink()
@@ -247,6 +288,7 @@ stats_out = {
         "engaged_by_country": engaged_by_country,
         "followers_by_country": followers_by_country,
     },
+    "campaigns": campaigns,
     "posts": posts,
 }
 
@@ -310,7 +352,7 @@ upsert_csv(HISTORY_DIR / "daily_account.csv", [{
     **{f"last30_{k}": v for k, v in account_30d.items() if not isinstance(v, (dict, list))},
 }], ["date"])
 
-# 3) one row per post per day, so each post's growth curve builds up over time
+# 3) one row per post per day, so each post's growth curve builds up over time (campaign posts included every day)
 upsert_csv(HISTORY_DIR / "daily_posts.csv", [{
     "date": today, "post_id": p["id"], "posted": p["posted"], "type": p["type"],
     "views": p["views"], "reach": p["reach"], "likes": p["likes"], "comments": p["comments"],
@@ -338,3 +380,5 @@ if account_30d:
 top = engaged_by_country or followers_by_country
 if top:
     print("  Top countries: " + ", ".join(f"{r['country']} {r['share']}%" for r in top[:5]))
+for c in campaigns:
+    print(f"  Campaign {c['brand']}: {c['views']:,} views, {c['likes']:,} likes, {c['comments']:,} comments")
