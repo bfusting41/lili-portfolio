@@ -17,6 +17,8 @@ Reads (optional):
 Output:
   stats.json        - everything the website needs
   thumbs/<id>.jpg   - cover images for her recent reels and campaign posts (Instagram's own image links expire)
+  history/          - dated records for the future Statistics tab: account, posts (incl. reel watch time),
+                      countries, age/gender/city, tagged posts
 """
 
 import csv
@@ -105,17 +107,34 @@ def total_value(insights_json):
     return out
 
 
-def country_breakdown(insights_json):
-    """Turn a demographics response into a sorted list of {country, count, share}."""
+def breakdown(insights_json, key="country"):
+    """Turn a demographics response into a sorted list of {<key>, count, share}."""
     try:
         results = insights_json["data"][0]["total_value"]["breakdowns"][0]["results"]
     except (TypeError, KeyError, IndexError):
         return []
-    rows = [{"country": r["dimension_values"][0], "count": r["value"]} for r in results]
+    rows = [{key: r["dimension_values"][0], "count": r["value"]} for r in results]
     total = sum(r["count"] for r in rows) or 1
     for r in rows:
         r["share"] = round(r["count"] / total * 100, 1)
     return sorted(rows, key=lambda r: r["count"], reverse=True)
+
+
+def country_breakdown(insights_json):
+    return breakdown(insights_json, "country")
+
+
+def demographics(metric, dim, **extra):
+    """Follower or engaged-audience demographics split by age, gender, city or country."""
+    return breakdown(call(f"{IG_ID}/insights", metric=metric, period="lifetime",
+                          metric_type="total_value", breakdown=dim, **extra), dim)
+
+
+def link_taps(since_ts, until_ts):
+    """Taps on the links in her bio (asked on its own so a problem here can't block anything else)."""
+    out = total_value(call(f"{IG_ID}/insights", metric="profile_links_taps", period="day",
+                           metric_type="total_value", since=since_ts, until=until_ts))
+    return {"profile_links_taps": out["profile_links_taps"]} if "profile_links_taps" in out else {}
 
 
 # ---------- 1. profile ----------
@@ -142,6 +161,8 @@ account_30d = total_value(call(
     until=until,
 ))
 
+account_30d.update(link_taps(since, until))
+
 # ---------- 3. audience countries ----------
 print("Pulling audience countries...")
 followers_by_country = country_breakdown(call(
@@ -159,6 +180,14 @@ engaged_by_country = country_breakdown(call(
     metric_type="total_value",
     breakdown="country",
 ))
+
+# age, gender and top cities (tracked daily for the Statistics tab; not shown on the main site yet)
+print("Pulling audience age, gender and cities...")
+demo = {}
+for who, metric, extra in (("followers", "follower_demographics", {}),
+                           ("engaged", "engaged_audience_demographics", {"timeframe": "this_month"})):
+    for dim in ("age", "gender", "city"):
+        demo[f"{who}_by_{dim}"] = demographics(metric, dim, **extra)
 
 # ---------- 4. every post, plus per-post stats ----------
 print("Pulling her full post list...")
@@ -195,6 +224,11 @@ for i, m in enumerate(all_media):
     if refresh:
         stats = total_value(call(f"{m['id']}/insights", metric="views,reach,saved,shares,total_interactions"))
         time.sleep(0.2)  # stay well under Instagram's rate limits
+        if m.get("media_product_type") == "REELS":
+            # watch time is asked separately so a problem here can't wipe out the views above
+            stats.update(total_value(call(f"{m['id']}/insights",
+                                          metric="ig_reels_avg_watch_time,ig_reels_video_view_total_time")))
+            time.sleep(0.2)
 
     # cover images only for posts shown on the site (Instagram's image links expire after a few days)
     thumb_file = None
@@ -226,6 +260,9 @@ for i, m in enumerate(all_media):
         "saves": stats.get("saved", 0),
         "shares": stats.get("shares", 0),
         "interactions": stats.get("total_interactions", 0),
+        # Instagram reports watch time in milliseconds
+        "avg_watch_s": round(stats.get("ig_reels_avg_watch_time", 0) / 1000, 1),
+        "total_watch_min": round(stats.get("ig_reels_video_view_total_time", 0) / 60000, 1),
     })
 
 posts = all_posts[:DISPLAY_POSTS]  # what the website shows
@@ -244,7 +281,7 @@ for c in CAMPAIGNS:
         "category": c.get("category", ""),
         "en": c.get("en", ""),
         "es": c.get("es", ""),
-        **{k: p[k] for k in ("posted", "permalink", "thumb", "views", "reach", "likes", "comments", "saves", "shares", "interactions")},
+        **{k: p[k] for k in ("posted", "permalink", "thumb", "views", "reach", "likes", "comments", "saves", "shares", "interactions", "avg_watch_s")},
     })
 campaigns.sort(key=lambda r: r["views"], reverse=True)
 print(f"  {len(campaigns)} of {len(CAMPAIGNS)} campaigns found")
@@ -255,11 +292,18 @@ for f in THUMB_DIR.glob("*.jpg"):
     if f"thumbs/{f.name}" not in keep:
         f.unlink()
 
+# ---------- 4c. posts where other accounts (often brands) tagged her ----------
+print("Pulling posts she's tagged in...")
+tagged = (call(f"{IG_ID}/tags", fields="id,username,caption,permalink,timestamp,media_type,like_count,comments_count", limit=50) or {}).get("data", [])
+print(f"  {len(tagged)} tagged posts" if tagged else "  none returned (this needs the instagram_manage_comments permission; see meta-api-setup.md)")
+
 # ---------- 5. figures for the website ----------
 followers = profile.get("followers_count", 0) or 0
 reels = [p for p in posts if p["type"] == "REELS"]
 avg_reel_views = round(sum(p["views"] for p in reels) / len(reels)) if reels else 0
 avg_interactions = (sum(p["interactions"] for p in posts) / len(posts)) if posts else 0
+timed = [p for p in reels if p["avg_watch_s"]]
+avg_watch_s = round(sum(p["avg_watch_s"] for p in timed) / len(timed), 1) if timed else 0
 engagement_rate = round(avg_interactions / followers * 100, 2) if followers else 0
 
 # posts per month, averaged over the last 90 days
@@ -282,11 +326,13 @@ stats_out = {
         "avg_reel_views": avg_reel_views,
         "engagement_rate_pct": engagement_rate,
         "posts_per_month": posts_per_month,
+        "avg_reel_watch_s": avg_watch_s,
     },
     "last_30_days": account_30d,
     "audience": {
         "engaged_by_country": engaged_by_country,
         "followers_by_country": followers_by_country,
+        **demo,
     },
     "campaigns": campaigns,
     "posts": posts,
@@ -338,6 +384,8 @@ yesterday.update(total_value(call(
     since=int(day_start.timestamp()), until=int(day_end.timestamp()),
 )))
 
+yesterday.update(link_taps(int(day_start.timestamp()), int(day_end.timestamp())))
+
 # 1) full copy of today's stats.json
 (HISTORY_DIR / "snapshots" / f"{today}.json").write_text(
     json.dumps(stats_out, indent=2, ensure_ascii=False), encoding="utf-8")
@@ -357,6 +405,7 @@ upsert_csv(HISTORY_DIR / "daily_posts.csv", [{
     "date": today, "post_id": p["id"], "posted": p["posted"], "type": p["type"],
     "views": p["views"], "reach": p["reach"], "likes": p["likes"], "comments": p["comments"],
     "saves": p["saves"], "shares": p["shares"], "interactions": p["interactions"],
+    "avg_watch_s": p["avg_watch_s"], "total_watch_min": p["total_watch_min"],
 } for p in all_posts if p["refreshed"]], ["date", "post_id"])
 
 # 4) one row per country per day
@@ -364,6 +413,19 @@ upsert_csv(HISTORY_DIR / "daily_countries.csv",
     [{"date": today, "audience": "engaged", **r} for r in engaged_by_country]
     + [{"date": today, "audience": "followers", **r} for r in followers_by_country],
     ["date", "audience", "country"])
+
+# 4b) age, gender and city shares per day
+upsert_csv(HISTORY_DIR / "daily_demographics.csv", [
+    {"date": today, "audience": name.split("_by_")[0], "dimension": dim, "value": r[dim], "count": r["count"], "share": r["share"]}
+    for name, rows in demo.items() for dim in [name.split("_by_")[1]] for r in rows
+], ["date", "audience", "dimension", "value"])
+
+# 4c) tagged posts, one row each (likes and comments updated on each run)
+upsert_csv(HISTORY_DIR / "tagged.csv", [{
+    "post_id": t["id"], "by": t.get("username", ""), "posted": t.get("timestamp", ""),
+    "media_type": t.get("media_type", ""), "likes": t.get("like_count", ""), "comments": t.get("comments_count", ""),
+    "permalink": t.get("permalink", ""), "caption": (t.get("caption") or "").strip(), "last_seen": today,
+} for t in tagged], ["post_id"])
 
 # 5) post details (caption, link) once per post, updated if they change
 upsert_csv(HISTORY_DIR / "posts.csv", [{
@@ -374,7 +436,12 @@ upsert_csv(HISTORY_DIR / "posts.csv", [{
 # ---------- summary ----------
 print("\nDone. Saved stats.json")
 print(f"  @{stats_out['profile']['username']}  ·  {followers:,} followers  ·  {len(all_posts)} posts in history, {len(posts)} on the site ({len(reels)} reels)")
-print(f"  Avg reel views: {avg_reel_views:,}   Engagement rate: {engagement_rate}%   Posts/month: {posts_per_month}")
+print(f"  Avg reel views: {avg_reel_views:,}   Engagement rate: {engagement_rate}%   Posts/month: {posts_per_month}   Avg reel watch: {avg_watch_s}s")
+for name, rows in demo.items():
+    if rows:
+        print(f"  {name}: " + ", ".join(f"{list(r.values())[0]} {r['share']}%" for r in rows[:4]))
+    else:
+        print(f"  {name}: not returned")
 if account_30d:
     print("  Last 30 days: " + ", ".join(f"{k} {v:,}" for k, v in account_30d.items()))
 top = engaged_by_country or followers_by_country
