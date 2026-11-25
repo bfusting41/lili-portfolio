@@ -1,30 +1,30 @@
 {
-  "updated": "2026-11-25T20:07:46+00:00",
+  "updated": "2026-11-25T20:29:23+00:00",
   "profile": {
     "username": "lilimagana16",
     "name": "Lili Magaña",
     "bio": "Austin, texas 🇺🇸🇸🇻\n•Lifestyle •Travel • Spanglish\n📧: lilimagana19@gmail.com",
-    "followers": 5505,
+    "followers": 5506,
     "following": 2226,
     "posts": 272
   },
   "headline": {
-    "followers": 5505,
+    "followers": 5506,
     "avg_reel_views": 2397,
     "engagement_rate_pct": 2.47,
     "posts_per_month": 17.7,
     "avg_reel_watch_s": 6.3
   },
   "last_30_days": {
-    "views": 247356,
+    "views": 247425,
     "reach": 68769,
     "accounts_engaged": 3164,
-    "total_interactions": 7346,
-    "likes": 5194,
+    "total_interactions": 7348,
+    "likes": 5196,
     "comments": 336,
     "shares": 593,
     "saves": 455,
-    "profile_views": 6368,
+    "profile_views": 6370,
     "profile_links_taps": 0
   },
   "audience": {
@@ -1176,7 +1176,7 @@
       "shares": 11,
       "interactions": 92,
       "avg_watch_s": 7.9,
-      "total_watch_min": 179.9
+      "total_watch_min": 180.1
     },
     {
       "id": "17918656446541196",
@@ -1190,13 +1190,13 @@
       "refreshed": true,
       "on_profile": true,
       "shared_to_feed": null,
-      "likes": 227,
+      "likes": 229,
       "comments": 33,
-      "views": 4695,
-      "reach": 2118,
+      "views": 4702,
+      "reach": 2121,
       "saves": 4,
       "shares": 14,
-      "interactions": 282,
+      "interactions": 284,
       "avg_watch_s": 0.0,
       "total_watch_min": 0.0
     },
@@ -1566,7 +1566,7 @@
       "shared_to_feed": null,
       "likes": 195,
       "comments": 12,
-      "views": 6334,
+      "views": 6335,
       "reach": 2304,
       "saves": 3,
       "shares": 0,
