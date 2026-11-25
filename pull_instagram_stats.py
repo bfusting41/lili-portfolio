@@ -13,6 +13,7 @@ Where the secrets come from:
 
 Reads (optional):
   campaigns.json    - brand campaigns for the "Brand results" section: post ID + brand + label
+  hidden.json       - post IDs to keep off the website, e.g. a trial reel that slipped through
 
 Output:
   stats.json        - everything the website needs
@@ -38,6 +39,7 @@ OUT_FILE = Path("stats.json")
 THUMB_DIR = Path("thumbs")
 HISTORY_DIR = Path("history")  # dated copies kept forever, for the future Statistics tab
 CAMPAIGNS_FILE = Path("campaigns.json")  # brand campaigns shown on the site; edit this file to add or remove one
+HIDDEN_FILE = Path("hidden.json")        # optional: list of post IDs to keep off the website (still kept in history)
 
 
 # ---------- secrets ----------
@@ -73,7 +75,17 @@ def load_campaigns():
         return []
 
 
+def load_hidden():
+    """Read hidden.json: a plain list of post IDs. Missing or broken file = nothing hidden."""
+    try:
+        return {str(x) for x in json.loads(HIDDEN_FILE.read_text(encoding="utf-8"))} if HIDDEN_FILE.exists() else set()
+    except Exception as e:
+        print(f"  ! hidden.json could not be read ({e}); ignoring it")
+        return set()
+
+
 CAMPAIGNS = load_campaigns()
+HIDDEN = load_hidden()
 CAMPAIGN_IDS = {str(c["id"]) for c in CAMPAIGNS}
 
 
@@ -195,7 +207,7 @@ all_media, after = [], None
 while True:
     page = call(
         f"{IG_ID}/media",
-        fields="id,caption,media_type,media_product_type,permalink,thumbnail_url,media_url,timestamp,like_count,comments_count",
+        fields="id,caption,media_type,media_product_type,is_shared_to_feed,permalink,thumbnail_url,media_url,timestamp,like_count,comments_count",
         limit=100,
         **({"after": after} if after else {}),
     )
@@ -205,7 +217,22 @@ while True:
     after = (page.get("paging") or {}).get("cursors", {}).get("after")
     if not (page.get("paging") or {}).get("next") or not after:
         break
-print(f"  found {len(all_media)} posts")
+
+
+def on_profile(m):
+    """False for trial reels (shown only to non-followers, never on her profile) and anything in hidden.json.
+    Instagram has no 'trial reel' field; reels not shared to her feed are the closest signal."""
+    if m["id"] in HIDDEN:
+        return False
+    return not (m.get("media_product_type") == "REELS" and m.get("is_shared_to_feed") is False)
+
+
+public_ids = [m["id"] for m in all_media if on_profile(m)]
+show_ids = set(public_ids[:DISPLAY_POSTS])
+not_feed = sum(1 for m in all_media if m.get("media_product_type") == "REELS" and m.get("is_shared_to_feed") is False)
+print(f"  found {len(all_media)} posts: {len(public_ids)} on her profile, {not_feed} reels not shared to her feed (likely trial reels), "
+      f"{len(HIDDEN & {m['id'] for m in all_media})} hidden by hand")
+print(f"  her profile's own post count: {profile.get('media_count')}")
 
 # old posts barely change, so: newest posts and campaign posts every day, everything once a week (and on the very first run)
 first_run = not (HISTORY_DIR / "daily_posts.csv").exists()
@@ -219,7 +246,8 @@ for i, m in enumerate(all_media):
     posted = m.get("timestamp")
     posted_dt = datetime.fromisoformat(posted.replace("+0000", "+00:00")) if posted else None
     is_campaign = m["id"] in CAMPAIGN_IDS
-    refresh = full_refresh or i < DISPLAY_POSTS or is_campaign or (posted_dt and posted_dt >= recent_cutoff)
+    shown = m["id"] in show_ids
+    refresh = full_refresh or shown or is_campaign or (posted_dt and posted_dt >= recent_cutoff)
     stats = {}
     if refresh:
         stats = total_value(call(f"{m['id']}/insights", metric="views,reach,saved,shares,total_interactions"))
@@ -233,7 +261,7 @@ for i, m in enumerate(all_media):
     # cover images only for posts shown on the site (Instagram's image links expire after a few days)
     thumb_file = None
     thumb_url = m.get("thumbnail_url") or m.get("media_url")
-    if (i < DISPLAY_POSTS or is_campaign) and thumb_url and (m.get("thumbnail_url") or m.get("media_type") != "VIDEO"):
+    if (shown or is_campaign) and thumb_url and (m.get("thumbnail_url") or m.get("media_type") != "VIDEO"):
         try:
             img = requests.get(thumb_url, timeout=30)
             if img.ok:
@@ -253,6 +281,8 @@ for i, m in enumerate(all_media):
         "posted": posted,
         "thumb": thumb_file,
         "refreshed": bool(refresh),
+        "on_profile": on_profile(m),
+        "shared_to_feed": m.get("is_shared_to_feed"),
         "likes": m.get("like_count", 0),
         "comments": m.get("comments_count", 0),
         "views": stats.get("views", 0),
@@ -265,7 +295,8 @@ for i, m in enumerate(all_media):
         "total_watch_min": round(stats.get("ig_reels_video_view_total_time", 0) / 60000, 1),
     })
 
-posts = all_posts[:DISPLAY_POSTS]  # what the website shows
+public_posts = [p for p in all_posts if p["on_profile"]]
+posts = public_posts[:DISPLAY_POSTS]  # what the website shows: newest posts that are actually on her profile
 
 # ---------- 4b. brand campaigns: live numbers for each post listed in campaigns.json ----------
 by_id = {p["id"]: p for p in all_posts}
@@ -307,7 +338,7 @@ avg_watch_s = round(sum(p["avg_watch_s"] for p in timed) / len(timed), 1) if tim
 engagement_rate = round(avg_interactions / followers * 100, 2) if followers else 0
 
 # posts per month, averaged over the last 90 days
-recent_count = sum(1 for p in all_posts if p["posted"] and
+recent_count = sum(1 for p in public_posts if p["posted"] and
                    datetime.fromisoformat(p["posted"].replace("+0000", "+00:00")) >= recent_cutoff)
 posts_per_month = round(recent_count / (RECENT_DAYS / 30), 1)
 
@@ -402,7 +433,7 @@ upsert_csv(HISTORY_DIR / "daily_account.csv", [{
 
 # 3) one row per post per day, so each post's growth curve builds up over time (campaign posts included every day)
 upsert_csv(HISTORY_DIR / "daily_posts.csv", [{
-    "date": today, "post_id": p["id"], "posted": p["posted"], "type": p["type"],
+    "date": today, "post_id": p["id"], "posted": p["posted"], "type": p["type"], "on_profile": p["on_profile"],
     "views": p["views"], "reach": p["reach"], "likes": p["likes"], "comments": p["comments"],
     "saves": p["saves"], "shares": p["shares"], "interactions": p["interactions"],
     "avg_watch_s": p["avg_watch_s"], "total_watch_min": p["total_watch_min"],
@@ -430,12 +461,14 @@ upsert_csv(HISTORY_DIR / "tagged.csv", [{
 # 5) post details (caption, link) once per post, updated if they change
 upsert_csv(HISTORY_DIR / "posts.csv", [{
     "post_id": p["id"], "posted": p["posted"], "type": p["type"], "media_type": p["media_type"],
+    "on_profile": p["on_profile"], "shared_to_feed": p["shared_to_feed"],
     "permalink": p["permalink"], "caption": p["caption"],
 } for p in all_posts], ["post_id"])
 
 # ---------- summary ----------
 print("\nDone. Saved stats.json")
-print(f"  @{stats_out['profile']['username']}  ·  {followers:,} followers  ·  {len(all_posts)} posts in history, {len(posts)} on the site ({len(reels)} reels)")
+print(f"  @{stats_out['profile']['username']}  ·  {followers:,} followers  ·  {len(all_posts)} posts in history "
+      f"({len(public_posts)} on her profile), {len(posts)} on the site ({len(reels)} reels)")
 print(f"  Avg reel views: {avg_reel_views:,}   Engagement rate: {engagement_rate}%   Posts/month: {posts_per_month}   Avg reel watch: {avg_watch_s}s")
 for name, rows in demo.items():
     if rows:
