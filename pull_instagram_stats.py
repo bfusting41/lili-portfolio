@@ -16,6 +16,7 @@ Output:
   thumbs/<id>.jpg   - cover images for her recent reels (Instagram's own image links expire)
 """
 
+import csv
 import json
 import os
 import time
@@ -28,6 +29,7 @@ GRAPH = "https://graph.facebook.com"
 RECENT_POSTS = 24  # how many recent posts to pull for the video wall
 OUT_FILE = Path("stats.json")
 THUMB_DIR = Path("thumbs")
+HISTORY_DIR = Path("history")  # dated copies kept forever, for the future Statistics tab
 
 
 # ---------- secrets ----------
@@ -223,6 +225,83 @@ stats_out = {
 }
 
 OUT_FILE.write_text(json.dumps(stats_out, indent=2, ensure_ascii=False), encoding="utf-8")
+
+
+# ---------- 6. history: keep a dated copy of every day ----------
+def upsert_csv(path, rows, key_fields):
+    """Add rows to a CSV, replacing any existing rows with the same key (so a re-run on the same day doesn't duplicate)."""
+    if not rows:
+        return
+    existing = []
+    if path.exists():
+        with path.open(newline="", encoding="utf-8") as f:
+            existing = list(csv.DictReader(f))
+    new_keys = {tuple(str(r[k]) for k in key_fields) for r in rows}
+    kept = [r for r in existing if tuple(str(r.get(k, "")) for k in key_fields) not in new_keys]
+    fields = list(rows[0].keys())
+    for r in kept:  # keep any columns older files had
+        fields += [k for k in r.keys() if k not in fields]
+    with path.open("w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
+        w.writeheader()
+        w.writerows(kept + rows)
+
+
+print("Saving history...")
+HISTORY_DIR.mkdir(exist_ok=True)
+(HISTORY_DIR / "snapshots").mkdir(exist_ok=True)
+today = datetime.now(timezone(timedelta(hours=-6))).date().isoformat()  # Austin date
+
+# yesterday's own numbers (not a rolling 30-day total), so daily trends can be charted later
+day_end = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
+day_start = day_end - timedelta(days=1)
+yesterday = total_value(call(
+    f"{IG_ID}/insights",
+    metric="views,reach,accounts_engaged,total_interactions,likes,comments,shares,saves,profile_views",
+    period="day",
+    metric_type="total_value",
+    since=int(day_start.timestamp()),
+    until=int(day_end.timestamp()),
+))
+
+# new followers gained yesterday (asked separately so a hiccup here can't block the rest)
+yesterday.update(total_value(call(
+    f"{IG_ID}/insights", metric="follower_count", period="day",
+    since=int(day_start.timestamp()), until=int(day_end.timestamp()),
+)))
+
+# 1) full copy of today's stats.json
+(HISTORY_DIR / "snapshots" / f"{today}.json").write_text(
+    json.dumps(stats_out, indent=2, ensure_ascii=False), encoding="utf-8")
+
+# 2) one row per day for the account
+upsert_csv(HISTORY_DIR / "daily_account.csv", [{
+    "date": today,
+    "followers": followers,
+    "following": profile.get("follows_count", ""),
+    "total_posts": profile.get("media_count", ""),
+    **{f"yesterday_{k}": v for k, v in yesterday.items() if not isinstance(v, (dict, list))},
+    **{f"last30_{k}": v for k, v in account_30d.items() if not isinstance(v, (dict, list))},
+}], ["date"])
+
+# 3) one row per post per day, so each post's growth curve builds up over time
+upsert_csv(HISTORY_DIR / "daily_posts.csv", [{
+    "date": today, "post_id": p["id"], "posted": p["posted"], "type": p["type"],
+    "views": p["views"], "reach": p["reach"], "likes": p["likes"], "comments": p["comments"],
+    "saves": p["saves"], "shares": p["shares"], "interactions": p["interactions"],
+} for p in posts], ["date", "post_id"])
+
+# 4) one row per country per day
+upsert_csv(HISTORY_DIR / "daily_countries.csv",
+    [{"date": today, "audience": "engaged", **r} for r in engaged_by_country]
+    + [{"date": today, "audience": "followers", **r} for r in followers_by_country],
+    ["date", "audience", "country"])
+
+# 5) post details (caption, link) once per post, updated if they change
+upsert_csv(HISTORY_DIR / "posts.csv", [{
+    "post_id": p["id"], "posted": p["posted"], "type": p["type"],
+    "permalink": p["permalink"], "caption": p["caption"],
+} for p in posts], ["post_id"])
 
 # ---------- summary ----------
 print("\nDone. Saved stats.json")
