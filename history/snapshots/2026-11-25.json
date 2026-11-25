@@ -1,29 +1,31 @@
 {
-  "updated": "2026-11-25T07:04:25+00:00",
+  "updated": "2026-11-25T19:50:44+00:00",
   "profile": {
     "username": "lilimagana16",
     "name": "Lili Magaña",
     "bio": "Austin, texas 🇺🇸🇸🇻\n•Lifestyle •Travel • Spanglish\n📧: lilimagana19@gmail.com",
-    "followers": 5491,
-    "following": 2223,
+    "followers": 5503,
+    "following": 2226,
     "posts": 272
   },
   "headline": {
-    "followers": 5491,
-    "avg_reel_views": 1814,
-    "engagement_rate_pct": 1.83,
-    "posts_per_month": 32.0
+    "followers": 5503,
+    "avg_reel_views": 1823,
+    "engagement_rate_pct": 1.85,
+    "posts_per_month": 32.0,
+    "avg_reel_watch_s": 5.2
   },
   "last_30_days": {
-    "views": 245292,
-    "reach": 68292,
-    "accounts_engaged": 3140,
-    "total_interactions": 7304,
-    "likes": 5156,
+    "views": 247322,
+    "reach": 68769,
+    "accounts_engaged": 3164,
+    "total_interactions": 7346,
+    "likes": 5194,
     "comments": 336,
     "shares": 593,
-    "saves": 450,
-    "profile_views": 6255
+    "saves": 455,
+    "profile_views": 6366,
+    "profile_links_taps": 0
   },
   "audience": {
     "engaged_by_country": [
@@ -479,8 +481,680 @@
         "count": 2,
         "share": 0.0
       }
+    ],
+    "followers_by_age": [
+      {
+        "age": "25-34",
+        "count": 2919,
+        "share": 55.4
+      },
+      {
+        "age": "35-44",
+        "count": 1371,
+        "share": 26.0
+      },
+      {
+        "age": "45-54",
+        "count": 477,
+        "share": 9.1
+      },
+      {
+        "age": "18-24",
+        "count": 299,
+        "share": 5.7
+      },
+      {
+        "age": "55-64",
+        "count": 133,
+        "share": 2.5
+      },
+      {
+        "age": "65+",
+        "count": 62,
+        "share": 1.2
+      },
+      {
+        "age": "13-17",
+        "count": 9,
+        "share": 0.2
+      }
+    ],
+    "followers_by_gender": [
+      {
+        "gender": "M",
+        "count": 3129,
+        "share": 59.4
+      },
+      {
+        "gender": "F",
+        "count": 1351,
+        "share": 25.6
+      },
+      {
+        "gender": "U",
+        "count": 790,
+        "share": 15.0
+      }
+    ],
+    "followers_by_city": [
+      {
+        "city": "San Salvador, San Salvador Department",
+        "count": 903,
+        "share": 34.0
+      },
+      {
+        "city": "Santa Tecla, La Libertad Department",
+        "count": 336,
+        "share": 12.6
+      },
+      {
+        "city": "Antiguo Cuscatlán, La Libertad Department",
+        "count": 159,
+        "share": 6.0
+      },
+      {
+        "city": "Mejicanos, San Salvador Department",
+        "count": 129,
+        "share": 4.9
+      },
+      {
+        "city": "New York, New York",
+        "count": 80,
+        "share": 3.0
+      },
+      {
+        "city": "San Juan, San Juan",
+        "count": 63,
+        "share": 2.4
+      },
+      {
+        "city": "Austin, Texas",
+        "count": 62,
+        "share": 2.3
+      },
+      {
+        "city": "Soyapango, San Salvador Department",
+        "count": 50,
+        "share": 1.9
+      },
+      {
+        "city": "Los Angeles, California",
+        "count": 50,
+        "share": 1.9
+      },
+      {
+        "city": "Colón, La Libertad Department",
+        "count": 46,
+        "share": 1.7
+      },
+      {
+        "city": "Santa Ana, Santa Ana Department",
+        "count": 45,
+        "share": 1.7
+      },
+      {
+        "city": "Apopa, San Salvador Department",
+        "count": 43,
+        "share": 1.6
+      },
+      {
+        "city": "Washington D.C., Washington, District of Columbia",
+        "count": 42,
+        "share": 1.6
+      },
+      {
+        "city": "San Miguel, San Miguel Department",
+        "count": 42,
+        "share": 1.6
+      },
+      {
+        "city": "Houston, Texas",
+        "count": 37,
+        "share": 1.4
+      },
+      {
+        "city": "Opico, La Libertad Department",
+        "count": 37,
+        "share": 1.4
+      },
+      {
+        "city": "Chicago, Illinois",
+        "count": 31,
+        "share": 1.2
+      },
+      {
+        "city": "Delgado, San Salvador Department",
+        "count": 29,
+        "share": 1.1
+      },
+      {
+        "city": "Bayamon, Bayamón",
+        "count": 28,
+        "share": 1.1
+      },
+      {
+        "city": "San José Villanueva, La Libertad Department",
+        "count": 28,
+        "share": 1.1
+      },
+      {
+        "city": "Nuevo Cuscatlán, La Libertad Department",
+        "count": 26,
+        "share": 1.0
+      },
+      {
+        "city": "Zaragoza, La Libertad Department",
+        "count": 26,
+        "share": 1.0
+      },
+      {
+        "city": "Dallas, Texas",
+        "count": 24,
+        "share": 0.9
+      },
+      {
+        "city": "Guatemala City, Guatemala Department",
+        "count": 24,
+        "share": 0.9
+      },
+      {
+        "city": "Arlington, Virginia",
+        "count": 23,
+        "share": 0.9
+      },
+      {
+        "city": "Madrid, Comunidad de Madrid",
+        "count": 22,
+        "share": 0.8
+      },
+      {
+        "city": "Ilopango, San Salvador Department",
+        "count": 21,
+        "share": 0.8
+      },
+      {
+        "city": "San Antonio, Texas",
+        "count": 21,
+        "share": 0.8
+      },
+      {
+        "city": "San Marcos, San Salvador Department",
+        "count": 21,
+        "share": 0.8
+      },
+      {
+        "city": "Panama City, Panamá Province",
+        "count": 19,
+        "share": 0.7
+      },
+      {
+        "city": "Philadelphia, Pennsylvania",
+        "count": 18,
+        "share": 0.7
+      },
+      {
+        "city": "Escalón, San Salvador Department",
+        "count": 17,
+        "share": 0.6
+      },
+      {
+        "city": "Ponce, Ponce",
+        "count": 17,
+        "share": 0.6
+      },
+      {
+        "city": "Carolina, Carolina",
+        "count": 16,
+        "share": 0.6
+      },
+      {
+        "city": "Ahuachapán, Ahuachapán Department",
+        "count": 13,
+        "share": 0.5
+      },
+      {
+        "city": "Mexico City, Distrito Federal",
+        "count": 13,
+        "share": 0.5
+      },
+      {
+        "city": "Tegucigalpa, Francisco Morazán Department",
+        "count": 13,
+        "share": 0.5
+      },
+      {
+        "city": "Miami, Florida",
+        "count": 13,
+        "share": 0.5
+      },
+      {
+        "city": "Caguas, Caguas",
+        "count": 12,
+        "share": 0.5
+      },
+      {
+        "city": "Usulután, Usulután Department",
+        "count": 11,
+        "share": 0.4
+      },
+      {
+        "city": "Santo Domingo de los Colorados, Santo Domingo de los Tsáchilas Province",
+        "count": 10,
+        "share": 0.4
+      },
+      {
+        "city": "Finca El Espino, La Libertad Department",
+        "count": 10,
+        "share": 0.4
+      },
+      {
+        "city": "Trujillo Alto, Trujillo Alto",
+        "count": 9,
+        "share": 0.3
+      },
+      {
+        "city": "Sonsonate, Sonsonate Department",
+        "count": 9,
+        "share": 0.3
+      },
+      {
+        "city": "Vallejo, California",
+        "count": 9,
+        "share": 0.3
+      }
+    ],
+    "engaged_by_age": [
+      {
+        "age": "25-34",
+        "count": 1965,
+        "share": 44.0
+      },
+      {
+        "age": "35-44",
+        "count": 1033,
+        "share": 23.1
+      },
+      {
+        "age": "18-24",
+        "count": 739,
+        "share": 16.5
+      },
+      {
+        "age": "45-54",
+        "count": 415,
+        "share": 9.3
+      },
+      {
+        "age": "55-64",
+        "count": 143,
+        "share": 3.2
+      },
+      {
+        "age": "13-17",
+        "count": 107,
+        "share": 2.4
+      },
+      {
+        "age": "65+",
+        "count": 67,
+        "share": 1.5
+      }
+    ],
+    "engaged_by_gender": [
+      {
+        "gender": "M",
+        "count": 2125,
+        "share": 47.5
+      },
+      {
+        "gender": "F",
+        "count": 1631,
+        "share": 36.5
+      },
+      {
+        "gender": "U",
+        "count": 713,
+        "share": 16.0
+      }
+    ],
+    "engaged_by_city": [
+      {
+        "city": "Austin, Texas",
+        "count": 190,
+        "share": 14.9
+      },
+      {
+        "city": "San Salvador, San Salvador Department",
+        "count": 152,
+        "share": 11.9
+      },
+      {
+        "city": "New York, New York",
+        "count": 83,
+        "share": 6.5
+      },
+      {
+        "city": "Santa Tecla, La Libertad Department",
+        "count": 72,
+        "share": 5.6
+      },
+      {
+        "city": "Houston, Texas",
+        "count": 56,
+        "share": 4.4
+      },
+      {
+        "city": "Los Angeles, California",
+        "count": 53,
+        "share": 4.2
+      },
+      {
+        "city": "Washington D.C., Washington, District of Columbia",
+        "count": 53,
+        "share": 4.2
+      },
+      {
+        "city": "San Juan, San Juan",
+        "count": 45,
+        "share": 3.5
+      },
+      {
+        "city": "Mejicanos, San Salvador Department",
+        "count": 35,
+        "share": 2.7
+      },
+      {
+        "city": "Mexico City, Distrito Federal",
+        "count": 33,
+        "share": 2.6
+      },
+      {
+        "city": "Dallas, Texas",
+        "count": 31,
+        "share": 2.4
+      },
+      {
+        "city": "San Antonio, Texas",
+        "count": 31,
+        "share": 2.4
+      },
+      {
+        "city": "Chicago, Illinois",
+        "count": 30,
+        "share": 2.4
+      },
+      {
+        "city": "Antiguo Cuscatlán, La Libertad Department",
+        "count": 30,
+        "share": 2.4
+      },
+      {
+        "city": "Bayamon, Bayamón",
+        "count": 24,
+        "share": 1.9
+      },
+      {
+        "city": "Carolina, Carolina",
+        "count": 21,
+        "share": 1.6
+      },
+      {
+        "city": "Philadelphia, Pennsylvania",
+        "count": 20,
+        "share": 1.6
+      },
+      {
+        "city": "Phoenix, Arizona",
+        "count": 18,
+        "share": 1.4
+      },
+      {
+        "city": "Caguas, Caguas",
+        "count": 15,
+        "share": 1.2
+      },
+      {
+        "city": "Santiago, Santiago Metropolitan Region",
+        "count": 15,
+        "share": 1.2
+      },
+      {
+        "city": "Miami, Florida",
+        "count": 15,
+        "share": 1.2
+      },
+      {
+        "city": "Leander, Texas",
+        "count": 13,
+        "share": 1.0
+      },
+      {
+        "city": "Baltimore, Maryland",
+        "count": 13,
+        "share": 1.0
+      },
+      {
+        "city": "Arlington, Virginia",
+        "count": 13,
+        "share": 1.0
+      },
+      {
+        "city": "Ponce, Ponce",
+        "count": 13,
+        "share": 1.0
+      },
+      {
+        "city": "El Paso, Texas",
+        "count": 12,
+        "share": 0.9
+      },
+      {
+        "city": "Yasuj, Kohgiluyeh and Boyer-Ahmad Province",
+        "count": 12,
+        "share": 0.9
+      },
+      {
+        "city": "Orocovis, Orocovis",
+        "count": 12,
+        "share": 0.9
+      },
+      {
+        "city": "Milwaukee, Wisconsin",
+        "count": 11,
+        "share": 0.9
+      },
+      {
+        "city": "Del Valle, Texas",
+        "count": 11,
+        "share": 0.9
+      },
+      {
+        "city": "Lima, Lima Region",
+        "count": 11,
+        "share": 0.9
+      },
+      {
+        "city": "Denver, Colorado",
+        "count": 11,
+        "share": 0.9
+      },
+      {
+        "city": "Guaynabo, Guaynabo",
+        "count": 11,
+        "share": 0.9
+      },
+      {
+        "city": "Toronto, Ontario",
+        "count": 10,
+        "share": 0.8
+      },
+      {
+        "city": "Charlotte, North Carolina",
+        "count": 10,
+        "share": 0.8
+      },
+      {
+        "city": "San Diego, California",
+        "count": 10,
+        "share": 0.8
+      },
+      {
+        "city": "Alexandria, Virginia",
+        "count": 9,
+        "share": 0.7
+      },
+      {
+        "city": "Apopa, San Salvador Department",
+        "count": 9,
+        "share": 0.7
+      },
+      {
+        "city": "Memphis, Tennessee",
+        "count": 9,
+        "share": 0.7
+      },
+      {
+        "city": "Odessa, Texas",
+        "count": 9,
+        "share": 0.7
+      },
+      {
+        "city": "Aldine, Texas",
+        "count": 9,
+        "share": 0.7
+      },
+      {
+        "city": "Indianapolis, Indiana",
+        "count": 9,
+        "share": 0.7
+      },
+      {
+        "city": "Round Rock, Texas",
+        "count": 9,
+        "share": 0.7
+      },
+      {
+        "city": "Nuevo Cuscatlán, La Libertad Department",
+        "count": 9,
+        "share": 0.7
+      },
+      {
+        "city": "Sacramento, California",
+        "count": 9,
+        "share": 0.7
+      }
     ]
   },
+  "campaigns": [
+    {
+      "id": "18075678866218259",
+      "brand": "Acqua Bistecca",
+      "category": "food",
+      "en": "Restaurant launch",
+      "es": "Lanzamiento de restaurante",
+      "posted": "2025-12-16T03:19:07+0000",
+      "permalink": "https://www.instagram.com/reel/DSTxMCvDQcW/",
+      "thumb": "thumbs/18075678866218259.jpg",
+      "views": 28172,
+      "reach": 18163,
+      "likes": 584,
+      "comments": 18,
+      "saves": 633,
+      "shares": 1082,
+      "interactions": 2334,
+      "avg_watch_s": 9.0
+    },
+    {
+      "id": "18121875160887469",
+      "brand": "Victoria's Secret",
+      "category": "events",
+      "en": "Fashion show coverage",
+      "es": "Cobertura del desfile",
+      "posted": "2026-10-19T02:29:21+0000",
+      "permalink": "https://www.instagram.com/reel/DeqL5YbNz5f/",
+      "thumb": "thumbs/18121875160887469.jpg",
+      "views": 17487,
+      "reach": 14177,
+      "likes": 512,
+      "comments": 10,
+      "saves": 16,
+      "shares": 93,
+      "interactions": 662,
+      "avg_watch_s": 6.9
+    },
+    {
+      "id": "17983039247809383",
+      "brand": "Skyscanner",
+      "category": "travel",
+      "en": "Travel storytelling",
+      "es": "Historia de viaje",
+      "posted": "2026-03-19T02:20:17+0000",
+      "permalink": "https://www.instagram.com/reel/DWDINFQjW3D/",
+      "thumb": "thumbs/17983039247809383.jpg",
+      "views": 7571,
+      "reach": 4090,
+      "likes": 228,
+      "comments": 26,
+      "saves": 32,
+      "shares": 12,
+      "interactions": 306,
+      "avg_watch_s": 8.6
+    },
+    {
+      "id": "18087359048164225",
+      "brand": "Toastique",
+      "category": "food",
+      "en": "Spring menu",
+      "es": "Menú de primavera",
+      "posted": "2026-03-05T14:00:14+0000",
+      "permalink": "https://www.instagram.com/reel/DVgVxCVDcPT/",
+      "thumb": "thumbs/18087359048164225.jpg",
+      "views": 3658,
+      "reach": 2450,
+      "likes": 87,
+      "comments": 9,
+      "saves": 6,
+      "shares": 8,
+      "interactions": 115,
+      "avg_watch_s": 6.4
+    },
+    {
+      "id": "17916653913406307",
+      "brand": "Morphe",
+      "category": "beauty",
+      "en": "Lip combo reel",
+      "es": "Reel de combinación de labios",
+      "posted": "2026-07-06T23:09:31+0000",
+      "permalink": "https://www.instagram.com/reel/DaeBzoWNwHo/",
+      "thumb": "thumbs/17916653913406307.jpg",
+      "views": 3040,
+      "reach": 1941,
+      "likes": 87,
+      "comments": 12,
+      "saves": 0,
+      "shares": 5,
+      "interactions": 110,
+      "avg_watch_s": 5.8
+    },
+    {
+      "id": "18128544187711542",
+      "brand": "ZEELOOL",
+      "category": "life",
+      "en": "Eyewear reel",
+      "es": "Reel de lentes",
+      "posted": "2026-07-02T16:44:14+0000",
+      "permalink": "https://www.instagram.com/reel/DaTDHapSEOy/",
+      "thumb": "thumbs/18128544187711542.jpg",
+      "views": 2649,
+      "reach": 1535,
+      "likes": 59,
+      "comments": 20,
+      "saves": 4,
+      "shares": 8,
+      "interactions": 95,
+      "avg_watch_s": 7.6
+    }
+  ],
   "posts": [
     {
       "id": "18080841944732429",
@@ -492,13 +1166,15 @@
       "posted": "2026-11-23T22:10:48+0000",
       "thumb": "thumbs/18080841944732429.jpg",
       "refreshed": true,
-      "likes": 53,
+      "likes": 54,
       "comments": 17,
-      "views": 1824,
-      "reach": 1117,
+      "views": 1865,
+      "reach": 1152,
       "saves": 3,
       "shares": 11,
-      "interactions": 91
+      "interactions": 92,
+      "avg_watch_s": 7.9,
+      "total_watch_min": 179.9
     },
     {
       "id": "17918656446541196",
@@ -510,13 +1186,15 @@
       "posted": "2026-11-23T05:08:48+0000",
       "thumb": "thumbs/17918656446541196.jpg",
       "refreshed": true,
-      "likes": 213,
+      "likes": 226,
       "comments": 33,
-      "views": 4434,
-      "reach": 2017,
-      "saves": 3,
+      "views": 4687,
+      "reach": 2118,
+      "saves": 4,
       "shares": 14,
-      "interactions": 267
+      "interactions": 281,
+      "avg_watch_s": 0.0,
+      "total_watch_min": 0.0
     },
     {
       "id": "18135609508682366",
@@ -528,13 +1206,15 @@
       "posted": "2026-11-22T21:16:18+0000",
       "thumb": "thumbs/18135609508682366.jpg",
       "refreshed": true,
-      "likes": 214,
+      "likes": 218,
       "comments": 9,
-      "views": 4759,
-      "reach": 3795,
+      "views": 4821,
+      "reach": 3854,
       "saves": 20,
       "shares": 8,
-      "interactions": 264
+      "interactions": 268,
+      "avg_watch_s": 6.7,
+      "total_watch_min": 442.2
     },
     {
       "id": "17998419165062521",
@@ -546,13 +1226,15 @@
       "posted": "2026-11-21T18:19:11+0000",
       "thumb": "thumbs/17998419165062521.jpg",
       "refreshed": true,
-      "likes": 35,
+      "likes": 37,
       "comments": 14,
-      "views": 1067,
-      "reach": 627,
+      "views": 1087,
+      "reach": 639,
       "saves": 1,
       "shares": 7,
-      "interactions": 62
+      "interactions": 64,
+      "avg_watch_s": 6.2,
+      "total_watch_min": 70.2
     },
     {
       "id": "18115348889121777",
@@ -564,13 +1246,15 @@
       "posted": "2026-11-20T08:07:58+0000",
       "thumb": "thumbs/18115348889121777.jpg",
       "refreshed": true,
-      "likes": 65,
+      "likes": 66,
       "comments": 7,
-      "views": 3303,
-      "reach": 2591,
+      "views": 3321,
+      "reach": 2609,
       "saves": 21,
       "shares": 57,
-      "interactions": 156
+      "interactions": 157,
+      "avg_watch_s": 4.3,
+      "total_watch_min": 196.9
     },
     {
       "id": "18064354541534609",
@@ -584,11 +1268,13 @@
       "refreshed": true,
       "likes": 35,
       "comments": 19,
-      "views": 1560,
-      "reach": 873,
+      "views": 1567,
+      "reach": 879,
       "saves": 3,
       "shares": 2,
-      "interactions": 64
+      "interactions": 64,
+      "avg_watch_s": 5.7,
+      "total_watch_min": 100.5
     },
     {
       "id": "18416785858092480",
@@ -602,11 +1288,13 @@
       "refreshed": true,
       "likes": 29,
       "comments": 11,
-      "views": 1295,
-      "reach": 759,
+      "views": 1298,
+      "reach": 760,
       "saves": 0,
       "shares": 1,
-      "interactions": 46
+      "interactions": 46,
+      "avg_watch_s": 5.6,
+      "total_watch_min": 85.1
     },
     {
       "id": "18502059271107061",
@@ -620,11 +1308,13 @@
       "refreshed": true,
       "likes": 31,
       "comments": 11,
-      "views": 1382,
-      "reach": 825,
+      "views": 1383,
+      "reach": 826,
       "saves": 0,
       "shares": 0,
-      "interactions": 48
+      "interactions": 48,
+      "avg_watch_s": 5.1,
+      "total_watch_min": 84.9
     },
     {
       "id": "18158081461525635",
@@ -638,11 +1328,13 @@
       "refreshed": true,
       "likes": 21,
       "comments": 8,
-      "views": 1198,
-      "reach": 730,
+      "views": 1205,
+      "reach": 740,
       "saves": 1,
       "shares": 1,
-      "interactions": 33
+      "interactions": 33,
+      "avg_watch_s": 4.9,
+      "total_watch_min": 65.5
     },
     {
       "id": "18134447668694989",
@@ -660,7 +1352,9 @@
       "reach": 120,
       "saves": 0,
       "shares": 0,
-      "interactions": 0
+      "interactions": 0,
+      "avg_watch_s": 2.2,
+      "total_watch_min": 4.6
     },
     {
       "id": "17995370139111087",
@@ -674,11 +1368,13 @@
       "refreshed": true,
       "likes": 141,
       "comments": 7,
-      "views": 4368,
-      "reach": 3126,
+      "views": 4379,
+      "reach": 3140,
       "saves": 8,
       "shares": 11,
-      "interactions": 172
+      "interactions": 172,
+      "avg_watch_s": 6.0,
+      "total_watch_min": 307.4
     },
     {
       "id": "18118136990083707",
@@ -692,11 +1388,13 @@
       "refreshed": true,
       "likes": 94,
       "comments": 18,
-      "views": 4804,
-      "reach": 2659,
+      "views": 4815,
+      "reach": 2663,
       "saves": 1,
       "shares": 7,
-      "interactions": 122
+      "interactions": 122,
+      "avg_watch_s": 0.0,
+      "total_watch_min": 0.0
     },
     {
       "id": "17871354012659736",
@@ -714,7 +1412,9 @@
       "reach": 131,
       "saves": 1,
       "shares": 0,
-      "interactions": 2
+      "interactions": 2,
+      "avg_watch_s": 2.2,
+      "total_watch_min": 5.0
     },
     {
       "id": "18353346655280492",
@@ -732,7 +1432,9 @@
       "reach": 6,
       "saves": 0,
       "shares": 0,
-      "interactions": 0
+      "interactions": 0,
+      "avg_watch_s": 5.0,
+      "total_watch_min": 0.5
     },
     {
       "id": "18104935955035657",
@@ -746,11 +1448,13 @@
       "refreshed": true,
       "likes": 45,
       "comments": 9,
-      "views": 1797,
-      "reach": 1058,
+      "views": 1803,
+      "reach": 1064,
       "saves": 0,
       "shares": 4,
-      "interactions": 61
+      "interactions": 61,
+      "avg_watch_s": 5.2,
+      "total_watch_min": 112.2
     },
     {
       "id": "18171782536474588",
@@ -764,11 +1468,13 @@
       "refreshed": true,
       "likes": 66,
       "comments": 21,
-      "views": 2082,
-      "reach": 1162,
+      "views": 2085,
+      "reach": 1164,
       "saves": 1,
       "shares": 10,
-      "interactions": 101
+      "interactions": 101,
+      "avg_watch_s": 6.9,
+      "total_watch_min": 165.2
     },
     {
       "id": "18120366647329038",
@@ -782,11 +1488,13 @@
       "refreshed": true,
       "likes": 60,
       "comments": 32,
-      "views": 2224,
-      "reach": 1236,
+      "views": 2226,
+      "reach": 1242,
       "saves": 2,
       "shares": 2,
-      "interactions": 101
+      "interactions": 101,
+      "avg_watch_s": 7.5,
+      "total_watch_min": 191.0
     },
     {
       "id": "17963845115998098",
@@ -800,11 +1508,13 @@
       "refreshed": true,
       "likes": 243,
       "comments": 24,
-      "views": 6012,
-      "reach": 1941,
+      "views": 6016,
+      "reach": 1948,
       "saves": 1,
       "shares": 1,
-      "interactions": 270
+      "interactions": 270,
+      "avg_watch_s": 0.0,
+      "total_watch_min": 0.0
     },
     {
       "id": "17928999480429276",
@@ -818,11 +1528,13 @@
       "refreshed": true,
       "likes": 124,
       "comments": 6,
-      "views": 3602,
+      "views": 3607,
       "reach": 2424,
       "saves": 16,
       "shares": 52,
-      "interactions": 206
+      "interactions": 206,
+      "avg_watch_s": 6.3,
+      "total_watch_min": 273.3
     },
     {
       "id": "18504119233101111",
@@ -840,7 +1552,9 @@
       "reach": 105,
       "saves": 1,
       "shares": 0,
-      "interactions": 3
+      "interactions": 3,
+      "avg_watch_s": 3.6,
+      "total_watch_min": 6.3
     },
     {
       "id": "18454679713127594",
@@ -858,7 +1572,9 @@
       "reach": 2246,
       "saves": 8,
       "shares": 3,
-      "interactions": 140
+      "interactions": 140,
+      "avg_watch_s": 4.4,
+      "total_watch_min": 168.5
     },
     {
       "id": "18124418227939934",
@@ -876,7 +1592,9 @@
       "reach": 1491,
       "saves": 4,
       "shares": 6,
-      "interactions": 78
+      "interactions": 78,
+      "avg_watch_s": 4.5,
+      "total_watch_min": 114.0
     },
     {
       "id": "18031477457872563",
@@ -894,7 +1612,9 @@
       "reach": 625,
       "saves": 0,
       "shares": 1,
-      "interactions": 27
+      "interactions": 27,
+      "avg_watch_s": 3.4,
+      "total_watch_min": 36.7
     },
     {
       "id": "17973036624155685",
@@ -908,11 +1628,13 @@
       "refreshed": true,
       "likes": 70,
       "comments": 7,
-      "views": 3169,
-      "reach": 1584,
+      "views": 3173,
+      "reach": 1586,
       "saves": 4,
       "shares": 20,
-      "interactions": 103
+      "interactions": 103,
+      "avg_watch_s": 0.0,
+      "total_watch_min": 0.0
     }
   ]
 }
