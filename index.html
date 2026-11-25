@@ -14,13 +14,13 @@
    COLOUR always light: white ground, blush fields, petal pink contact band, plum ink, rose accent (same in dark mode)
    TYPE Fraunces (soft, low-contrast) display + DM Sans text
    LAYOUT soft wave edges between bands, rounded cards; content glides up into place as you scroll, slow and calm */
-:root,:root[data-theme=dark],:root[data-theme=light]{color-scheme:light;--bg:#ffffff;--ink:#3a1f2b;--mute:#7a5262;--blush:#fbe1e9;--soft:#fff5f8;--rose:#d14d78;--line:#f2cfda;--card:#ffffff;--pink:#f6bfd0;--ease:cubic-bezier(.22,.61,.36,1);--dur:.9s;--wv:clamp(36px,5.5vw,84px);--shadow:0 16px 34px -24px rgba(209,77,120,.55)}
+:root,:root[data-theme=dark],:root[data-theme=light]{color-scheme:light;--bg:#ffffff;--ink:#3a1f2b;--mute:#7a5262;--blush:#fbe1e9;--soft:#fff5f8;--rose:#d14d78;--line:#f2cfda;--card:#ffffff;--pink:#f6bfd0;--ease:cubic-bezier(.22,.61,.36,1);--dur:.9s;--stag:.13s;--wv:clamp(36px,5.5vw,84px);--shadow:0 16px 34px -24px rgba(209,77,120,.55)}
 *{box-sizing:border-box;min-width:0}
 html{scroll-behavior:smooth;scroll-padding-top:76px}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "DM Sans",system-ui,sans-serif;overflow-x:clip}
 h1,h2,h3{font-variation-settings:"opsz" 30,"SOFT" 60;font-family:"Fraunces",Georgia,serif;font-weight:560;line-height:1.05;letter-spacing:-.02em;margin:0;text-wrap:balance}
 h2{font-size:clamp(32px,4.4vw,48px)}
-h2::after{content:"";display:block;width:120px;height:12px;margin-top:12px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12'%3E%3Cpath d='M2 7c10-6 18-6 28 0s18 6 28 0 18-6 28 0 18 6 28 0' fill='none' stroke='%23d14d78' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat;transition:clip-path 1.3s var(--ease) .4s}
+h2::after{content:"";display:block;width:120px;height:12px;margin-top:12px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12'%3E%3Cpath d='M2 7c10-6 18-6 28 0s18 6 28 0 18-6 28 0 18 6 28 0' fill='none' stroke='%23d14d78' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat;transition:clip-path calc(var(--dur)*1.45) var(--ease) calc(var(--dur)*.45)}
 .js h2::after{clip-path:inset(0 100% 0 0)}
 .js .in h2::after,.js h2.in::after{clip-path:inset(0 0 0 0)}
 p{margin:0}
@@ -84,7 +84,7 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 9
 .row{display:grid;grid-template-columns:8.5em minmax(0,1fr) 3em;gap:12px;align-items:center}
 .bar{height:14px;border-radius:99px;background:var(--line);overflow:hidden}
 .bar i{display:block;height:100%;width:var(--w);background:linear-gradient(90deg,var(--pink),var(--rose));border-radius:99px}
-.js .rows .bar i{width:0;transition:width 1.3s var(--ease) calc(var(--i,0)*.13s + .3s)}
+.js .rows .bar i{width:0;transition:width calc(var(--dur)*1.45) var(--ease) calc(var(--i,0)*var(--stag) + var(--dur)*.33)}
 .js .rows.in .bar i{width:var(--w)}
 .row em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums}
 .plat{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;align-items:center}
@@ -144,7 +144,7 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
 /* scroll reveal: one at a time, slow and soft */
 .js .rv{opacity:0;transform:translateY(30px);transition:opacity var(--dur) var(--ease),transform var(--dur) var(--ease)}
 .js .rv.in{opacity:1;transform:none}
-.js .rv-kids>*{opacity:0;transform:translateY(24px);transition:opacity var(--dur) var(--ease) calc(var(--i,0)*.13s),transform var(--dur) var(--ease) calc(var(--i,0)*.13s)}
+.js .rv-kids>*{opacity:0;transform:translateY(24px);transition:opacity var(--dur) var(--ease) calc(var(--i,0)*var(--stag)),transform var(--dur) var(--ease) calc(var(--i,0)*var(--stag))}
 .js .rv-kids.in>*{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.reel,.blob{animation:none}.track{animation:none;flex-wrap:wrap;width:auto}.track [aria-hidden]{display:none}html{scroll-behavior:auto}.js .rv,.js .rv-kids>*{opacity:1;transform:none;transition:none}.js .rows .bar i{width:var(--w);transition:none}.js h2::after{clip-path:none;transition:none}.thumb,.btn{transition:none}}
 @media(max-width:820px){.links{display:none}}
@@ -252,7 +252,7 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
       <h2 data-t="cH">Let's create something together</h2>
       <p style="margin-top:16px;max-width:30em" data-t="cP">Tell me about your launch, venue or event. I'll reply with ideas and rates within two business days.</p>
       <div class="flags">
-        <p data-t="c1">Email: hello@lili-sample.com</p>
+        <p><span data-t="c1">Email:</span> <a href="mailto:Lilimagana19@gmail.com">Lilimagana19@gmail.com</a></p>
         <p><a href="https://www.instagram.com/lilimagana16/" target="_blank" rel="noopener">Instagram: @lilimagana16</a></p>
       </div>
     </div>
@@ -273,7 +273,7 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
         <b data-t="dH">Thanks! Here is your inquiry.</b>
         <pre id="sum"></pre>
         <button class="btn ghost" type="button" id="copy" data-t="dCopy">Copy text</button>
-        <p class="note" data-t="dNote">On the live site this goes straight to her inbox. In this preview nothing is sent.</p>
+        <p class="note" data-t="dNote">Your email app should open with this message to Lilimagana19@gmail.com. If it doesn't, copy the text and email it to her.</p>
       </div>
     </form>
   </div>
@@ -302,13 +302,13 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
 <script>
 {
 const T={
-en:{navWork:"Work",navRes:"Results",navAud:"Audience",resH:"Brand results",resP:"Real numbers from recent brand campaigns on Instagram.",total:" views across these campaigns",sampleRes:"Figures from her media kit until the next daily update.",ytNote:" YouTube and TikTok counts as of November 2026.",calloutLive:(top,share,rest,restShare)=>`${share}% of her engaged audience is in ${top}, and another ${restShare}% is in ${rest}, so campaigns can run in English, Spanish or both.`,likes:"likes",comments:"comments",platTot:"followers in total",platNote:"",navSvc:"Collaborations",navContact:"Contact",lede:"Beauty and live-event creator. I turn launches, race weekends, hotels and dinners into short videos people actually watch to the end.",ctaWork:"Work with me",ctaReels:"Watch the reels",f1:"Based in Austin, Texas",f2:"Creates in English and Spanish",f3:"Audience: USA and Latin America",workH:"Selected work",workP:"Beauty and events lead the way, with travel, restaurants and hospitality close behind. Tap any reel to see the details.",sampleWork:"Sample reels and view counts shown until her real videos are added.",audH:"A bilingual audience across the Americas",topC:"Top countries by engagement",callout:"Most of her engaged audience is in the USA, and nearly a quarter is in El Salvador, Puerto Rico and Mexico, so campaigns can run in English, Spanish or both.",sampleAud:"Sample figures shown; these will be replaced with her live Instagram and TikTok numbers.",svcH:"Ways to collaborate",svcP:"Every partnership is tailored. Rates are shared on request.",brandsH:"Brands and venues she has worked with",cH:"Let's create something together",cP:"Tell me about your launch, venue or event. I'll reply with ideas and rates within two business days.",c1:"Email: hello@lili-sample.com",fH:"Collaboration inquiry",fName:"Your name",fBrand:"Brand or venue",fEmail:"Email",fType:"Type of project",fDate:"Date or timeframe",fMsg:"Tell me about it",fSend:"Send inquiry",dH:"Thanks! Here is your inquiry.",dCopy:"Copy text",copied:"Copied",dNote:"On the live site this goes straight to her inbox. In this preview nothing is sent.",foot:"Beauty · Events · Travel · Food · Hospitality",dVid:"Her video will play here once it's uploaded.",need:"Please add your name and a valid email.",views:"views",logo:"Partner logo",all:"All",
+en:{navWork:"Work",navRes:"Results",navAud:"Audience",resH:"Brand results",resP:"Real numbers from recent brand campaigns on Instagram.",total:" views across these campaigns",sampleRes:"Figures from her media kit until the next daily update.",ytNote:" YouTube and TikTok counts as of November 2026.",calloutLive:(top,share,rest,restShare)=>`${share}% of her engaged audience is in ${top}, and another ${restShare}% is in ${rest}, so campaigns can run in English, Spanish or both.`,likes:"likes",comments:"comments",platTot:"followers in total",platNote:"",navSvc:"Collaborations",navContact:"Contact",lede:"Beauty and live-event creator. I turn launches, race weekends, hotels and dinners into short videos people actually watch to the end.",ctaWork:"Work with me",ctaReels:"Watch the reels",f1:"Based in Austin, Texas",f2:"Creates in English and Spanish",f3:"Audience: USA and Latin America",workH:"Selected work",workP:"Beauty and events lead the way, with travel, restaurants and hospitality close behind. Tap any reel to see the details.",sampleWork:"Sample reels and view counts shown until her real videos are added.",audH:"A bilingual audience across the Americas",topC:"Top countries by engagement",callout:"Most of her engaged audience is in the USA, and nearly a quarter is in El Salvador, Puerto Rico and Mexico, so campaigns can run in English, Spanish or both.",sampleAud:"Sample figures shown; these will be replaced with her live Instagram and TikTok numbers.",svcH:"Ways to collaborate",svcP:"Every partnership is tailored. Rates are shared on request.",brandsH:"Brands and venues she has worked with",cH:"Let's create something together",cP:"Tell me about your launch, venue or event. I'll reply with ideas and rates within two business days.",c1:"Email:",fH:"Collaboration inquiry",fName:"Your name",fBrand:"Brand or venue",fEmail:"Email",fType:"Type of project",fDate:"Date or timeframe",fMsg:"Tell me about it",fSend:"Send inquiry",dH:"Thanks! Here is your inquiry.",dCopy:"Copy text",copied:"Copied",dNote:"Your email app should open with this message to Lilimagana19@gmail.com. If it doesn't, copy the text and email it to her.",foot:"Beauty · Events · Travel · Food · Hospitality",dVid:"Her video will play here once it's uploaded.",need:"Please add your name and a valid email.",views:"views",logo:"Partner logo",all:"All",
 cats:{beauty:"Beauty",events:"Events",travel:"Travel",food:"Restaurants",hosp:"Hospitality",life:"Lifestyle"},
 stats:[["Instagram followers","and growing"],["Average views","per reel, latest 24 posts"],["Engagement rate","per post, vs followers"],["Posts per month","last 90 days"],["Views","last 30 days"],["Accounts reached","last 30 days"]],live:"Live from Instagram, updated ",watch:"Watch on Instagram",other:"Other",reel:"Reel",
 countries:["USA","El Salvador","Mexico","Guatemala","Other"],
 svc:[["Beauty reviews and tutorials","Honest first impressions, get-ready-with-me videos and before-and-after looks, filmed in natural light."],["Live event coverage","Race weekends, launches and galas captured from arrival to after-party, posted the same day."],["Hotels and restaurants","Stays and tasting menus told as a story: the room, the view, the plate, the people."],["UGC for your channels","Polished vertical video you own and can run as ads or on your own page, in English or Spanish."]],
 types:["Beauty or skincare","Event coverage","Hotel or travel","Restaurant","Content for your channels","Something else"]},
-es:{navWork:"Trabajo",navRes:"Resultados",navAud:"Audiencia",resH:"Resultados con marcas",resP:"Números reales de campañas recientes con marcas en Instagram.",total:" vistas en estas campañas",sampleRes:"Cifras de su media kit hasta la próxima actualización diaria.",ytNote:" Seguidores de YouTube y TikTok a noviembre de 2026.",calloutLive:(top,share,rest,restShare)=>`El ${share}% de su audiencia activa está en ${top} y otro ${restShare}% en ${rest}, así que cada campaña puede ir en inglés, en español o en ambos.`,likes:"me gusta",comments:"comentarios",platTot:"seguidores en total",platNote:"",navSvc:"Colaboraciones",navContact:"Contacto",lede:"Creadora de belleza y eventos en vivo. Convierto lanzamientos, fines de semana de carreras, hoteles y cenas en videos cortos que la gente ve hasta el final.",ctaWork:"Trabaja conmigo",ctaReels:"Ver los reels",f1:"Desde Austin, Texas",f2:"Crea en inglés y español",f3:"Audiencia: EE. UU. y Latinoamérica",workH:"Trabajo destacado",workP:"La belleza y los eventos van al frente, seguidos de viajes, restaurantes y hotelería. Toca cualquier reel para ver los detalles.",sampleWork:"Reels y vistas de muestra hasta que se agreguen sus videos reales.",audH:"Una audiencia bilingüe en las Américas",topC:"Países con mayor interacción",callout:"La mayor parte de su audiencia activa está en EE. UU., y casi una cuarta parte en El Salvador, Puerto Rico y México, así que cada campaña puede ir en inglés, en español o en ambos.",sampleAud:"Cifras de muestra; se reemplazarán con sus números reales de Instagram y TikTok.",svcH:"Formas de colaborar",svcP:"Cada colaboración es a la medida. Las tarifas se comparten a solicitud.",brandsH:"Marcas y lugares con los que ha trabajado",cH:"Creemos algo juntos",cP:"Cuéntame sobre tu lanzamiento, lugar o evento. Te responderé con ideas y tarifas en dos días hábiles.",c1:"Correo: hello@lili-sample.com",fH:"Solicitud de colaboración",fName:"Tu nombre",fBrand:"Marca o lugar",fEmail:"Correo",fType:"Tipo de proyecto",fDate:"Fecha o plazo",fMsg:"Cuéntame más",fSend:"Enviar solicitud",dH:"¡Gracias! Aquí está tu solicitud.",dCopy:"Copiar texto",copied:"Copiado",dNote:"En el sitio real esto llega directo a su correo. En esta vista previa no se envía nada.",foot:"Belleza · Eventos · Viajes · Comida · Hotelería",dVid:"Su video se reproducirá aquí cuando se suba.",need:"Agrega tu nombre y un correo válido.",views:"vistas",logo:"Logo de marca",all:"Todo",
+es:{navWork:"Trabajo",navRes:"Resultados",navAud:"Audiencia",resH:"Resultados con marcas",resP:"Números reales de campañas recientes con marcas en Instagram.",total:" vistas en estas campañas",sampleRes:"Cifras de su media kit hasta la próxima actualización diaria.",ytNote:" Seguidores de YouTube y TikTok a noviembre de 2026.",calloutLive:(top,share,rest,restShare)=>`El ${share}% de su audiencia activa está en ${top} y otro ${restShare}% en ${rest}, así que cada campaña puede ir en inglés, en español o en ambos.`,likes:"me gusta",comments:"comentarios",platTot:"seguidores en total",platNote:"",navSvc:"Colaboraciones",navContact:"Contacto",lede:"Creadora de belleza y eventos en vivo. Convierto lanzamientos, fines de semana de carreras, hoteles y cenas en videos cortos que la gente ve hasta el final.",ctaWork:"Trabaja conmigo",ctaReels:"Ver los reels",f1:"Desde Austin, Texas",f2:"Crea en inglés y español",f3:"Audiencia: EE. UU. y Latinoamérica",workH:"Trabajo destacado",workP:"La belleza y los eventos van al frente, seguidos de viajes, restaurantes y hotelería. Toca cualquier reel para ver los detalles.",sampleWork:"Reels y vistas de muestra hasta que se agreguen sus videos reales.",audH:"Una audiencia bilingüe en las Américas",topC:"Países con mayor interacción",callout:"La mayor parte de su audiencia activa está en EE. UU., y casi una cuarta parte en El Salvador, Puerto Rico y México, así que cada campaña puede ir en inglés, en español o en ambos.",sampleAud:"Cifras de muestra; se reemplazarán con sus números reales de Instagram y TikTok.",svcH:"Formas de colaborar",svcP:"Cada colaboración es a la medida. Las tarifas se comparten a solicitud.",brandsH:"Marcas y lugares con los que ha trabajado",cH:"Creemos algo juntos",cP:"Cuéntame sobre tu lanzamiento, lugar o evento. Te responderé con ideas y tarifas en dos días hábiles.",c1:"Correo:",fH:"Solicitud de colaboración",fName:"Tu nombre",fBrand:"Marca o lugar",fEmail:"Correo",fType:"Tipo de proyecto",fDate:"Fecha o plazo",fMsg:"Cuéntame más",fSend:"Enviar solicitud",dH:"¡Gracias! Aquí está tu solicitud.",dCopy:"Copiar texto",copied:"Copiado",dNote:"Tu app de correo debería abrirse con este mensaje para Lilimagana19@gmail.com. Si no, copia el texto y envíaselo.",foot:"Belleza · Eventos · Viajes · Comida · Hotelería",dVid:"Su video se reproducirá aquí cuando se suba.",need:"Agrega tu nombre y un correo válido.",views:"vistas",logo:"Logo de marca",all:"Todo",
 cats:{beauty:"Belleza",events:"Eventos",travel:"Viajes",food:"Restaurantes",hosp:"Hotelería",life:"Estilo de vida"},
 stats:[["Seguidores en Instagram","y creciendo"],["Vistas promedio","por reel, últimas 24 publicaciones"],["Tasa de interacción","por publicación, vs seguidores"],["Publicaciones al mes","últimos 90 días"],["Vistas","últimos 30 días"],["Cuentas alcanzadas","últimos 30 días"]],live:"En vivo desde Instagram, actualizado ",watch:"Ver en Instagram",other:"Otros",reel:"Reel",
 countries:["EE. UU.","El Salvador","México","Guatemala","Otros"],
@@ -359,9 +359,22 @@ const $=id=>document.getElementById(id);
 const order=["all","beauty","events","travel","food","hosp","life"];
 const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
 function hero(){
-  const r=[["travel",-14,70,40],["beauty",0,155,10],["events",14,240,40]];
+  /* Three phones: her pinned posts from stats.json (newest posts if none are pinned), drawn art until data loads.
+     Spot order left, centre, right = pinned 1, 2, 3; the centre phone is drawn last so it sits in front. */
+  const live=LIVE&&Array.isArray(LIVE.pinned)?LIVE.pinned.filter(p=>p&&p.thumb):[];
+  const spots=[[-12,30,58,"travel"],[0,135,22,"beauty"],[12,240,58,"events"]];
+  const phone=(i)=>{const [rot,x,y,c]=spots[i],pic=live[i];
+    const screen=pic?`<image href="${esc(pic.thumb)}" x="7" y="7" width="136" height="296" preserveAspectRatio="xMidYMid slice" clip-path="url(#hc${i})"/>`
+      :`<svg x="7" y="7" width="136" height="296" viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice"><g clip-path="url(#hcs${i})">${motif(c)}</g></svg>`;
+    return `<g class="reel"><g transform="translate(${x} ${y}) rotate(${rot} 75 155)">
+      <rect x="9" y="16" width="150" height="310" rx="28" fill="#d14d78" opacity=".2"/>
+      <rect x="150" y="84" width="3" height="40" rx="1.5" fill="#e7b9c8"/><rect x="-3" y="70" width="3" height="24" rx="1.5" fill="#e7b9c8"/><rect x="-3" y="102" width="3" height="40" rx="1.5" fill="#e7b9c8"/>
+      <rect width="150" height="310" rx="28" fill="#fff" stroke="#f2cfda" stroke-width="1.5"/>
+      <clipPath id="hc${i}"><rect x="7" y="7" width="136" height="296" rx="22"/></clipPath><clipPath id="hcs${i}"><rect width="90" height="160" rx="12"/></clipPath>
+      <rect x="7" y="7" width="136" height="296" rx="22" fill="#fbe1e9"/>${screen}
+      <rect x="55" y="15" width="40" height="11" rx="5.5" fill="#1d1016"/></g></g>`;};
   const blobs=`<path class="blob" d="M214 22C312 16 404 88 402 190C400 300 318 380 214 378C108 376 22 306 18 206C14 104 118 28 214 22Z" fill="#f6bfd0" opacity=".55"/><path class="blob b2" d="M226 64C300 70 360 120 354 204C348 286 284 340 206 334C130 328 70 270 76 190C82 112 150 58 226 64Z" fill="#ffffff" opacity=".45"/>`;
-  $("heroSvg").innerHTML=blobs+r.map(([c,rot,x,y],i)=>`<g class="reel"><g transform="translate(${x} ${y}) rotate(${rot} 55 170)"><rect x="8" y="14" width="110" height="340" rx="22" fill="#d14d78" opacity=".22"/><rect width="110" height="340" rx="22" fill="#fff"/><svg x="6" y="6" width="98" height="328" viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice"><clipPath id="hc${i}"><rect width="90" height="160" rx="10"/></clipPath><g clip-path="url(#hc${i})">${motif(c)}</g></svg><rect x="40" y="14" width="30" height="5" rx="2.5" fill="#fff"/></g></g>`).join("");
+  $("heroSvg").innerHTML=blobs+[0,2,1].map(phone).join("");
 }
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
 const fmt=n=>{try{return new Intl.NumberFormat(lang==="es"?"es":"en",{notation:"compact",maximumFractionDigits:1}).format(+n||0)}catch(e){return String(n)}};
@@ -418,27 +431,43 @@ function render(){
   watch();
 }
 /* Scroll reveal. Items that come into view together are queued and shown one after another,
-   GAP ms apart, so nothing fires all at once, even at the bottom of the page. */
-const GAP=180,queue=[];let busy=false,counted=false;
+   so nothing fires all at once. The pace follows the visitor's scroll speed: reading slowly gets the
+   full 0.9s glide; scrolling fast shortens it (down to about a third) so content keeps up with them.
+   Anything they've already scrolled past is shown instantly. */
+const GAP=180,BASE=.9,STAG=.13,queue=[];let busy=false,counted=false;
+let vel=0,lastY=scrollY,lastT=performance.now();
+addEventListener("scroll",()=>{const t=performance.now(),dt=Math.max(16,t-lastT),v=Math.abs(scrollY-lastY)/dt;
+  vel=vel*.5+v*.5;lastY=scrollY;lastT=t;},{passive:true});
+function pace(){ /* 1 = normal, smaller = faster. Speed in px per ms: reading ~0.3-0.6, flicking 2+ */
+  const idle=performance.now()-lastT,v=idle>300?vel*Math.max(0,1-(idle-300)/600):vel;
+  return Math.max(.33,Math.min(1,1.2-v*.33));
+}
 function countUp(){
   if(counted||RM)return;counted=true;
   document.querySelectorAll("#stats b").forEach((b,k)=>{
     const fin=b.textContent,m=fin.match(/^([\d.,]+)(.*)$/);if(!m)return;
     const raw=m[1],sep=raw.includes(",")?",":".",dec=(raw.split(/[.,]/)[1]||"").length,n=parseFloat(raw.replace(",","."));
     if(!isFinite(n))return;
-    const dur=1600,start=performance.now()+k*130;
+    const p=+(document.getElementById("stats").dataset.p||1),dur=1600*p,start=performance.now()+k*130*p;
+    if(dur<50)return; /* revealed instantly (scrolled past): just show the final number */
     const tick=now=>{if(!b.isConnected)return;const p=Math.min(1,Math.max(0,(now-start)/dur)),e=1-Math.pow(1-p,3);
       b.textContent=p>=1?fin:(n*e).toFixed(dec).replace(".",sep)+m[2];if(p<1)requestAnimationFrame(tick);};
     b.textContent=(0).toFixed(dec).replace(".",sep)+m[2];requestAnimationFrame(tick);
   });
 }
+function show(el,p){
+  el.style.setProperty("--dur",(BASE*p).toFixed(2)+"s");el.style.setProperty("--stag",(STAG*p).toFixed(3)+"s");
+  el.dataset.p=p;el.classList.add("in");if(el.id==="stats")countUp();
+}
 function pump(){
   if(busy)return;const el=queue.shift();if(!el)return;
-  el.classList.add("in");if(el.id==="stats")countUp();
-  busy=true;setTimeout(()=>{busy=false;pump();},GAP);
+  if(el.getBoundingClientRect().bottom<0){show(el,0);pump();return;} /* already scrolled past: no animation */
+  const p=+el.dataset.q||1;show(el,p);
+  busy=true;setTimeout(()=>{busy=false;pump();},GAP*p);
 }
 function enqueue(list){
-  list.forEach(el=>{if(!el.classList.contains("in")&&!queue.includes(el))queue.push(el);});
+  const p=pace(); /* everything that arrives together shares the pace of the scroll that brought it in */
+  list.forEach(el=>{if(!el.classList.contains("in")&&!queue.includes(el)){el.dataset.q=p;queue.push(el);}});
   queue.sort((a,b)=>a.compareDocumentPosition(b)&4?-1:1);pump();
 }
 const io="IntersectionObserver" in window?new IntersectionObserver(es=>{
@@ -491,13 +520,15 @@ $("form").addEventListener("submit",e=>{
   const lines=[t.fName+": "+n,t.fBrand+": "+($("fb").value.trim()||"-"),t.fEmail+": "+em,t.fType+": "+$("ft").value,t.fDate+": "+($("fd").value.trim()||"-"),"",$("fm").value.trim()];
   $("sum").textContent=lines.join("\n");
   $("done").classList.add("on");
+  const subj=(t.fH+" — "+($("fb").value.trim()||n)).slice(0,120);
+  try{location.href="mailto:Lilimagana19@gmail.com?subject="+encodeURIComponent(subj)+"&body="+encodeURIComponent(lines.join("\n"));}catch(err){}
 });
 $("copy").addEventListener("click",async()=>{try{await navigator.clipboard.writeText($("sum").textContent);$("copy").textContent=T[lang].copied;}catch(err){}});
 hero();render();
 const getJSON=u=>fetch(u,{cache:"no-store"}).then(r=>r.ok?r.json():null).catch(()=>null);
 Promise.all([getJSON("stats.json"),getJSON("categories.json")]).then(([st,cm])=>{
   if(cm&&typeof cm==="object")CATMAP=cm;
-  if(st&&st.profile){LIVE=st;render();}
+  if(st&&st.profile){LIVE=st;render();hero();}
 });
 }
 </script>

@@ -14,6 +14,7 @@ Where the secrets come from:
 Reads (optional):
   campaigns.json    - brand campaigns for the "Brand results" section: post ID + brand + label
   hidden.json       - post IDs to keep off the website, e.g. a trial reel that slipped through
+  pinned.json       - links to her 3 pinned posts, shown in the phones at the top of the site
 
 Output:
   stats.json        - everything the website needs
@@ -40,6 +41,7 @@ THUMB_DIR = Path("thumbs")
 HISTORY_DIR = Path("history")  # dated copies kept forever, for the future Statistics tab
 CAMPAIGNS_FILE = Path("campaigns.json")  # brand campaigns shown on the site; edit this file to add or remove one
 HIDDEN_FILE = Path("hidden.json")        # optional: list of post IDs to keep off the website (still kept in history)
+PINNED_FILE = Path("pinned.json")        # optional: her pinned posts (links or IDs) for the phones at the top of the site
 
 
 # ---------- secrets ----------
@@ -84,7 +86,24 @@ def load_hidden():
         return set()
 
 
+def load_pinned():
+    """Read pinned.json: a list of post links (https://www.instagram.com/reel/ABC123/) or post IDs, in order.
+    Instagram's API doesn't say which posts are pinned, so they're listed by hand."""
+    try:
+        rows = json.loads(PINNED_FILE.read_text(encoding="utf-8")) if PINNED_FILE.exists() else []
+    except Exception as e:
+        print(f"  ! pinned.json could not be read ({e}); using her newest posts instead")
+        return []
+    keys = []
+    for r in rows:
+        r = str(r).strip()
+        parts = [x for x in r.split("?")[0].split("/") if x]
+        keys.append(parts[-1] if "instagram.com" in r and parts else r)  # link -> its shortcode, ID stays as is
+    return keys[:3]
+
+
 CAMPAIGNS = load_campaigns()
+PINNED = load_pinned()
 HIDDEN = load_hidden()
 CAMPAIGN_IDS = {str(c["id"]) for c in CAMPAIGNS}
 
@@ -245,7 +264,8 @@ all_posts = []
 for i, m in enumerate(all_media):
     posted = m.get("timestamp")
     posted_dt = datetime.fromisoformat(posted.replace("+0000", "+00:00")) if posted else None
-    is_campaign = m["id"] in CAMPAIGN_IDS
+    shortcode = [x for x in (m.get("permalink") or "").split("/") if x][-1:] or [""]
+    is_campaign = m["id"] in CAMPAIGN_IDS or m["id"] in PINNED or shortcode[0] in PINNED  # pinned posts get the same daily care
     shown = m["id"] in show_ids
     refresh = full_refresh or shown or is_campaign or (posted_dt and posted_dt >= recent_cutoff)
     stats = {}
@@ -282,6 +302,7 @@ for i, m in enumerate(all_media):
         "thumb": thumb_file,
         "refreshed": bool(refresh),
         "on_profile": on_profile(m),
+        "shortcode": shortcode[0],
         "shared_to_feed": m.get("is_shared_to_feed"),
         "likes": m.get("like_count", 0),
         "comments": m.get("comments_count", 0),
@@ -317,13 +338,25 @@ for c in CAMPAIGNS:
 campaigns.sort(key=lambda r: r["views"], reverse=True)
 print(f"  {len(campaigns)} of {len(CAMPAIGNS)} campaigns found")
 
+# ---------- 4c. the three phones at the top of the site: her pinned posts (or newest, if pinned.json is empty) ----------
+pinned = []
+for key in PINNED:
+    p = by_id.get(key) or next((q for q in all_posts if q["shortcode"] == key), None)
+    if p:
+        pinned.append(p)
+    else:
+        print(f"  ! pinned post {key} not found on her account")
+pinned += [p for p in posts if p["thumb"] and p not in pinned][:3 - len(pinned)]  # fill any gap with her newest posts
+pinned_out = [{k: p[k] for k in ("id", "permalink", "thumb", "title", "type")} for p in pinned]
+print(f"  phones at the top: {len(pinned_out)} " + ("pinned posts" if PINNED else "newest posts (pinned.json is empty)"))
+
 # remove cover images for posts that dropped off the website
-keep = {p["thumb"] for p in posts + campaigns if p["thumb"]}
+keep = {p["thumb"] for p in posts + campaigns + pinned if p["thumb"]}
 for f in THUMB_DIR.glob("*.jpg"):
     if f"thumbs/{f.name}" not in keep:
         f.unlink()
 
-# ---------- 4c. posts where other accounts (often brands) tagged her ----------
+# ---------- 4d. posts where other accounts (often brands) tagged her ----------
 print("Pulling posts she's tagged in...")
 tagged = (call(f"{IG_ID}/tags", fields="id,username,caption,permalink,timestamp,media_type,like_count,comments_count", limit=50) or {}).get("data", [])
 print(f"  {len(tagged)} tagged posts" if tagged else "  none returned (this needs the instagram_manage_comments permission; see meta-api-setup.md)")
@@ -366,6 +399,7 @@ stats_out = {
         **demo,
     },
     "campaigns": campaigns,
+    "pinned": pinned_out,
     "posts": posts,
 }
 
