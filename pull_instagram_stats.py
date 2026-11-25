@@ -26,7 +26,9 @@ from pathlib import Path
 import requests
 
 GRAPH = "https://graph.facebook.com"
-RECENT_POSTS = 24  # how many recent posts to pull for the video wall
+DISPLAY_POSTS = 24   # newest posts shown on the website's video wall
+RECENT_DAYS = 90     # posts newer than this get fresh stats every day
+FULL_REFRESH_DAY = 6 # Sunday: refresh stats for every post she has ever made (0 = Monday)
 OUT_FILE = Path("stats.json")
 THUMB_DIR = Path("thumbs")
 HISTORY_DIR = Path("history")  # dated copies kept forever, for the future Statistics tab
@@ -137,23 +139,45 @@ engaged_by_country = country_breakdown(call(
     breakdown="country",
 ))
 
-# ---------- 4. recent posts + per-post stats ----------
-print(f"Pulling last {RECENT_POSTS} posts...")
-media = call(
-    f"{IG_ID}/media",
-    fields="id,caption,media_type,media_product_type,permalink,thumbnail_url,media_url,timestamp,like_count,comments_count",
-    limit=RECENT_POSTS,
-) or {"data": []}
+# ---------- 4. every post, plus per-post stats ----------
+print("Pulling her full post list...")
+all_media, after = [], None
+while True:
+    page = call(
+        f"{IG_ID}/media",
+        fields="id,caption,media_type,media_product_type,permalink,thumbnail_url,media_url,timestamp,like_count,comments_count",
+        limit=100,
+        **({"after": after} if after else {}),
+    )
+    if not page:
+        break
+    all_media += page.get("data", [])
+    after = (page.get("paging") or {}).get("cursors", {}).get("after")
+    if not (page.get("paging") or {}).get("next") or not after:
+        break
+print(f"  found {len(all_media)} posts")
+
+# old posts barely change, so: newest posts every day, everything once a week (and on the very first run)
+first_run = not (HISTORY_DIR / "daily_posts.csv").exists()
+full_refresh = first_run or datetime.now(timezone(timedelta(hours=-6))).weekday() == FULL_REFRESH_DAY
+recent_cutoff = now - timedelta(days=RECENT_DAYS)
+print("  refreshing stats for " + ("every post (weekly full refresh)" if full_refresh else f"posts from the last {RECENT_DAYS} days"))
 
 THUMB_DIR.mkdir(exist_ok=True)
-posts = []
-for m in media.get("data", []):
-    stats = total_value(call(f"{m['id']}/insights", metric="views,reach,saved,shares,total_interactions"))
+all_posts = []
+for i, m in enumerate(all_media):
+    posted = m.get("timestamp")
+    posted_dt = datetime.fromisoformat(posted.replace("+0000", "+00:00")) if posted else None
+    refresh = full_refresh or i < DISPLAY_POSTS or (posted_dt and posted_dt >= recent_cutoff)
+    stats = {}
+    if refresh:
+        stats = total_value(call(f"{m['id']}/insights", metric="views,reach,saved,shares,total_interactions"))
+        time.sleep(0.2)  # stay well under Instagram's rate limits
 
-    # save a copy of the cover image, since Instagram's image links expire after a few days
-    thumb_url = m.get("thumbnail_url") or m.get("media_url")
+    # cover images only for the posts shown on the site (Instagram's image links expire after a few days)
     thumb_file = None
-    if thumb_url and (m.get("thumbnail_url") or m.get("media_type") != "VIDEO"):
+    thumb_url = m.get("thumbnail_url") or m.get("media_url")
+    if i < DISPLAY_POSTS and thumb_url and (m.get("thumbnail_url") or m.get("media_type") != "VIDEO"):
         try:
             img = requests.get(thumb_url, timeout=30)
             if img.ok:
@@ -163,14 +187,16 @@ for m in media.get("data", []):
             pass
 
     caption = (m.get("caption") or "").strip()
-    posts.append({
+    all_posts.append({
         "id": m["id"],
         "type": m.get("media_product_type") or m.get("media_type"),  # REELS, FEED, ...
+        "media_type": m.get("media_type"),                            # VIDEO, IMAGE, CAROUSEL_ALBUM
         "title": caption.split("\n")[0][:90],  # first line of the caption
         "caption": caption,
         "permalink": m.get("permalink"),
-        "posted": m.get("timestamp"),
+        "posted": posted,
         "thumb": thumb_file,
+        "refreshed": bool(refresh),
         "likes": m.get("like_count", 0),
         "comments": m.get("comments_count", 0),
         "views": stats.get("views", 0),
@@ -180,7 +206,9 @@ for m in media.get("data", []):
         "interactions": stats.get("total_interactions", 0),
     })
 
-# remove cover images for posts that are no longer in the latest batch
+posts = all_posts[:DISPLAY_POSTS]  # what the website shows
+
+# remove cover images for posts that dropped off the website
 keep = {p["thumb"] for p in posts if p["thumb"]}
 for f in THUMB_DIR.glob("*.jpg"):
     if f"thumbs/{f.name}" not in keep:
@@ -193,12 +221,10 @@ avg_reel_views = round(sum(p["views"] for p in reels) / len(reels)) if reels els
 avg_interactions = (sum(p["interactions"] for p in posts) / len(posts)) if posts else 0
 engagement_rate = round(avg_interactions / followers * 100, 2) if followers else 0
 
-# posts per month, over the span of the posts pulled
-posts_per_month = 0
-if len(posts) >= 2:
-    first = datetime.fromisoformat(posts[-1]["posted"].replace("+0000", "+00:00"))
-    days = max((now - first).days, 1)
-    posts_per_month = round(len(posts) / days * 30, 1)
+# posts per month, averaged over the last 90 days
+recent_count = sum(1 for p in all_posts if p["posted"] and
+                   datetime.fromisoformat(p["posted"].replace("+0000", "+00:00")) >= recent_cutoff)
+posts_per_month = round(recent_count / (RECENT_DAYS / 30), 1)
 
 stats_out = {
     "updated": now.isoformat(timespec="seconds"),
@@ -289,7 +315,7 @@ upsert_csv(HISTORY_DIR / "daily_posts.csv", [{
     "date": today, "post_id": p["id"], "posted": p["posted"], "type": p["type"],
     "views": p["views"], "reach": p["reach"], "likes": p["likes"], "comments": p["comments"],
     "saves": p["saves"], "shares": p["shares"], "interactions": p["interactions"],
-} for p in posts], ["date", "post_id"])
+} for p in all_posts if p["refreshed"]], ["date", "post_id"])
 
 # 4) one row per country per day
 upsert_csv(HISTORY_DIR / "daily_countries.csv",
@@ -299,13 +325,13 @@ upsert_csv(HISTORY_DIR / "daily_countries.csv",
 
 # 5) post details (caption, link) once per post, updated if they change
 upsert_csv(HISTORY_DIR / "posts.csv", [{
-    "post_id": p["id"], "posted": p["posted"], "type": p["type"],
+    "post_id": p["id"], "posted": p["posted"], "type": p["type"], "media_type": p["media_type"],
     "permalink": p["permalink"], "caption": p["caption"],
-} for p in posts], ["post_id"])
+} for p in all_posts], ["post_id"])
 
 # ---------- summary ----------
 print("\nDone. Saved stats.json")
-print(f"  @{stats_out['profile']['username']}  ·  {followers:,} followers  ·  {len(posts)} posts pulled ({len(reels)} reels)")
+print(f"  @{stats_out['profile']['username']}  ·  {followers:,} followers  ·  {len(all_posts)} posts in history, {len(posts)} on the site ({len(reels)} reels)")
 print(f"  Avg reel views: {avg_reel_views:,}   Engagement rate: {engagement_rate}%   Posts/month: {posts_per_month}")
 if account_30d:
     print("  Last 30 days: " + ", ".join(f"{k} {v:,}" for k, v in account_30d.items()))
