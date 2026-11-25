@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-25T06:33:20+00:00",
+  "updated": "2026-11-25T06:59:32+00:00",
   "profile": {
     "username": "lilimagana16",
     "name": "Lili Magaña",
@@ -15,15 +15,15 @@
     "posts_per_month": 34.3
   },
   "last_30_days": {
-    "views": 251081,
+    "views": 251120,
     "reach": 69669,
     "accounts_engaged": 3230,
     "total_interactions": 7506,
-    "likes": 5320,
+    "likes": 5321,
     "comments": 345,
     "shares": 601,
     "saves": 456,
-    "profile_views": 6391
+    "profile_views": 6393
   },
   "audience": {
     "engaged_by_country": [
@@ -492,7 +492,7 @@
       "thumb": "thumbs/18080841944732429.jpg",
       "likes": 53,
       "comments": 17,
-      "views": 1823,
+      "views": 1824,
       "reach": 1117,
       "saves": 3,
       "shares": 11,
@@ -524,8 +524,8 @@
       "thumb": "thumbs/18135609508682366.jpg",
       "likes": 214,
       "comments": 9,
-      "views": 4758,
-      "reach": 3789,
+      "views": 4759,
+      "reach": 3795,
       "saves": 20,
       "shares": 8,
       "interactions": 264
@@ -556,8 +556,8 @@
       "thumb": "thumbs/18115348889121777.jpg",
       "likes": 65,
       "comments": 7,
-      "views": 3299,
-      "reach": 2587,
+      "views": 3303,
+      "reach": 2591,
       "saves": 21,
       "shares": 57,
       "interactions": 156
@@ -572,7 +572,7 @@
       "thumb": "thumbs/18064354541534609.jpg",
       "likes": 35,
       "comments": 19,
-      "views": 1559,
+      "views": 1560,
       "reach": 873,
       "saves": 3,
       "shares": 2,
@@ -588,8 +588,8 @@
       "thumb": "thumbs/18416785858092480.jpg",
       "likes": 29,
       "comments": 11,
-      "views": 1293,
-      "reach": 757,
+      "views": 1295,
+      "reach": 759,
       "saves": 0,
       "shares": 1,
       "interactions": 46
