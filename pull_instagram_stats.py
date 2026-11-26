@@ -332,6 +332,8 @@ for i, m in enumerate(all_media):
         "permalink": m.get("permalink"),
         "posted": posted,
         "thumb": thumb_file,
+        # direct video link for the site's player; Instagram's links expire after a few days, so this is refreshed every run
+        "video": m.get("media_url") if m.get("media_type") == "VIDEO" else None,
         "refreshed": bool(refresh),
         "on_profile": on_profile(m),
         "shortcode": shortcode[0],
@@ -367,7 +369,7 @@ for c, ids in zip(CAMPAIGNS, campaign_ids):
         "brand": c["brand"], "category": c.get("category", ""), "en": c.get("en", ""), "es": c.get("es", ""),
         "post_count": len(ps),
         "first_posted": dates[0] if dates else None, "last_posted": dates[-1] if dates else None,
-        "id": top["id"], "permalink": top["permalink"], "thumb": top["thumb"],  # the best-performing post represents the card
+        "id": top["id"], "permalink": top["permalink"], "thumb": top["thumb"], "video": top["video"],  # the best-performing post represents the card
         **{k: sum(p[k] or 0 for p in ps) for k in SUM},
         "post_links": [p["permalink"] for p in sorted(ps, key=lambda p: p["views"], reverse=True)],
     })
@@ -549,6 +551,7 @@ upsert_csv(HISTORY_DIR / "posts.csv", [{
 print("\nDone. Saved stats.json")
 print(f"  @{stats_out['profile']['username']}  ·  {followers:,} followers  ·  {len(all_posts)} posts in history "
       f"({len(public_posts)} on her profile), {len(posts)} on the site ({len(reels)} reels)")
+print(f"  Videos for the site player: {sum(1 for p in posts if p['video'])} of {len(posts)} posts have a playable link")
 print(f"  Avg reel views: {avg_reel_views:,}   Engagement rate: {engagement_rate}%   Posts/month: {posts_per_month}   Avg reel watch: {avg_watch_s}s")
 for name, rows in demo.items():
     if rows:

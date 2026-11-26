@@ -150,10 +150,34 @@ textarea{min-height:110px;resize:vertical}
 .done pre{white-space:pre-wrap;font:14px/1.5 "DM Sans",sans-serif;margin:10px 0}
 .flags{display:flex;flex-direction:column;gap:12px;margin-top:22px}
 footer{padding:28px max(5vw,16px);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--mute);font-size:14px}
-dialog{border:0;border-radius:30px;padding:0;max-width:min(440px,92vw);width:100%;background:var(--card);color:var(--ink)}
+dialog{border:0;border-radius:30px;padding:0;max-width:min(720px,94vw);width:100%;background:var(--card);color:var(--ink)}
 dialog::backdrop{background:rgba(30,10,20,.6)}
-.dlg{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr);gap:18px;padding:20px}
+.dlg{display:grid;grid-template-columns:minmax(0,280px) minmax(0,1fr);gap:22px;padding:20px;align-items:start}
 .dlg .thumb{border-radius:20px}
+/* reel player: hover previews on the wall, full player in the reel window */
+.tile .thumb video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .45s var(--ease)}
+.tile .thumb video.on{opacity:1}.tile .thumb video.on~.play{opacity:0}
+.tile .play{transition:opacity .3s}
+.player{position:relative;width:100%;aspect-ratio:9/16;border-radius:20px;overflow:hidden;background:#1d1016;box-shadow:var(--shadow)}
+.player video,.player img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.player .bigplay{position:absolute;left:50%;top:50%;width:68px;height:68px;margin:-34px 0 0 -34px;border-radius:50%;border:1px solid rgba(255,255,255,.8);cursor:pointer;
+  background:linear-gradient(135deg,rgba(255,255,255,.75),rgba(255,255,255,.35));-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:inset 0 1.5px 0 #fff,0 10px 24px -10px rgba(0,0,0,.5);transition:opacity .3s,transform .3s}
+.player .bigplay::after{content:"";position:absolute;left:27px;top:21px;border-left:20px solid #2e1621;border-top:13px solid transparent;border-bottom:13px solid transparent}
+.player.playing .bigplay{opacity:0;transform:scale(.8);pointer-events:none}
+.pbar{position:absolute;left:8px;right:8px;bottom:8px;display:flex;align-items:center;gap:8px;padding:6px 10px 6px 6px;border-radius:99px;
+  background:linear-gradient(135deg,rgba(255,255,255,.72),rgba(255,255,255,.4));-webkit-backdrop-filter:blur(14px) saturate(170%);backdrop-filter:blur(14px) saturate(170%);
+  border:1px solid rgba(255,255,255,.75);box-shadow:inset 0 1.5px 0 #fff,0 8px 20px -10px rgba(0,0,0,.45)}
+.pbar button{flex:none;width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.9);cursor:pointer;position:relative}
+.pbar .pbtn::after{content:"";position:absolute;left:13px;top:10px;border-left:11px solid #2e1621;border-top:7px solid transparent;border-bottom:7px solid transparent}
+.player.playing .pbar .pbtn::after{left:11px;top:11px;width:4px;height:12px;border:0;background:#2e1621;box-shadow:7px 0 0 #2e1621}
+.pbar .mbtn::before{content:"";position:absolute;left:9px;top:12px;width:6px;height:10px;background:#2e1621;border-radius:1px}
+.pbar .mbtn::after{content:"";position:absolute;left:12px;top:8px;border-right:9px solid #2e1621;border-top:9px solid transparent;border-bottom:9px solid transparent}
+.player.muted .pbar .mbtn{background:rgba(255,255,255,.55)}.player.muted .pbar .mbtn::before{box-shadow:12px -3px 0 -2px transparent}
+.player.muted .pbar .mbtn{outline:2px solid var(--rose);outline-offset:-2px}
+.pbar input[type=range]{accent-color:var(--rose);min-height:0;padding:0;border:0;background:none;height:20px}
+.pbar .seek{flex:1;width:auto}.pbar .vol{width:60px;flex:none}
+@media(hover:none){.pbar .vol{display:none}}
+.ptime{font-size:12px;font-variant-numeric:tabular-nums;color:var(--ink);min-width:2.6em;text-align:right}
 .x{position:absolute;right:10px;top:10px;width:44px;height:44px;border-radius:50%;border:0;background:var(--soft);color:var(--ink);font-size:22px;cursor:pointer}
 @keyframes float{50%{transform:translateY(-8px)}}
 .reel{animation:float 6s ease-in-out infinite}
@@ -166,7 +190,7 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
 @media(prefers-reduced-motion:reduce){.reel,.blob{animation:none}.track{animation:none;flex-wrap:wrap;width:auto}.track [aria-hidden]{display:none}html{scroll-behavior:auto}.js .rv,.js .rv-kids>*{opacity:1;transform:none;transition:none}.js .rows .bar i{width:var(--w);transition:none}.js h2::after{clip-path:none;transition:none}.thumb,.btn{transition:none}}
 @media(max-width:820px){.links{display:none}}
 @media(max-width:700px){.hero .wrap,.two{grid-template-columns:minmax(0,1fr)}.fig{order:-1;aspect-ratio:1.25}.hero .copy{order:1}}
-@media(max-width:600px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.pair{grid-template-columns:minmax(0,1fr)}.row{grid-template-columns:7em minmax(0,1fr) 2.8em}.dlg{grid-template-columns:minmax(0,1fr)}.dlg .thumb{max-width:170px}}
+@media(max-width:600px){.player{max-width:280px;margin:0 auto}dialog{max-height:92vh}.pbar .vol{width:52px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.pair{grid-template-columns:minmax(0,1fr)}.row{grid-template-columns:7em minmax(0,1fr) 2.8em}.dlg{grid-template-columns:minmax(0,1fr)}.dlg .thumb{max-width:170px}}
 </style>
 </head>
 <body>
@@ -310,7 +334,7 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
       <p id="dDesc" style="color:var(--mute)"></p>
       <p id="dViews" style="margin-top:12px;font-weight:700"></p>
       <a id="dLink" class="btn ghost" target="_blank" rel="noopener" style="margin-top:14px;display:none" data-t="watch">Watch on Instagram</a>
-      <p class="note" data-t="dVid">Her video will play here once it's uploaded.</p>
+      <p class="note" id="dNote"></p>
     </div>
   </div>
 </dialog>
@@ -318,13 +342,13 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
 <script>
 {
 const T={
-en:{navWork:"Work",navRes:"Results",navAud:"Audience",resH:"Brand results",resP:"Live numbers from her brand posts on Instagram, updated every morning.",total:" views across these campaigns",posts:"posts",calloutLive:(top,share,rest,restShare)=>`${share}% of her engaged audience is in ${top}, and another ${restShare}% is in ${rest}, so campaigns can run in English, Spanish or both.`,likes:"likes",comments:"comments",navSvc:"Collaborations",navContact:"Contact",lede:"Beauty and live-event creator. I turn launches, race weekends, hotels and dinners into short videos people actually watch to the end.",ctaWork:"Work with me",ctaReels:"Watch the reels",f1:"Based in Austin, Texas",f2:"Creates in English and Spanish",f3:"Audience: USA and Latin America",workH:"Selected work",workP:"Beauty and events lead the way, with travel, restaurants and hospitality close behind. Tap any reel to see the details.",sampleWork:"Sample reels and view counts shown until her real videos are added.",audH:"A bilingual audience across the Americas",topC:"Top countries by engagement",callout:"Most of her engaged audience is in the USA, and nearly a quarter is in El Salvador, Puerto Rico and Mexico, so campaigns can run in English, Spanish or both.",sampleAud:"Sample figures shown; these will be replaced with her live Instagram and TikTok numbers.",svcH:"Ways to collaborate",svcP:"Every partnership is tailored. Rates are shared on request.",brandsH:"Brands and venues she has worked with",cH:"Let's create something together",cP:"Tell me about your launch, venue or event. I'll reply with ideas and rates within two business days.",c1:"Email:",fH:"Collaboration inquiry",fName:"Your name",fBrand:"Brand or venue",fEmail:"Email",fType:"Type of project",fDate:"Date or timeframe",fMsg:"Tell me about it",fSend:"Send inquiry",dH:"Thanks! Here is your inquiry.",dCopy:"Copy text",copied:"Copied",dNote:"Your email app should open with this message to Lilimagana19@gmail.com. If it doesn't, copy the text and email it to her.",foot:"Beauty · Events · Travel · Food · Hospitality",dVid:"Her video will play here once it's uploaded.",need:"Please add your name and a valid email.",views:"views",logo:"Partner logo",all:"All",
+en:{navWork:"Work",navRes:"Results",navAud:"Audience",resH:"Brand results",resP:"Live numbers from her brand posts on Instagram, updated every morning.",total:" views across these campaigns",posts:"posts",calloutLive:(top,share,rest,restShare)=>`${share}% of her engaged audience is in ${top}, and another ${restShare}% is in ${rest}, so campaigns can run in English, Spanish or both.`,likes:"likes",comments:"comments",navSvc:"Collaborations",navContact:"Contact",lede:"Beauty and live-event creator. I turn launches, race weekends, hotels and dinners into short videos people actually watch to the end.",ctaWork:"Work with me",ctaReels:"Watch the reels",f1:"Based in Austin, Texas",f2:"Creates in English and Spanish",f3:"Audience: USA and Latin America",workH:"Selected work",workP:"Beauty and events lead the way, with travel, restaurants and hospitality close behind. Tap any reel to see the details.",sampleWork:"Sample reels and view counts shown until her real videos are added.",audH:"A bilingual audience across the Americas",topC:"Top countries by engagement",callout:"Most of her engaged audience is in the USA, and nearly a quarter is in El Salvador, Puerto Rico and Mexico, so campaigns can run in English, Spanish or both.",sampleAud:"Sample figures shown; these will be replaced with her live Instagram and TikTok numbers.",svcH:"Ways to collaborate",svcP:"Every partnership is tailored. Rates are shared on request.",brandsH:"Brands and venues she has worked with",cH:"Let's create something together",cP:"Tell me about your launch, venue or event. I'll reply with ideas and rates within two business days.",c1:"Email:",fH:"Collaboration inquiry",fName:"Your name",fBrand:"Brand or venue",fEmail:"Email",fType:"Type of project",fDate:"Date or timeframe",fMsg:"Tell me about it",fSend:"Send inquiry",dH:"Thanks! Here is your inquiry.",dCopy:"Copy text",copied:"Copied",dNote:"Your email app should open with this message to Lilimagana19@gmail.com. If it doesn't, copy the text and email it to her.",foot:"Beauty · Events · Travel · Food · Hospitality",dVid:"Her video will play here once it's uploaded.",vidFail:"This video can't play here right now. Watch it on Instagram instead.",playL:"Play or pause",seekL:"Video position",muteL:"Mute",volL:"Volume",need:"Please add your name and a valid email.",views:"views",logo:"Partner logo",all:"All",
 cats:{beauty:"Beauty",events:"Events",travel:"Travel",food:"Restaurants",hosp:"Hospitality",life:"Lifestyle"},
 stats:[["Instagram followers","and growing"],["Average views","per reel, latest 24 posts"],["Engagement rate","per post, vs followers"],["Posts per month","last 90 days"],["Views","last 30 days"],["Accounts reached","last 30 days"]],live:"Live from Instagram, updated ",watch:"Watch on Instagram",other:"Other",reel:"Reel",
 countries:["USA","El Salvador","Mexico","Guatemala","Other"],
 svc:[["Beauty reviews and tutorials","Honest first impressions, get-ready-with-me videos and before-and-after looks, filmed in natural light."],["Live event coverage","Race weekends, launches and galas captured from arrival to after-party, posted the same day."],["Hotels and restaurants","Stays and tasting menus told as a story: the room, the view, the plate, the people."],["UGC for your channels","Polished vertical video you own and can run as ads or on your own page, in English or Spanish."]],
 types:["Beauty or skincare","Event coverage","Hotel or travel","Restaurant","Content for your channels","Something else"]},
-es:{navWork:"Trabajo",navRes:"Resultados",navAud:"Audiencia",resH:"Resultados con marcas",resP:"Números en vivo de sus publicaciones con marcas en Instagram, actualizados cada mañana.",total:" vistas en estas campañas",posts:"publicaciones",calloutLive:(top,share,rest,restShare)=>`El ${share}% de su audiencia activa está en ${top} y otro ${restShare}% en ${rest}, así que cada campaña puede ir en inglés, en español o en ambos.`,likes:"me gusta",comments:"comentarios",navSvc:"Colaboraciones",navContact:"Contacto",lede:"Creadora de belleza y eventos en vivo. Convierto lanzamientos, fines de semana de carreras, hoteles y cenas en videos cortos que la gente ve hasta el final.",ctaWork:"Trabaja conmigo",ctaReels:"Ver los reels",f1:"Desde Austin, Texas",f2:"Crea en inglés y español",f3:"Audiencia: EE. UU. y Latinoamérica",workH:"Trabajo destacado",workP:"La belleza y los eventos van al frente, seguidos de viajes, restaurantes y hotelería. Toca cualquier reel para ver los detalles.",sampleWork:"Reels y vistas de muestra hasta que se agreguen sus videos reales.",audH:"Una audiencia bilingüe en las Américas",topC:"Países con mayor interacción",callout:"La mayor parte de su audiencia activa está en EE. UU., y casi una cuarta parte en El Salvador, Puerto Rico y México, así que cada campaña puede ir en inglés, en español o en ambos.",sampleAud:"Cifras de muestra; se reemplazarán con sus números reales de Instagram y TikTok.",svcH:"Formas de colaborar",svcP:"Cada colaboración es a la medida. Las tarifas se comparten a solicitud.",brandsH:"Marcas y lugares con los que ha trabajado",cH:"Creemos algo juntos",cP:"Cuéntame sobre tu lanzamiento, lugar o evento. Te responderé con ideas y tarifas en dos días hábiles.",c1:"Correo:",fH:"Solicitud de colaboración",fName:"Tu nombre",fBrand:"Marca o lugar",fEmail:"Correo",fType:"Tipo de proyecto",fDate:"Fecha o plazo",fMsg:"Cuéntame más",fSend:"Enviar solicitud",dH:"¡Gracias! Aquí está tu solicitud.",dCopy:"Copiar texto",copied:"Copiado",dNote:"Tu app de correo debería abrirse con este mensaje para Lilimagana19@gmail.com. Si no, copia el texto y envíaselo.",foot:"Belleza · Eventos · Viajes · Comida · Hotelería",dVid:"Su video se reproducirá aquí cuando se suba.",need:"Agrega tu nombre y un correo válido.",views:"vistas",logo:"Logo de marca",all:"Todo",
+es:{navWork:"Trabajo",navRes:"Resultados",navAud:"Audiencia",resH:"Resultados con marcas",resP:"Números en vivo de sus publicaciones con marcas en Instagram, actualizados cada mañana.",total:" vistas en estas campañas",posts:"publicaciones",calloutLive:(top,share,rest,restShare)=>`El ${share}% de su audiencia activa está en ${top} y otro ${restShare}% en ${rest}, así que cada campaña puede ir en inglés, en español o en ambos.`,likes:"me gusta",comments:"comentarios",navSvc:"Colaboraciones",navContact:"Contacto",lede:"Creadora de belleza y eventos en vivo. Convierto lanzamientos, fines de semana de carreras, hoteles y cenas en videos cortos que la gente ve hasta el final.",ctaWork:"Trabaja conmigo",ctaReels:"Ver los reels",f1:"Desde Austin, Texas",f2:"Crea en inglés y español",f3:"Audiencia: EE. UU. y Latinoamérica",workH:"Trabajo destacado",workP:"La belleza y los eventos van al frente, seguidos de viajes, restaurantes y hotelería. Toca cualquier reel para ver los detalles.",sampleWork:"Reels y vistas de muestra hasta que se agreguen sus videos reales.",audH:"Una audiencia bilingüe en las Américas",topC:"Países con mayor interacción",callout:"La mayor parte de su audiencia activa está en EE. UU., y casi una cuarta parte en El Salvador, Puerto Rico y México, así que cada campaña puede ir en inglés, en español o en ambos.",sampleAud:"Cifras de muestra; se reemplazarán con sus números reales de Instagram y TikTok.",svcH:"Formas de colaborar",svcP:"Cada colaboración es a la medida. Las tarifas se comparten a solicitud.",brandsH:"Marcas y lugares con los que ha trabajado",cH:"Creemos algo juntos",cP:"Cuéntame sobre tu lanzamiento, lugar o evento. Te responderé con ideas y tarifas en dos días hábiles.",c1:"Correo:",fH:"Solicitud de colaboración",fName:"Tu nombre",fBrand:"Marca o lugar",fEmail:"Correo",fType:"Tipo de proyecto",fDate:"Fecha o plazo",fMsg:"Cuéntame más",fSend:"Enviar solicitud",dH:"¡Gracias! Aquí está tu solicitud.",dCopy:"Copiar texto",copied:"Copiado",dNote:"Tu app de correo debería abrirse con este mensaje para Lilimagana19@gmail.com. Si no, copia el texto y envíaselo.",foot:"Belleza · Eventos · Viajes · Comida · Hotelería",dVid:"Su video se reproducirá aquí cuando se suba.",vidFail:"Este video no se puede reproducir aquí ahora. Míralo en Instagram.",playL:"Reproducir o pausar",seekL:"Posición del video",muteL:"Silenciar",volL:"Volumen",need:"Agrega tu nombre y un correo válido.",views:"vistas",logo:"Logo de marca",all:"Todo",
 cats:{beauty:"Belleza",events:"Eventos",travel:"Viajes",food:"Restaurantes",hosp:"Hotelería",life:"Estilo de vida"},
 stats:[["Seguidores en Instagram","y creciendo"],["Vistas promedio","por reel, últimas 24 publicaciones"],["Tasa de interacción","por publicación, vs seguidores"],["Publicaciones al mes","últimos 90 días"],["Vistas","últimos 30 días"],["Cuentas alcanzadas","últimos 30 días"]],live:"En vivo desde Instagram, actualizado ",watch:"Ver en Instagram",other:"Otros",reel:"Reel",
 countries:["EE. UU.","El Salvador","México","Guatemala","Otros"],
@@ -362,7 +386,8 @@ function motif(c){
   return s;
 }
 let lang="en",filt="all";
-const SHOW=12; /* reels shown on the wall (stats.json keeps 24 for the averages) */
+const SHOW=12,SAMPLE_VIDEO="sample-reel.mp4"; /* sample clip only exists in the preview; on the live site her real reels play */
+const safeVid=u=>typeof u==="string"&&(/^https:\/\//.test(u)||/^[\w.-]+\.mp4$/.test(u))?u:null; /* reels shown on the wall (stats.json keeps 24 for the averages) */
 try{const st=localStorage.getItem("lili-lang");if(st==="es"||st==="en")lang=st;}catch(e){}
 const $=id=>document.getElementById(id);
 const order=["all","beauty","events","travel","food","hosp","life"];
@@ -463,7 +488,7 @@ function countUp(){
     const fin=b.textContent,m=fin.match(/^([\d.,]+)(.*)$/);if(!m)return;
     const raw=m[1],sep=raw.includes(",")?",":".",dec=(raw.split(/[.,]/)[1]||"").length,n=parseFloat(raw.replace(",","."));
     if(!isFinite(n))return;
-    const p=+(document.getElementById("stats").dataset.p||1),dur=1600*p,start=performance.now()+k*130*p;
+    const p=+(document.getElementById("stats").dataset.pace||1),dur=1600*p,start=performance.now()+k*130*p;
     if(dur<50)return; /* revealed instantly (scrolled past): just show the final number */
     const tick=now=>{if(!b.isConnected)return;const p=Math.min(1,Math.max(0,(now-start)/dur)),e=1-Math.pow(1-p,3);
       b.textContent=p>=1?fin:(n*e).toFixed(dec).replace(".",sep)+m[2];if(p<1)requestAnimationFrame(tick);};
@@ -472,7 +497,7 @@ function countUp(){
 }
 function show(el,p){
   el.style.setProperty("--dur",(BASE*p).toFixed(2)+"s");el.style.setProperty("--stag",(STAG*p).toFixed(3)+"s");
-  el.dataset.p=p;el.classList.add("in");if(el.id==="stats")countUp();
+  el.dataset.pace=p;el.classList.add("in");if(el.id==="stats")countUp();
 }
 function pump(){
   if(busy)return;const el=queue.shift();if(!el)return;
@@ -508,7 +533,7 @@ $("grid").addEventListener("click",e=>{
   const t=T[lang],link=$("dLink");
   if(b.dataset.p!==undefined){
     const p=livePosts()[+b.dataset.p];if(!p)return;
-    $("dThumb").innerHTML=`<img src="${esc(p.thumb)}" alt=""><span class="play"></span>`;
+    openPlayer(safeVid(p.video),p.thumb?esc(p.thumb):"",p.permalink);
     const cat=t.cats[CATMAP[p.id]];
     $("dCat").textContent=(cat?cat+" · ":"")+(p.posted?new Date(p.posted).toLocaleDateString(lang,{month:"long",day:"numeric",year:"numeric"}):"");
     $("dTitle").textContent=p.title||t.reel;
@@ -517,7 +542,7 @@ $("grid").addEventListener("click",e=>{
     if(p.permalink&&/^https:\/\/(www\.)?instagram\.com\//.test(p.permalink)){link.href=p.permalink;link.style.display="";}else link.style.display="none";
   }else{
     const w=WORK[+b.dataset.i];
-    $("dThumb").innerHTML=`<svg viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice">${motif(w.c)}</svg><span class="play"></span>`;
+    openPlayer(SAMPLE_VIDEO,"",null,`<svg viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice">${motif(w.c)}</svg>`);
     $("dCat").textContent=t.cats[w.c]+" · "+w[lang][1];
     $("dTitle").textContent=w[lang][0];
     $("dDesc").textContent=w.d[lang];
@@ -527,6 +552,47 @@ $("grid").addEventListener("click",e=>{
   try{$("dlg").showModal()}catch(err){$("dlg").setAttribute("open","")}
 });
 $("close").addEventListener("click",()=>$("dlg").close());
+$("dlg").addEventListener("close",()=>{const v=$("dThumb").querySelector("video");if(v)v.pause();});
+/* ----- reel player ----- */
+function openPlayer(src,poster,permalink,art){
+  const t=T[lang],box=$("dThumb"),note=$("dNote");
+  const still=poster?`<img src="${poster}" alt="">`:(art||"");
+  const fallback=msg=>{box.className="thumb";box.innerHTML=still+'<span class="play"></span>';note.textContent=msg;};
+  if(!src){fallback(art?t.dVid:"");return;} /* photo posts simply show their image */
+  note.textContent="";box.className="player muted-no";
+  box.innerHTML=`${still}<video playsinline preload="metadata"${poster?` poster="${poster}"`:""} src="${esc(src)}"></video><button class="bigplay" aria-label="${t.playL}"></button>
+    <div class="pbar"><button class="pbtn" aria-label="${t.playL}"></button><input class="seek" type="range" min="0" max="1000" value="0" aria-label="${t.seekL}"><span class="ptime">0:00</span>
+    <button class="mbtn" aria-label="${t.muteL}" aria-pressed="false"></button><input class="vol" type="range" min="0" max="1" step="0.05" value="1" aria-label="${t.volL}"></div>`;
+  const v=box.querySelector("video"),seek=box.querySelector(".seek"),vol=box.querySelector(".vol"),mb=box.querySelector(".mbtn"),tm=box.querySelector(".ptime");
+  const mmss=x=>{x=Math.max(0,Math.floor(x||0));return Math.floor(x/60)+":"+String(x%60).padStart(2,"0")};
+  const toggle=()=>{if(v.paused)v.play().catch(()=>{});else v.pause();};
+  box.querySelector(".bigplay").onclick=toggle;box.querySelector(".pbtn").onclick=toggle;v.onclick=toggle;
+  v.onplay=()=>box.classList.add("playing");v.onpause=()=>box.classList.remove("playing");
+  v.ontimeupdate=()=>{if(v.duration){seek.value=Math.round(v.currentTime/v.duration*1000);tm.textContent=mmss(v.currentTime);}};
+  seek.oninput=()=>{if(v.duration)v.currentTime=seek.value/1000*v.duration;};
+  const syncMute=()=>{box.classList.toggle("muted",v.muted||v.volume===0);mb.setAttribute("aria-pressed",v.muted);};
+  mb.onclick=()=>{v.muted=!v.muted;if(!v.muted&&v.volume===0){v.volume=.6;vol.value=.6;}syncMute();};
+  vol.oninput=()=>{v.volume=+vol.value;v.muted=+vol.value===0;syncMute();};
+  v.onerror=()=>fallback(t.vidFail);
+  v.addEventListener("loadeddata",()=>{const img=box.querySelector("img");if(img)img.remove();},{once:true});
+  setTimeout(()=>v.play().catch(()=>{}),60); /* opened by a tap or click, so it may start with sound */
+}
+/* hover previews on the reel wall (mouse only; phones tap to open the player) */
+const canHover=matchMedia("(hover:hover) and (pointer:fine)").matches;
+const tileVid=tile=>{if(tile.dataset.novid)return null;if(tile.dataset.p!==undefined){const p=livePosts()[+tile.dataset.p];return p?safeVid(p.video):null;}return SAMPLE_VIDEO;};
+$("grid").addEventListener("mouseover",e=>{
+  const tile=e.target.closest(".tile");if(!tile||!canHover||RM)return;
+  if(e.relatedTarget&&tile.contains(e.relatedTarget))return;
+  let v=tile.querySelector("video");const src=tileVid(tile);if(!src)return;
+  if(!v){v=document.createElement("video");v.muted=true;v.loop=true;v.playsInline=true;v.preload="auto";v.src=src;
+    v.addEventListener("playing",()=>v.classList.add("on"));v.addEventListener("error",()=>{tile.dataset.novid="1";v.remove();});
+    tile.querySelector(".thumb").insertBefore(v,tile.querySelector(".play"));}
+  v.play().catch(()=>{});
+});
+$("grid").addEventListener("mouseout",e=>{
+  const tile=e.target.closest(".tile");if(!tile||(e.relatedTarget&&tile.contains(e.relatedTarget)))return;
+  const v=tile.querySelector("video");if(v){v.pause();v.classList.remove("on");}
+});
 $("dlg").addEventListener("click",e=>{if(e.target===$("dlg"))$("dlg").close();});
 $("form").addEventListener("submit",e=>{
   e.preventDefault();
