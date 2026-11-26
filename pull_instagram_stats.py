@@ -43,6 +43,7 @@ HISTORY_DIR = Path("history")  # dated copies kept forever, for the future Stati
 CAMPAIGNS_FILE = Path("campaigns.json")  # brand campaigns shown on the site; edit this file to add or remove one
 HIDDEN_FILE = Path("hidden.json")        # optional: list of post IDs to keep off the website (still kept in history)
 SHOWN_FILE = Path("shown.json")          # optional: trial reels she later shared to followers (links or IDs) — count them as on her profile
+REELS_FILE = Path("reels.json")          # reel categories for the site's shelves: Lili's picks by link (+ the script's guesses)
 CORRECTIONS_FILE = Path("corrections.json")  # optional: numbers Lili checked in her app for posts the API undercounts
 PINNED_FILE = Path("pinned.json")        # optional: her pinned posts (links or IDs) for the phones at the top of the site
 
@@ -311,6 +312,64 @@ for c in CAMPAIGNS:
     campaign_ids.append(ids)
 CAMPAIGN_IDS = {i for ids in campaign_ids for i in ids}
 
+# ---------- reel categories (the shelves on the site) ----------
+# One category per reel. Lili's picks in reels.json win; the rest are guessed from caption words; reels with no
+# category stay off the site. Within a category the best-performing reels show first.
+CATS = ["skincare", "haircare", "makeup", "travel", "hospitality", "lifestyle"]
+CAT_WORDS = {
+    "skincare": ["skincare", "skin care", "serum", "moisturizer", "sunscreen", "spf", "acne", "breakout", "pimple", "cleanser",
+                 "toner", "retinol", "dark spots", "hyperpigmentation", "pores", "eye cream", "face mask", "glass skin",
+                 "madhippiebeauty", "madhippie_atx", "mad hippie", "esteelauder", "estée lauder", "estee lauder", "cuidado de la piel"],
+    "haircare": ["haircare", "hair care", "shampoo", "conditioner", "dry shampoo", "batiste", "batiste_us", "hair mask", "scalp",
+                 "frizz", "blowout", "hair routine", "hair oil", "cocoandeve", "coco & eve", "coco and eve", "cabello"],
+    "makeup": ["makeup", "make up", "maquillaje", "grwm", "get ready with me", "lipstick", "lip combo", "lip liner", "lip gloss",
+               "lipgloss", "lashes", "mascara", "foundation", "concealer", "blush", "eyeliner", "eyeshadow", "contour", "morphe",
+               "ultabeauty", "ulta", "glam", "nails", "btartboxnails", "fragrance", "perfume", "origenfragrances", "beauty"],
+    "travel": ["travel", "trip", "flight", "airport", "skyscanner", "vacation", "itinerary", "passport", "app", "viaje", "vuelo"],
+    "hospitality": ["restaurant", "brunch", "dinner", "lunch", "menu", "chef", "tasting", "foodie", "pizza", "tacos", "taqueria",
+                    "pancakes", "cafe", "coffee", "matcha", "cocktail", "cocktails", "wine", "prosecco", "hotel", "suite",
+                    "staycation", "resort", "spa", "toastique", "acquabistecca", "acqua bistecca", "jettspizza", "yachtclubatx",
+                    "capebottleroom", "hoteltrinityatx", "jpspancakecompany", "taqueriade10", "taqueriadediez", "heb",
+                    "bellissimaprosecco", "comida", "restaurante"],
+    "lifestyle": ["outfit", "ootd", "fit check", "style", "fashion", "day in my life", "vlog", "weekend",
+                  "gym", "workout", "vspink", "#pinkpartner", "zeelool", "glasses", "eyewear", "haniix_official",
+                  "victoriassecret", "victoria's secret", "victoria’s secret", "fashion show"],
+}
+
+
+def word_hit(text, term):
+    return re.search(r"(?<![a-z0-9_])" + re.escape(term) + r"(?![a-z0-9_])", text) is not None
+
+
+def guess_cat(caption):
+    # like brand matching, hashtags are ignored (they're often copied onto unrelated posts) unless the word is listed with "#"
+    full = (caption or "").lower()
+    text = re.sub(r"#[^\s#]+", " ", full)
+    scores = {c: sum(word_hit(full, w[1:]) and ("#" + w[1:]) in full if w.startswith("#") else word_hit(text, w)
+                     for w in CAT_WORDS[c]) for c in CATS}
+    best = max(CATS, key=lambda c: (scores[c], -CATS.index(c)))
+    return best if scores[best] else None
+
+
+try:
+    REELS_CFG = json.loads(REELS_FILE.read_text(encoding="utf-8")) if REELS_FILE.exists() else {}
+except Exception as e:
+    print(f"  ! reels.json could not be read ({e}); using the script's guesses only")
+    REELS_CFG = {}
+picked = {post_key(x): c for c in CATS + ["none"] for x in REELS_CFG.get(c, [])}
+use_guesses = REELS_CFG.get("use_guesses", True)
+reel_cat, reel_cat_source = {}, {}
+for m in all_media:
+    k1, k2 = m["id"], shortcode_of(m)
+    if k1 in picked or k2 in picked:
+        c = picked.get(k1, picked.get(k2))
+        if c != "none":
+            reel_cat[m["id"]], reel_cat_source[m["id"]] = c, "Lili"
+    elif use_guesses and on_profile(m) and m.get("media_product_type") == "REELS":
+        c = guess_cat(m.get("caption"))
+        if c:
+            reel_cat[m["id"]], reel_cat_source[m["id"]] = c, "guess"
+
 # old posts barely change, so: newest posts and campaign posts every day, everything once a week (and on the very first run)
 first_run = not (HISTORY_DIR / "daily_posts.csv").exists()
 full_refresh = first_run or datetime.now(timezone(timedelta(hours=-6))).weekday() == FULL_REFRESH_DAY
@@ -323,7 +382,7 @@ for i, m in enumerate(all_media):
     posted = m.get("timestamp")
     posted_dt = datetime.fromisoformat(posted.replace("+0000", "+00:00")) if posted else None
     shortcode = [shortcode_of(m)]
-    is_campaign = bool({m["id"], shortcode[0]} & (CAMPAIGN_IDS | set(PINNED)))  # pinned posts get the same daily care
+    is_campaign = bool({m["id"], shortcode[0]} & (CAMPAIGN_IDS | set(PINNED))) or m["id"] in reel_cat  # same daily care
     shown = m["id"] in show_ids
     refresh = full_refresh or shown or is_campaign or (posted_dt and posted_dt >= recent_cutoff)
     stats = {}
@@ -339,7 +398,8 @@ for i, m in enumerate(all_media):
     # cover images only for posts shown on the site (Instagram's image links expire after a few days)
     thumb_file = None
     thumb_url = m.get("thumbnail_url") or m.get("media_url")
-    if (shown or is_campaign) and thumb_url and (m.get("thumbnail_url") or m.get("media_type") != "VIDEO"):
+    shelf = m["id"] in reel_cat  # thumbnails for shelf reels are fetched after we know which ones make the top of each shelf
+    if (shown or (is_campaign and not shelf)) and thumb_url and (m.get("thumbnail_url") or m.get("media_type") != "VIDEO"):
         try:
             img = requests.get(thumb_url, timeout=30)
             if img.ok:
@@ -362,6 +422,7 @@ for i, m in enumerate(all_media):
         "video": m.get("media_url") if m.get("media_type") == "VIDEO" else None,
         "refreshed": bool(refresh),
         "on_profile": on_profile(m),
+        "_turl": thumb_url if (m.get("thumbnail_url") or m.get("media_type") != "VIDEO") else None,
         "shortcode": shortcode[0],
         "shared_to_feed": m.get("is_shared_to_feed"),
         "likes": m.get("total_like_count") or m.get("like_count", 0),  # incl. likes from ads/boosts
@@ -461,8 +522,35 @@ pinned += [p for p in posts if p["thumb"] and p not in pinned][:3 - len(pinned)]
 pinned_out = [{k: p[k] for k in ("id", "permalink", "thumb", "title", "type")} for p in pinned]
 print(f"  phones at the top: {len(pinned_out)} " + ("pinned posts" if PINNED else "newest posts (pinned.json is empty)"))
 
+# ---------- 4e. reel shelves: top reels per category, highest views first ----------
+SHELF_MAX = 12
+followers_now = profile.get("followers_count", 0) or 0
+shelves, shelf_posts = {}, []
+for c in CATS:
+    ps = sorted((p for p in all_posts if reel_cat.get(p["id"]) == c), key=lambda p: p["views"], reverse=True)
+    if not ps:
+        continue
+    top = ps[:SHELF_MAX]
+    for p in top:
+        if not p["thumb"] and p.get("_turl"):
+            try:
+                img = requests.get(p["_turl"], timeout=30)
+                if img.ok:
+                    p["thumb"] = f"thumbs/{p['id']}.jpg"
+                    Path(p["thumb"]).write_bytes(img.content)
+            except Exception:
+                pass
+    shelf_posts += top
+    inter = sum(p["interactions"] for p in ps) / len(ps)
+    shelves[c] = {
+        "count": len(ps), "views": sum(p["views"] for p in ps), "avg_views": round(sum(p["views"] for p in ps) / len(ps)),
+        "engagement_pct": round(inter / followers_now * 100, 2) if followers_now else 0,
+        "items": [{k: p[k] for k in ("id", "permalink", "thumb", "video", "title", "views", "likes", "comments", "posted", "type", "media_type")}
+                  | {"caption": p["caption"][:600], "picked": reel_cat_source.get(p["id"]) == "Lili"} for p in top],
+    }
+
 # remove cover images for posts that dropped off the website
-keep = {p["thumb"] for p in posts + campaigns + pinned if p["thumb"]}
+keep = {p["thumb"] for p in posts + campaigns + pinned + shelf_posts if p["thumb"]}
 for f in THUMB_DIR.glob("*.jpg"):
     if f"thumbs/{f.name}" not in keep:
         f.unlink()
@@ -510,6 +598,7 @@ stats_out = {
         **demo,
     },
     "campaigns": [{k: v for k, v in c.items() if k != "_posts"} for c in campaigns],
+    "reels": shelves,
     "pinned": pinned_out,
     "posts": posts,
 }
@@ -640,6 +729,18 @@ def collab_names(media_id):
     return ", ".join(f"@{d.get('username')}" + ("" if d.get("invite_status") in (None, "Accepted") else f" ({d.get('invite_status')})") for d in data)
 
 
+print("  Reel shelves (Lili's picks marked *; move or remove any with reels.json):")
+for c in CATS:
+    if c in shelves:
+        sh = shelves[c]
+        print(f"    {c}: {sh['count']} reels, {sh['views']:,} views, avg {sh['avg_views']:,}, engagement {sh['engagement_pct']}%")
+        for it in sh["items"]:
+            print(f"      {'*' if it['picked'] else ' '} {it['permalink']}  {it['views']:,} views  — {it['title'][:50]}")
+    else:
+        print(f"    {c}: no reels yet")
+none_reels = [p for p in public_posts if p["type"] == "REELS" and p["id"] not in reel_cat]
+print(f"  Reels with no category (kept off the site): {len(none_reels)}"
+      + (", e.g. " + ", ".join(p["permalink"] for p in none_reels[:5]) if none_reels else ""))
 for c in campaigns:
     print(f"  Campaign {c['brand']}: {c['post_count']} post(s), {c['views']:,} views, {c['likes']:,} likes, {c['comments']:,} comments")
     for p in c["_posts"]:
