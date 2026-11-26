@@ -78,7 +78,7 @@ header.small .nav{max-width:760px;padding:6px 6px 6px 18px;box-shadow:inset 0 1.
 .head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap}
 .head p{color:var(--mute);max-width:34em}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:18px}
-.tile{border:0;padding:0;background:none;color:var(--ink);text-align:left;cursor:pointer;font:inherit}
+.tile{border:0;padding:0;background:none;color:var(--ink);text-align:left;cursor:pointer;font:inherit;border-radius:24px}
 .thumb{position:relative;aspect-ratio:9/16;border-radius:24px;overflow:hidden;box-shadow:var(--shadow);transition:transform .6s var(--ease),box-shadow .6s var(--ease)}
 .thumb svg,.thumb img{position:absolute;inset:0;width:100%;height:100%}
 .thumb img{object-fit:cover;background:var(--blush)}
@@ -167,13 +167,22 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
 .pbar{position:absolute;left:8px;right:8px;bottom:8px;display:flex;align-items:center;gap:8px;padding:6px 10px 6px 6px;border-radius:99px;
   background:linear-gradient(135deg,rgba(255,255,255,.72),rgba(255,255,255,.4));-webkit-backdrop-filter:blur(14px) saturate(170%);backdrop-filter:blur(14px) saturate(170%);
   border:1px solid rgba(255,255,255,.75);box-shadow:inset 0 1.5px 0 #fff,0 8px 20px -10px rgba(0,0,0,.45)}
-.pbar button{flex:none;width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.9);cursor:pointer;position:relative}
-.pbar .pbtn::after{content:"";position:absolute;left:13px;top:10px;border-left:11px solid #2e1621;border-top:7px solid transparent;border-bottom:7px solid transparent}
-.player.playing .pbar .pbtn::after{left:11px;top:11px;width:4px;height:12px;border:0;background:#2e1621;box-shadow:7px 0 0 #2e1621}
-.pbar .mbtn::before{content:"";position:absolute;left:9px;top:12px;width:6px;height:10px;background:#2e1621;border-radius:1px}
-.pbar .mbtn::after{content:"";position:absolute;left:12px;top:8px;border-right:9px solid #2e1621;border-top:9px solid transparent;border-bottom:9px solid transparent}
+.pbar button,.tctl button{flex:none;width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.9);cursor:pointer;position:relative}
+:is(.pbar,.tctl) .pbtn::after{content:"";position:absolute;left:13px;top:10px;border-left:11px solid #2e1621;border-top:7px solid transparent;border-bottom:7px solid transparent}
+.player.playing .pbar .pbtn::after,.tile.playing .tctl .pbtn::after{left:11px;top:11px;width:4px;height:12px;border:0;background:#2e1621;box-shadow:7px 0 0 #2e1621}
+:is(.pbar,.tctl) .mbtn::before{content:"";position:absolute;left:9px;top:12px;width:6px;height:10px;background:#2e1621;border-radius:1px}
+:is(.pbar,.tctl) .mbtn::after{content:"";position:absolute;left:12px;top:8px;border-right:9px solid #2e1621;border-top:9px solid transparent;border-bottom:9px solid transparent}
 .player.muted .pbar .mbtn{background:rgba(255,255,255,.55)}.player.muted .pbar .mbtn::before{box-shadow:12px -3px 0 -2px transparent}
-.player.muted .pbar .mbtn{outline:2px solid var(--rose);outline-offset:-2px}
+.player.muted .pbar .mbtn,.tile.muted .tctl .mbtn{outline:2px solid var(--rose);outline-offset:-2px}
+.tctl{position:absolute;left:8px;right:8px;bottom:8px;z-index:2;display:flex;align-items:center;gap:6px;padding:4px 10px 4px 4px;border-radius:99px;
+  background:linear-gradient(135deg,rgba(255,255,255,.72),rgba(255,255,255,.4));-webkit-backdrop-filter:blur(14px) saturate(170%);backdrop-filter:blur(14px) saturate(170%);
+  border:1px solid rgba(255,255,255,.75);box-shadow:inset 0 1.5px 0 #fff,0 8px 20px -10px rgba(0,0,0,.45);opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .35s,transform .35s var(--ease)}
+.tctl button{width:30px;height:30px}.tctl .pbtn::after{left:11px;top:8px}.tile.playing .tctl .pbtn::after{left:9px;top:9px}.tctl .mbtn::before{left:7px;top:10px}.tctl .mbtn::after{left:10px;top:6px}
+.tctl .tvol{flex:1;width:auto;accent-color:var(--rose);min-height:0;padding:0;border:0;background:none;height:18px}
+.tile.vid:hover .tctl,.tile.vid:focus-within .tctl{opacity:1;transform:none;pointer-events:auto}
+.tile.vid:hover .play{opacity:0}
+.thumb .views,.thumb .play{z-index:1}
+@media(hover:none){.tctl{display:none}}
 .pbar input[type=range]{accent-color:var(--rose);min-height:0;padding:0;border:0;background:none;height:20px}
 .pbar .seek{flex:1;width:auto}.pbar .vol{width:60px;flex:none}
 @media(hover:none){.pbar .vol{display:none}}
@@ -430,10 +439,10 @@ function render(){
   if(live){
     const list=livePosts().map((p,i)=>({p,i})).filter(o=>filt==="all"||CATMAP[o.p.id]===filt).slice(0,SHOW);
     $("grid").innerHTML=list.map(({p,i})=>{const cat=t.cats[CATMAP[p.id]];const when=p.posted?new Date(p.posted).toLocaleDateString(lang,{month:"short",day:"numeric"}):"";
-      return `<button class="tile rv" data-p="${i}"><div class="thumb"><img src="${esc(p.thumb)}" alt="" loading="lazy"><span class="views">${fmt(p.views)} ${t.views}</span><span class="play"></span></div><h3>${esc(p.title||t.reel)}</h3><small>${esc(cat?cat+" · "+when:when)}</small></button>`}).join("");
+      return `<div class="tile rv" data-p="${i}" role="button" tabindex="0"><div class="thumb"><img src="${esc(p.thumb)}" alt="" loading="lazy"><span class="views">${fmt(p.views)} ${t.views}</span><span class="play"></span><div class="tctl"><button class="pbtn" data-a="play" aria-label="${T[lang].playL}"></button><button class="mbtn" data-a="mute" aria-label="${T[lang].muteL}"></button><input class="tvol" type="range" min="0" max="1" step="0.05" value="0" aria-label="${T[lang].volL}"></div></div><h3>${esc(p.title||t.reel)}</h3><small>${esc(cat?cat+" · "+when:when)}</small></div>`}).join("");
   }else{
     const list=WORK.map((w,i)=>({...w,i})).filter(w=>filt==="all"||w.c===filt).slice(0,SHOW);
-    $("grid").innerHTML=list.map(w=>`<button class="tile rv" data-i="${w.i}"><div class="thumb"><svg viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice">${motif(w.c)}</svg><span class="views">${w.v} ${t.views}</span><span class="play"></span></div><h3>${w[lang][0]}</h3><small>${t.cats[w.c]} · ${w[lang][1]}</small></button>`).join("");
+    $("grid").innerHTML=list.map(w=>`<div class="tile rv" data-i="${w.i}" role="button" tabindex="0"><div class="thumb"><svg viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice">${motif(w.c)}</svg><span class="views">${w.v} ${t.views}</span><span class="play"></span><div class="tctl"><button class="pbtn" data-a="play" aria-label="${T[lang].playL}"></button><button class="mbtn" data-a="mute" aria-label="${T[lang].muteL}"></button><input class="tvol" type="range" min="0" max="1" step="0.05" value="0" aria-label="${T[lang].volL}"></div></div><h3>${w[lang][0]}</h3><small>${t.cats[w.c]} · ${w[lang][1]}</small></div>`).join("");
   }
   const l30=(LIVE&&LIVE.last_30_days)||{},prof=(LIVE&&LIVE.profile)||{};
   const hl=(LIVE&&LIVE.headline)||{},pct=n=>{try{return new Intl.NumberFormat(lang,{maximumFractionDigits:2}).format(+n)+"%"}catch(e){return n+"%"}};
@@ -529,7 +538,18 @@ $("l-en").addEventListener("click",()=>setLang("en"));
 $("l-es").addEventListener("click",()=>setLang("es"));
 $("chips").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;filt=b.dataset.c;render();});
 $("grid").addEventListener("click",e=>{
-  const b=e.target.closest(".tile");if(!b)return;
+  const ctl=e.target.closest(".tctl");
+  if(ctl){const tile=ctl.closest(".tile"),v=tile.querySelector("video"),btn=e.target.closest("button"),a=btn&&btn.dataset.a;
+    if(!v||!a)return;
+    if(a==="play"){if(v.paused)v.play().catch(()=>{});else v.pause();}
+    if(a==="mute"){v.muted=!v.muted;if(!v.muted&&v.volume===0)v.volume=.6;}
+    return;}
+  openTile(e.target.closest(".tile"));
+});
+$("grid").addEventListener("input",e=>{const r=e.target.closest(".tvol");if(!r)return;const v=r.closest(".tile").querySelector("video");if(!v)return;v.volume=+r.value;v.muted=+r.value===0;});
+$("grid").addEventListener("keydown",e=>{const tile=e.target.classList&&e.target.classList.contains("tile")?e.target:null;if(tile&&(e.key==="Enter"||e.key===" ")){e.preventDefault();openTile(tile);}});
+function openTile(b){if(!b)return;
+  const v0=b.querySelector("video");if(v0)v0.pause();
   const t=T[lang],link=$("dLink");
   if(b.dataset.p!==undefined){
     const p=livePosts()[+b.dataset.p];if(!p)return;
@@ -550,7 +570,7 @@ $("grid").addEventListener("click",e=>{
     link.style.display="none";
   }
   try{$("dlg").showModal()}catch(err){$("dlg").setAttribute("open","")}
-});
+}
 $("close").addEventListener("click",()=>$("dlg").close());
 $("dlg").addEventListener("close",()=>{const v=$("dThumb").querySelector("video");if(v)v.pause();});
 /* ----- reel player ----- */
@@ -585,7 +605,9 @@ $("grid").addEventListener("mouseover",e=>{
   if(e.relatedTarget&&tile.contains(e.relatedTarget))return;
   let v=tile.querySelector("video");const src=tileVid(tile);if(!src)return;
   if(!v){v=document.createElement("video");v.muted=true;v.loop=true;v.playsInline=true;v.preload="auto";v.src=src;
-    v.addEventListener("playing",()=>v.classList.add("on"));v.addEventListener("error",()=>{tile.dataset.novid="1";v.remove();});
+    v.addEventListener("playing",()=>{v.classList.add("on");tile.classList.add("vid");});v.addEventListener("error",()=>{tile.dataset.novid="1";tile.classList.remove("vid");v.remove();});
+    v.addEventListener("play",()=>tile.classList.add("playing"));v.addEventListener("pause",()=>tile.classList.remove("playing"));
+    v.addEventListener("volumechange",()=>{tile.classList.toggle("muted",v.muted||v.volume===0);const r=tile.querySelector(".tvol");if(r)r.value=v.muted?0:v.volume;});tile.classList.add("muted");
     tile.querySelector(".thumb").insertBefore(v,tile.querySelector(".play"));}
   v.play().catch(()=>{});
 });
