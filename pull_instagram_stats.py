@@ -42,6 +42,7 @@ THUMB_DIR = Path("thumbs")
 HISTORY_DIR = Path("history")  # dated copies kept forever, for the future Statistics tab
 CAMPAIGNS_FILE = Path("campaigns.json")  # brand campaigns shown on the site; edit this file to add or remove one
 HIDDEN_FILE = Path("hidden.json")        # optional: list of post IDs to keep off the website (still kept in history)
+SHOWN_FILE = Path("shown.json")          # optional: trial reels she later shared to followers (links or IDs) — count them as on her profile
 PINNED_FILE = Path("pinned.json")        # optional: her pinned posts (links or IDs) for the phones at the top of the site
 
 
@@ -114,6 +115,20 @@ def post_key(value):
     v = str(value).strip()
     parts = [x for x in v.split("?")[0].split("/") if x]
     return parts[-1] if "instagram.com" in v and parts else v
+
+
+def load_shown():
+    """Read shown.json: links or IDs of trial reels she later shared to her followers. Instagram still reports those
+    as 'not shared to feed', so without this list they'd be treated as hidden trial reels."""
+    try:
+        rows = json.loads(SHOWN_FILE.read_text(encoding="utf-8")) if SHOWN_FILE.exists() else []
+        return {post_key(r) for r in rows}
+    except Exception as e:
+        print(f"  ! shown.json could not be read ({e}); ignoring it")
+        return set()
+
+
+SHOWN = load_shown()
 
 
 
@@ -252,11 +267,17 @@ while True:
         break
 
 
+def shortcode_of(m):
+    return ([x for x in (m.get("permalink") or "").split("/") if x][-1:] or [""])[0]
+
+
 def on_profile(m):
     """False for trial reels (shown only to non-followers, never on her profile) and anything in hidden.json.
     Instagram has no 'trial reel' field; reels not shared to her feed are the closest signal."""
     if m["id"] in HIDDEN:
         return False
+    if m["id"] in SHOWN or shortcode_of(m) in SHOWN:
+        return True  # a trial reel she later posted to her followers
     return not (m.get("media_product_type") == "REELS" and m.get("is_shared_to_feed") is False)
 
 
@@ -264,12 +285,9 @@ public_ids = [m["id"] for m in all_media if on_profile(m)]
 show_ids = set(public_ids[:DISPLAY_POSTS])
 not_feed = sum(1 for m in all_media if m.get("media_product_type") == "REELS" and m.get("is_shared_to_feed") is False)
 print(f"  found {len(all_media)} posts: {len(public_ids)} on her profile, {not_feed} reels not shared to her feed (likely trial reels), "
-      f"{len(HIDDEN & {m['id'] for m in all_media})} hidden by hand")
+      f"{len(HIDDEN & {m['id'] for m in all_media})} hidden by hand, "
+      f"{sum(1 for m in all_media if m['id'] in SHOWN or shortcode_of(m) in SHOWN)} trial reels marked as posted")
 print(f"  her profile's own post count: {profile.get('media_count')}")
-
-
-def shortcode_of(m):
-    return ([x for x in (m.get("permalink") or "").split("/") if x][-1:] or [""])[0]
 
 
 # brand campaigns come only from her own posts: posts on her profile whose caption mentions the brand
@@ -564,6 +582,10 @@ if account_30d:
 top = engaged_by_country or followers_by_country
 if top:
     print("  Top countries: " + ", ".join(f"{r['country']} {r['share']}%" for r in top[:5]))
+trials = sorted((p for p in all_posts if not p["on_profile"] and p["id"] not in HIDDEN), key=lambda p: p["likes"], reverse=True)[:5]
+if trials:
+    print("  Most-liked reels treated as trials (if one is on her profile, add its link to shown.json): "
+          + ", ".join(f"{p['permalink']} ({p['likes']:,} likes)" for p in trials))
 boosted = [p for p in all_posts if p["likes"] > p["likes_organic"]]
 if boosted:
     print(f"  {len(boosted)} posts have extra likes from ads/boosts (counted in the totals), e.g. "
