@@ -411,9 +411,11 @@ const hdr=document.querySelector("header");
 const glass=()=>{hdr.classList.toggle("small",scrollY>40);hdr.querySelector(".nav").style.setProperty("--sheen",(15+(scrollY/8)%70).toFixed(1)+"%");};
 addEventListener("scroll",glass,{passive:true});glass();
 function hero(){
-  /* Three phones: her pinned posts from stats.json (newest posts if none are pinned), drawn art until data loads.
+  /* Three phones: Lili's photos (or her pinned posts from stats.json), drawn art as a last resort.
      Spot order left, centre, right = pinned 1, 2, 3; the centre phone is drawn last so it sits in front. */
-  const live=LIVE&&Array.isArray(LIVE.pinned)?LIVE.pinned.filter(p=>p&&p.thumb):[];
+  /* Lili's chosen photos (lili-hero-1/2/3.jpg); if they're ever removed, the phones fall back to her pinned posts */
+  const HERO_PHOTOS=["lili-hero-1.jpg","lili-hero-2.jpg","lili-hero-3.jpg"];
+  const live=HERO_PHOTOS.length?HERO_PHOTOS.map(t=>({thumb:t})):(LIVE&&Array.isArray(LIVE.pinned)?LIVE.pinned.filter(p=>p&&p.thumb):[]);
   const spots=[[-12,30,58,"travel"],[0,135,22,"beauty"],[12,240,58,"events"]];
   const phone=(i)=>{const [rot,x,y,c]=spots[i],pic=live[i];
     const screen=pic?`<image href="${esc(pic.thumb)}" x="7" y="7" width="136" height="296" preserveAspectRatio="xMidYMid slice" clip-path="url(#hc${i})"/>`

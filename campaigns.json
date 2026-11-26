@@ -1,5 +1,5 @@
 [
-  {"brand": "Acqua Bistecca", "match": ["acquabistecca", "acqua bistecca"], "category": "food", "en": "Restaurant launch", "es": "Lanzamiento de restaurante"},
+  {"brand": "Acqua Bistecca", "match": ["acquabistecca", "acqua bistecca"], "category": "food", "en": "Restaurant launch", "es": "Lanzamiento de restaurante", "posts": ["https://www.instagram.com/reel/DSTxMCvDQcW/"]},
   {"brand": "Victoria's Secret", "match": ["victoriassecret", "victoria's secret", "victoria’s secret", "victorias secret"], "category": "events", "en": "Fashion show coverage", "es": "Cobertura del desfile"},
   {"brand": "Skyscanner", "match": ["skyscanner"], "category": "travel", "en": "Travel storytelling", "es": "Historia de viaje"},
   {"brand": "Toastique", "match": ["toastique"], "category": "food", "en": "Spring menu", "es": "Menú de primavera"},
