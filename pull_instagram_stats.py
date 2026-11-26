@@ -534,6 +534,21 @@ pinned += [p for p in posts if p["thumb"] and p not in pinned][:3 - len(pinned)]
 pinned_out = [{k: p[k] for k in ("id", "permalink", "thumb", "title", "type")} for p in pinned]
 print(f"  phones at the top: {len(pinned_out)} " + ("pinned posts" if PINNED else "newest posts (pinned.json is empty)"))
 
+# per-reel tags (reels.json "formats"): {tag: [links, or a few words from the caption]} overrides the category's usual tag
+FORMAT_NAMES = ("problem_solution", "testimonial", "experience", "personal_style")
+squash = lambda x: " ".join(str(x).lower().split())
+FORMAT_RULES = [(f, post_key(x), squash(x)) for f in FORMAT_NAMES for x in REELS_CFG.get("formats", {}).get(f, [])]
+format_hits = {}
+
+
+def format_of(p):
+    for f, key, words in FORMAT_RULES:
+        if p["id"] == key or p["shortcode"] == key or (" " in words and words in squash(p["caption"])):
+            format_hits[words] = format_hits.get(words, 0) + 1
+            return f
+    return None
+
+
 # ---------- 4e. reel shelves: top reels per category, highest views first ----------
 SHELF_MAX = 12
 followers_now = profile.get("followers_count", 0) or 0
@@ -558,7 +573,7 @@ for c in CATS:
         "count": len(ps), "views": sum(p["views"] for p in ps), "avg_views": round(sum(p["views"] for p in ps) / len(ps)),
         "engagement_pct": round(inter / followers_now * 100, 2) if followers_now else 0,
         "items": [{k: p[k] for k in ("id", "permalink", "thumb", "video", "title", "views", "likes", "comments", "posted", "type", "media_type")}
-                  | {"caption": p["caption"][:600], "picked": reel_cat_source.get(p["id"]) == "Lili"} for p in top],
+                  | {"caption": p["caption"][:600], "picked": reel_cat_source.get(p["id"]) == "Lili", "format": format_of(p)} for p in top],
     }
 
 # remove cover images for posts that dropped off the website
@@ -747,7 +762,7 @@ for c in CATS:
         sh = shelves[c]
         print(f"    {c}: {sh['count']} reels, {sh['views']:,} views, avg {sh['avg_views']:,}, engagement {sh['engagement_pct']}%")
         for it in sh["items"]:
-            print(f"      {'*' if it['picked'] else ' '} {it['permalink']}  {it['views']:,} views  — {it['title'][:50]}")
+            print(f"      {'*' if it['picked'] else ' '} {it['permalink']}  {it['views']:,} views{'  [' + it['format'] + ']' if it['format'] else ''}  — {it['title'][:50]}")
     else:
         print(f"    {c}: no reels yet")
 no_vid = [it for c in CATS if c in shelves for it in shelves[c]["items"] if not it["video"] and it["media_type"] == "VIDEO"]
@@ -755,6 +770,9 @@ print(f"  Reels on the site with no video file (they open Instagram's player and
       f"videos/ named <code>.mp4, e.g. videos/DSTxMCvDQcW.mp4): {len(no_vid)}")
 for it in no_vid:
     print(f"      {it['permalink']}  -> videos/{it['permalink'].rstrip('/').split('/')[-1]}.mp4")
+for f, key, words in FORMAT_RULES:
+    if words not in format_hits:
+        print(f"  ! tag rule {f}: '{words[:60]}' didn't match any reel on the site (check the link or caption words)")
 none_reels = [p for p in public_posts if p["type"] == "REELS" and p["id"] not in reel_cat]
 print(f"  Reels with no category (kept off the site): {len(none_reels)}"
       + (", e.g. " + ", ".join(p["permalink"] for p in none_reels[:5]) if none_reels else ""))
