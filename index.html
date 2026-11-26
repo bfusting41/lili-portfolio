@@ -53,6 +53,9 @@ header.small .nav{max-width:760px;padding:6px 6px 6px 18px;box-shadow:inset 0 1.
 .lang{position:relative;display:flex;background:rgba(255,255,255,.35);border-radius:99px;padding:3px;box-shadow:inset 0 1px 2px rgba(120,30,70,.12),inset 0 -1px 0 rgba(255,255,255,.7)}
 .lang button{position:relative;z-index:1;border:0;background:none;color:var(--ink);font:700 13px "DM Sans",sans-serif;padding:8px 13px;border-radius:99px;cursor:pointer;min-height:36px;transition:color .35s}
 .lang button[aria-pressed=true]{color:#fff}
+.ltip{position:absolute;top:calc(100% + 12px);right:-6px;width:max-content;max-width:min(260px,80vw);background:#3a1f2b;color:#fff;font:500 13px/1.4 "DM Sans",sans-serif;padding:9px 13px;border-radius:14px;box-shadow:0 12px 26px -12px rgba(58,31,43,.55);opacity:0;transform:translateY(-4px);pointer-events:none;transition:opacity .3s,transform .3s;z-index:5}
+.ltip::before{content:"";position:absolute;top:-5px;right:24px;width:10px;height:10px;background:#3a1f2b;transform:rotate(45deg);border-radius:2px}
+.ltip.on{opacity:1;transform:none}
 .lang::before{content:"";position:absolute;top:3px;bottom:3px;left:3px;width:calc(50% - 3px);border-radius:99px;transform:translateX(var(--lx,0%));transition:transform .5s var(--ease);
   background:linear-gradient(180deg,#e46b93,#c8436d);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 -2px 4px rgba(120,20,60,.25),0 4px 10px -4px rgba(200,67,109,.7)}
 .lang.es::before{--lx:100%}
@@ -230,7 +233,8 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
     </div>
     <div class="lang" role="group" aria-label="Language">
       <button id="l-en" aria-pressed="true">EN</button>
-      <button id="l-es" aria-pressed="false">ES</button>
+      <button id="l-es" aria-pressed="false" aria-describedby="esTip">ES</button>
+      <span class="ltip" id="esTip" role="status"></span>
     </div>
   </nav>
 </header>
@@ -414,7 +418,8 @@ function motif(c){
 let lang="en",filt="all";
 const SHOW=12,SAMPLE_VIDEO="sample-reel.mp4"; /* sample clip only exists in the preview; on the live site her real reels play */
 const safeVid=u=>typeof u==="string"&&(/^https:\/\//.test(u)||/^(videos\/)?[\w.-]+\.mp4$/.test(u))?u:null; /* reels shown on the wall (stats.json keeps 24 for the averages) */
-try{const st=localStorage.getItem("lili-lang");if(st==="es"||st==="en")lang=st;}catch(e){}
+const ES_READY=false; /* Spanish is paused while it's finished; set to true to turn the ES button back on */
+try{const st=localStorage.getItem("lili-lang");if(st==="en"||(ES_READY&&st==="es"))lang=st;}catch(e){}
 const $=id=>document.getElementById(id);
 const order=["all","beauty","events","travel","food","hosp","life"];
 const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -588,7 +593,12 @@ addEventListener("scroll",()=>{
 },{passive:true});
 function setLang(l){lang=l;try{localStorage.setItem("lili-lang",l)}catch(e){}render();}
 $("l-en").addEventListener("click",()=>setLang("en"));
-$("l-es").addEventListener("click",()=>setLang("es"));
+let tipT;
+$("l-es").addEventListener("click",()=>{
+  if(ES_READY){setLang("es");return;}
+  const tip=$("esTip");tip.textContent="Sorry, this is currently under construction 😢";tip.classList.add("on");
+  clearTimeout(tipT);tipT=setTimeout(()=>tip.classList.remove("on"),2800);
+});
 $("moreCases").addEventListener("click",()=>{$("cases").classList.toggle("all");render();});
 $("chips").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;filt=b.dataset.c;render();});
 $("grid").addEventListener("click",e=>{
