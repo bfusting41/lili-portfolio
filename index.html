@@ -29,15 +29,32 @@ a{color:inherit}
 .band.wv{padding-top:calc(clamp(36px,5vw,72px) + var(--wv))}
 .wave{position:absolute;left:0;top:-1px;width:100%;height:var(--wv);display:block;pointer-events:none}
 .wrap{max-width:1240px;margin:0 auto}
-header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);box-shadow:0 10px 28px -24px rgba(209,77,120,.6)}
-.nav{display:flex;align-items:center;gap:20px;flex-wrap:wrap;max-width:1240px;margin:0 auto;padding:12px max(5vw,16px)}
-.mark{font:italic 600 28px/1 "Fraunces",Georgia,serif;font-variation-settings:"opsz" 30,"SOFT" 60;text-decoration:none;margin-right:auto}
-.links{display:flex;gap:18px;flex-wrap:wrap}
-.links a{text-decoration:none;font-size:15px;color:var(--mute)}
-.links a:hover{color:var(--rose)}
-.lang{display:flex;background:var(--soft);border-radius:99px;padding:3px}
-.lang button{border:0;background:none;color:var(--mute);font:700 13px "DM Sans",sans-serif;padding:8px 12px;border-radius:99px;cursor:pointer;min-height:36px}
-.lang button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+/* Liquid Glass header: a floating frosted capsule with a bright rim, inner glow and a light sheen
+   that drifts as you scroll. Content stays readable because the glass is milky, not clear. */
+header{position:fixed;top:12px;left:0;right:0;z-index:20;padding:0 max(3vw,10px);pointer-events:none}
+.nav{pointer-events:auto;position:relative;isolation:isolate;display:flex;align-items:center;gap:18px;max-width:1120px;margin:0 auto;padding:8px 8px 8px 22px;border-radius:999px;
+  background:linear-gradient(135deg,rgba(255,255,255,.62),rgba(255,255,255,.26) 55%,rgba(255,240,246,.4));
+  -webkit-backdrop-filter:blur(18px) saturate(190%) brightness(1.04);backdrop-filter:blur(18px) saturate(190%) brightness(1.04);
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(255,255,255,.35),inset 0 0 22px rgba(255,255,255,.35),0 1px 2px rgba(120,30,70,.08),0 14px 34px -14px rgba(150,40,80,.4);
+  transition:max-width .6s var(--ease),padding .6s var(--ease),box-shadow .6s var(--ease)}
+.nav::before{content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none;
+  background:radial-gradient(70% 140% at var(--sheen,20%) -30%,rgba(255,255,255,.85),transparent 55%),radial-gradient(60% 120% at calc(100% - var(--sheen,20%)) 140%,rgba(246,191,208,.45),transparent 60%);
+  transition:background-position .3s}
+.nav::after{content:"";position:absolute;inset:1px;border-radius:inherit;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(209,77,120,.08)}
+header.small .nav{max-width:760px;padding:6px 6px 6px 18px;box-shadow:inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 0 22px rgba(255,255,255,.35),0 18px 40px -16px rgba(150,40,80,.5)}
+.mark{font:italic 600 26px/1 "Fraunces",Georgia,serif;font-variation-settings:"opsz" 30,"SOFT" 60;text-decoration:none;margin-right:auto;text-shadow:0 1px 0 rgba(255,255,255,.6)}
+.links{display:flex;gap:4px;flex-wrap:wrap}
+.links a{text-decoration:none;font-size:15px;color:var(--ink);padding:9px 14px;border-radius:99px;transition:background .35s,box-shadow .35s}
+.links a:hover{background:rgba(255,255,255,.55);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 4px 12px -6px rgba(150,40,80,.35)}
+.lang{position:relative;display:flex;background:rgba(255,255,255,.35);border-radius:99px;padding:3px;box-shadow:inset 0 1px 2px rgba(120,30,70,.12),inset 0 -1px 0 rgba(255,255,255,.7)}
+.lang button{position:relative;z-index:1;border:0;background:none;color:var(--ink);font:700 13px "DM Sans",sans-serif;padding:8px 13px;border-radius:99px;cursor:pointer;min-height:36px;transition:color .35s}
+.lang button[aria-pressed=true]{color:#fff}
+.lang::before{content:"";position:absolute;top:3px;bottom:3px;left:3px;width:calc(50% - 3px);border-radius:99px;transform:translateX(var(--lx,0%));transition:transform .5s var(--ease);
+  background:linear-gradient(180deg,#e46b93,#c8436d);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 -2px 4px rgba(120,20,60,.25),0 4px 10px -4px rgba(200,67,109,.7)}
+.lang.es::before{--lx:100%}
+.hero{padding-top:calc(clamp(36px,5vw,72px) + 64px)!important}
+@media(max-width:600px){header{top:8px}.nav{padding:6px 6px 6px 16px}.mark{font-size:22px}}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 24px;border-radius:99px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);font:700 15px "DM Sans",sans-serif;text-decoration:none;cursor:pointer;transition:background .4s,border-color .4s,color .4s,transform .4s var(--ease)}
 .btn.ghost{background:transparent;color:var(--ink)}
 .btn:hover{background:var(--rose);border-color:var(--rose);color:#fff;transform:translateY(-2px)}
@@ -216,7 +233,7 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
 </section>
 
 <section class="band aud wv" id="audience">
-  <svg class="wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0H1440V54C1230 20 1020 18 800 44S380 86 190 62 40 30 0 36Z" fill="#fbe1e9"/></svg>
+  <svg class="wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path id="audWave" d="M0 0H1440V54C1230 20 1020 18 800 44S380 86 190 62 40 30 0 36Z" fill="#fbe1e9"/></svg>
   <div class="wrap">
     <h2 class="rv" data-t="audH">A bilingual audience across the Americas</h2>
     <div class="two">
@@ -328,7 +345,9 @@ const WORK=[
 {c:"hosp",v:"64K",en:["Suite check-in","Hotel feature"],es:["Check-in en la suite","Reseña de hotel"],d:{en:"Room tour, spa and rooftop, from key card to checkout.",es:"Recorrido, spa y terraza, de la llave al checkout."}},
 {c:"beauty",v:"143K",en:["Bridal-guest makeup","Tutorial"],es:["Maquillaje para invitada de boda","Tutorial"],d:{en:"Soft pink tones that last from ceremony to dance floor.",es:"Tonos rosa suave que duran de la ceremonia a la pista."}},
 {c:"life",v:"58K",en:["Sunday reset","Day in my life"],es:["Domingo de reinicio","Un día conmigo"],d:{en:"Coffee, a workout and planning the week ahead.",es:"Café, entrenamiento y planear la semana."}},
-{c:"events",v:"119K",en:["Gala red carpet","Event coverage"],es:["Alfombra roja de gala","Cobertura de evento"],d:{en:"Looks, arrivals and the room, cut for the next morning.",es:"Looks, llegadas y el ambiente, editado para la mañana siguiente."}}
+{c:"events",v:"119K",en:["Gala red carpet","Event coverage"],es:["Alfombra roja de gala","Cobertura de evento"],d:{en:"Looks, arrivals and the room, cut for the next morning.",es:"Looks, llegadas y el ambiente, editado para la mañana siguiente."}},
+{c:"travel",v:"76K",en:["Golden hour in the hill country","Day trip"],es:["Atardecer en el Hill Country","Escapada de un día"],d:{en:"Wildflowers, a winding road and a sunset stop just outside Austin.",es:"Flores silvestres, un camino sinuoso y un atardecer a las afueras de Austin."}},
+{c:"food",v:"92K",en:["Brunch worth the wait","Restaurant feature"],es:["Un brunch que vale la espera","Reseña de restaurante"],d:{en:"The line, the table and the dish everyone orders, in under a minute.",es:"La fila, la mesa y el platillo que todos piden, en menos de un minuto."}}
 ];
 const PAL={beauty:["#f6c9d6","#d95c86"],events:["#ffd3df","#d14d78"],travel:["#bfe3ea","#f3a6bd"],food:["#f7e1cf","#c8436d"],hosp:["#efe3ea","#8c5a73"],life:["#fbe6ec","#e391aa"]};
 function motif(c){
@@ -343,10 +362,15 @@ function motif(c){
   return s;
 }
 let lang="en",filt="all";
+const SHOW=12; /* reels shown on the wall (stats.json keeps 24 for the averages) */
 try{const st=localStorage.getItem("lili-lang");if(st==="es"||st==="en")lang=st;}catch(e){}
 const $=id=>document.getElementById(id);
 const order=["all","beauty","events","travel","food","hosp","life"];
 const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+/* glass header: compact capsule after the top, sheen drifts with scroll */
+const hdr=document.querySelector("header");
+const glass=()=>{hdr.classList.toggle("small",scrollY>40);hdr.querySelector(".nav").style.setProperty("--sheen",(15+(scrollY/8)%70).toFixed(1)+"%");};
+addEventListener("scroll",glass,{passive:true});glass();
 function hero(){
   /* Three phones: her pinned posts from stats.json (newest posts if none are pinned), drawn art until data loads.
      Spot order left, centre, right = pinned 1, 2, 3; the centre phone is drawn last so it sits in front. */
@@ -373,17 +397,17 @@ function render(){
   const t=T[lang],live=livePosts().length>0;
   document.documentElement.lang=lang;
   document.querySelectorAll("[data-t]").forEach(el=>{const k=el.dataset.t;if(typeof t[k]==="string")el.textContent=t[k];});
-  $("l-en").setAttribute("aria-pressed",lang==="en");$("l-es").setAttribute("aria-pressed",lang==="es");
+  $("l-en").setAttribute("aria-pressed",lang==="en");document.querySelector(".lang").classList.toggle("es",lang==="es");$("l-es").setAttribute("aria-pressed",lang==="es");
   let chipList=order;
   if(live){const have=new Set(livePosts().map(p=>CATMAP[p.id]).filter(c=>t.cats[c]));chipList=order.filter(c=>c==="all"||have.has(c));if(filt!=="all"&&!have.has(filt))filt="all";}
   $("chips").style.display=chipList.length>1?"":"none";
   $("chips").innerHTML=chipList.map(c=>`<button class="chip" data-c="${c}" aria-pressed="${filt===c}">${c==="all"?t.all:t.cats[c]}</button>`).join("");
   if(live){
-    const list=livePosts().map((p,i)=>({p,i})).filter(o=>filt==="all"||CATMAP[o.p.id]===filt);
+    const list=livePosts().map((p,i)=>({p,i})).filter(o=>filt==="all"||CATMAP[o.p.id]===filt).slice(0,SHOW);
     $("grid").innerHTML=list.map(({p,i})=>{const cat=t.cats[CATMAP[p.id]];const when=p.posted?new Date(p.posted).toLocaleDateString(lang,{month:"short",day:"numeric"}):"";
       return `<button class="tile rv" data-p="${i}"><div class="thumb"><img src="${esc(p.thumb)}" alt="" loading="lazy"><span class="views">${fmt(p.views)} ${t.views}</span><span class="play"></span></div><h3>${esc(p.title||t.reel)}</h3><small>${esc(cat?cat+" · "+when:when)}</small></button>`}).join("");
   }else{
-    const list=WORK.map((w,i)=>({...w,i})).filter(w=>filt==="all"||w.c===filt);
+    const list=WORK.map((w,i)=>({...w,i})).filter(w=>filt==="all"||w.c===filt).slice(0,SHOW);
     $("grid").innerHTML=list.map(w=>`<button class="tile rv" data-i="${w.i}"><div class="thumb"><svg viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice">${motif(w.c)}</svg><span class="views">${w.v} ${t.views}</span><span class="play"></span></div><h3>${w[lang][0]}</h3><small>${t.cats[w.c]} · ${w[lang][1]}</small></button>`).join("");
   }
   const l30=(LIVE&&LIVE.last_30_days)||{},prof=(LIVE&&LIVE.profile)||{};
@@ -406,6 +430,7 @@ function render(){
   /* Brand results come only from the daily script (her own posts that mention each brand). No data = section hidden. */
   const cl=LIVE&&Array.isArray(LIVE.campaigns)?LIVE.campaigns:[];
   $("results").hidden=!cl.length;document.querySelector('a[href="#results"]').hidden=!cl.length;
+  $("audWave").setAttribute("fill",cl.length?"#fbe1e9":"#ffffff"); /* the wave takes the colour of whichever section sits above it */
   $("total").textContent=fmt(cl.reduce((a,x)=>a+(+x.views||0),0))+t.total;
   $("cases").innerHTML=cl.map(x=>{const lp=livePosts().find(p=>p.id===x.id),thumb=x.thumb||(lp&&lp.thumb),perm=x.permalink||(lp&&lp.permalink);
     const pic=thumb?`<img src="${esc(thumb)}" alt="" loading="lazy">`:`<svg viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice">${motif(PAL[x.category]?x.category:"life")}</svg>`;
