@@ -372,6 +372,7 @@ for c, ids in zip(CAMPAIGNS, campaign_ids):
         "id": top["id"], "permalink": top["permalink"], "thumb": top["thumb"], "video": top["video"],  # the best-performing post represents the card
         **{k: sum(p[k] or 0 for p in ps) for k in SUM},
         "post_links": [p["permalink"] for p in sorted(ps, key=lambda p: p["views"], reverse=True)],
+        "_posts": sorted(ps, key=lambda p: p["views"], reverse=True),  # log only, removed before saving
     })
 campaigns.sort(key=lambda r: r["views"], reverse=True)
 print(f"  {len(campaigns)} of {len(CAMPAIGNS)} campaigns found")
@@ -446,7 +447,7 @@ stats_out = {
         "followers_by_country": followers_by_country,
         **demo,
     },
-    "campaigns": campaigns,
+    "campaigns": [{k: v for k, v in c.items() if k != "_posts"} for c in campaigns],
     "pinned": pinned_out,
     "posts": posts,
 }
@@ -567,9 +568,19 @@ boosted = [p for p in all_posts if p["likes"] > p["likes_organic"]]
 if boosted:
     print(f"  {len(boosted)} posts have extra likes from ads/boosts (counted in the totals), e.g. "
           + ", ".join(f"{p['permalink']} {p['likes_organic']:,} -> {p['likes']:,}" for p in boosted[:3]))
+def collab_names(media_id):
+    """Accounts invited as collaborators on a post (asked on its own; a problem here can't affect anything else)."""
+    data = (call(f"{media_id}/collaborators", fields="username,invite_status") or {}).get("data", [])
+    return ", ".join(f"@{d.get('username')}" + ("" if d.get("invite_status") in (None, "Accepted") else f" ({d.get('invite_status')})") for d in data)
+
+
 for c in campaigns:
     print(f"  Campaign {c['brand']}: {c['post_count']} post(s), {c['views']:,} views, {c['likes']:,} likes, {c['comments']:,} comments")
-    for link in c["post_links"]:
-        print(f"      {link}")
+    for p in c["_posts"]:
+        ins = total_value(call(f"{p['id']}/insights", metric="likes"))
+        collab = collab_names(p["id"])
+        print(f"      {p['permalink']}  views {p['views']:,} · likes {p['likes']:,} (organic {p['likes_organic']:,}"
+              f"{', insights ' + format(ins['likes'], ',') if 'likes' in ins else ''}) · comments {p['comments']:,}"
+              f"{' · collab with ' + collab if collab else ''}")
 if top_mentions:
     print("  Other accounts she @mentions most (possible campaigns): " + ", ".join(f"@{h} ({n})" for h, n in top_mentions))
