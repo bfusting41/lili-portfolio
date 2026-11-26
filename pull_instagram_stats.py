@@ -604,5 +604,19 @@ for c in campaigns:
         print(f"      {p['permalink']}  views {p['views']:,} · likes {p['likes']:,} (organic {p['likes_organic']:,}"
               f"{', insights ' + format(ins['likes'], ',') if 'likes' in ins else ''}) · comments {p['comments']:,}"
               f"{' · collab with ' + collab if collab else ''}")
+        # does a "trial" copy of this same video exist? (same caption opening, posted within 30 days)
+        key = " ".join(p["caption"].lower().split())[:60]
+        if key:
+            pdt = datetime.fromisoformat(p["posted"].replace("+0000", "+00:00")) if p["posted"] else None
+            for q in all_posts:
+                if q["on_profile"] or q["id"] == p["id"] or " ".join(q["caption"].lower().split())[:60] != key:
+                    continue
+                qdt = datetime.fromisoformat(q["posted"].replace("+0000", "+00:00")) if q["posted"] else None
+                gap = abs((pdt - qdt).days) if pdt and qdt else None
+                if gap is None or gap <= 30:
+                    if not q["refreshed"]:  # older posts only refresh on Sundays; get today's numbers for this check
+                        q["views"] = total_value(call(f"{q['id']}/insights", metric="views")).get("views", q["views"])
+                    print(f"         ↳ matching trial copy: {q['permalink']}  views {q['views']:,} · likes {q['likes']:,} · comments {q['comments']:,}"
+                          f" · posted {q['posted'][:10] if q['posted'] else '?'} (profile copy {p['posted'][:10] if p['posted'] else '?'})")
 if top_mentions:
     print("  Other accounts she @mentions most (possible campaigns): " + ", ".join(f"@{h} ({n})" for h, n in top_mentions))
