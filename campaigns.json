@@ -1,25 +1,229 @@
 [
-  {"brand": "Acqua Bistecca", "match": ["acquabistecca", "acqua bistecca"], "category": "food", "en": "Restaurant launch", "es": "Lanzamiento de restaurante", "posts": ["https://www.instagram.com/reel/DSTxMCvDQcW/"]},
-  {"brand": "Victoria's Secret", "match": ["victoriassecret", "victoria's secret", "victoria’s secret", "victorias secret"], "category": "events", "en": "Fashion show coverage", "es": "Cobertura del desfile"},
-  {"brand": "Skyscanner", "match": ["skyscanner"], "category": "travel", "en": "Travel storytelling", "es": "Historia de viaje"},
-  {"brand": "Toastique", "match": ["toastique"], "category": "food", "en": "Spring menu", "es": "Menú de primavera"},
-  {"brand": "Morphe", "match": ["morphe"], "category": "beauty", "en": "Lip combo reel", "es": "Reel de combinación de labios"},
-  {"brand": "ZEELOOL", "match": ["zeelool"], "category": "life", "en": "Eyewear reel", "es": "Reel de lentes"},
-  {"brand": "Cape Bottle Room", "match": ["@capebottleroom", "cape bottle room"], "category": "food", "en": "Restaurant feature", "es": "Reseña de restaurante"},
-  {"brand": "Estée Lauder", "match": ["@esteelauder", "estée lauder", "estee lauder"], "category": "beauty", "en": "Skincare and makeup", "es": "Cuidado de la piel y maquillaje"},
-  {"brand": "Coco & Eve", "match": ["@cocoandeve", "coco & eve", "coco and eve"], "category": "beauty", "en": "Hair and body care", "es": "Cuidado del cabello y cuerpo"},
-  {"brand": "Bellissima Prosecco", "match": ["bellissimaprosecco", "bellissima prosecco"], "category": "food", "en": "Drinks partnership", "es": "Colaboración de bebidas"},
-  {"brand": "H-E-B", "match": ["@heb"], "category": "life", "en": "Grocery partnership", "es": "Colaboración de supermercado"},
-  {"brand": "Origen Fragrances", "match": ["@origenfragrances"], "category": "beauty", "en": "Fragrance", "es": "Fragancia"},
-  {"brand": "JP's Pancake Company", "match": ["@jpspancakecompany"], "category": "food", "en": "Restaurant feature", "es": "Reseña de restaurante"},
-  {"brand": "BT Artbox Nails", "match": ["@btartboxnails"], "category": "beauty", "en": "Nails", "es": "Uñas"},
-  {"brand": "PINK", "match": ["@vspink", "#pinkpartner"], "category": "life", "en": "Fashion partnership", "es": "Colaboración de moda"},
-  {"brand": "Batiste", "match": ["@batiste_us"], "category": "beauty", "en": "Hair care", "es": "Cuidado del cabello"},
-  {"brand": "Ulta Beauty", "match": ["@ultabeauty"], "category": "beauty", "en": "Beauty partnership", "es": "Colaboración de belleza"},
-  {"brand": "Hotel Trinity", "match": ["@hoteltrinityatx"], "category": "hosp", "en": "Hotel feature", "es": "Reseña de hotel"},
-  {"brand": "Yacht Club ATX", "match": ["@yachtclubatx"], "category": "food", "en": "Restaurant feature", "es": "Reseña de restaurante"},
-  {"brand": "Haniix", "match": ["@haniix_official"], "category": "life", "en": "Brand partnership", "es": "Colaboración de marca"},
-  {"brand": "Taqueria De Diez", "match": ["#taqueriadediez", "@taqueriade10"], "category": "food", "en": "Restaurant feature", "es": "Reseña de restaurante"},
-  {"brand": "Jett's Pizza", "match": ["@jettspizza"], "category": "food", "en": "Restaurant feature", "es": "Reseña de restaurante"},
-  {"brand": "Mad Hippie", "match": ["@madhippiebeauty", "@madhippie_atx"], "category": "beauty", "en": "Skincare", "es": "Cuidado de la piel"}
+  {
+    "brand": "Acqua Bistecca",
+    "match": [
+      "acquabistecca",
+      "acqua bistecca"
+    ],
+    "category": "food",
+    "en": "Restaurant launch",
+    "es": "Lanzamiento de restaurante",
+    "posts": [
+      "https://www.instagram.com/reel/DSTxMCvDQcW/"
+    ]
+  },
+  {
+    "brand": "Victoria's Secret",
+    "match": [
+      "victoriassecret",
+      "victoria's secret",
+      "victoria’s secret",
+      "victorias secret"
+    ],
+    "category": "events",
+    "en": "Fashion show coverage",
+    "es": "Cobertura del desfile"
+  },
+  {
+    "brand": "Skyscanner",
+    "match": [
+      "skyscanner"
+    ],
+    "category": "travel",
+    "en": "Travel storytelling",
+    "es": "Historia de viaje"
+  },
+  {
+    "brand": "Toastique",
+    "match": [
+      "toastique"
+    ],
+    "category": "food",
+    "en": "Spring menu",
+    "es": "Menú de primavera"
+  },
+  {
+    "brand": "Morphe",
+    "match": [
+      "morphe"
+    ],
+    "category": "beauty",
+    "en": "Lip combo reel",
+    "es": "Reel de combinación de labios"
+  },
+  {
+    "brand": "ZEELOOL",
+    "match": [
+      "zeelool"
+    ],
+    "category": "life",
+    "en": "Eyewear reel",
+    "es": "Reel de lentes"
+  },
+  {
+    "brand": "Cape Bottle Room",
+    "match": [
+      "@capebottleroom",
+      "cape bottle room"
+    ],
+    "category": "food",
+    "en": "Restaurant feature",
+    "es": "Reseña de restaurante",
+    "posts": [
+      "https://www.instagram.com/reel/DgGa7DEt3Z1/"
+    ]
+  },
+  {
+    "brand": "Estée Lauder",
+    "match": [
+      "@esteelauder",
+      "estée lauder",
+      "estee lauder"
+    ],
+    "category": "beauty",
+    "en": "Skincare and makeup",
+    "es": "Cuidado de la piel y maquillaje"
+  },
+  {
+    "brand": "Coco & Eve",
+    "match": [
+      "@cocoandeve",
+      "coco & eve",
+      "coco and eve"
+    ],
+    "category": "beauty",
+    "en": "Hair and body care",
+    "es": "Cuidado del cabello y cuerpo"
+  },
+  {
+    "brand": "Bellissima Prosecco",
+    "match": [
+      "bellissimaprosecco",
+      "bellissima prosecco"
+    ],
+    "category": "food",
+    "en": "Drinks partnership",
+    "es": "Colaboración de bebidas"
+  },
+  {
+    "brand": "H-E-B",
+    "match": [
+      "@heb"
+    ],
+    "category": "life",
+    "en": "Grocery partnership",
+    "es": "Colaboración de supermercado"
+  },
+  {
+    "brand": "Origen Fragrances",
+    "match": [
+      "@origenfragrances"
+    ],
+    "category": "beauty",
+    "en": "Fragrance",
+    "es": "Fragancia"
+  },
+  {
+    "brand": "JP's Pancake Company",
+    "match": [
+      "@jpspancakecompany"
+    ],
+    "category": "food",
+    "en": "Restaurant feature",
+    "es": "Reseña de restaurante"
+  },
+  {
+    "brand": "BT Artbox Nails",
+    "match": [
+      "@btartboxnails"
+    ],
+    "category": "beauty",
+    "en": "Nails",
+    "es": "Uñas"
+  },
+  {
+    "brand": "PINK",
+    "match": [
+      "@vspink",
+      "#pinkpartner"
+    ],
+    "category": "life",
+    "en": "Fashion partnership",
+    "es": "Colaboración de moda"
+  },
+  {
+    "brand": "Batiste",
+    "match": [
+      "@batiste_us"
+    ],
+    "category": "beauty",
+    "en": "Hair care",
+    "es": "Cuidado del cabello"
+  },
+  {
+    "brand": "Ulta Beauty",
+    "match": [
+      "@ultabeauty"
+    ],
+    "category": "beauty",
+    "en": "Beauty partnership",
+    "es": "Colaboración de belleza"
+  },
+  {
+    "brand": "Hotel Trinity",
+    "match": [
+      "@hoteltrinityatx"
+    ],
+    "category": "hosp",
+    "en": "Hotel feature",
+    "es": "Reseña de hotel"
+  },
+  {
+    "brand": "Yacht Club ATX",
+    "match": [
+      "@yachtclubatx"
+    ],
+    "category": "food",
+    "en": "Restaurant feature",
+    "es": "Reseña de restaurante"
+  },
+  {
+    "brand": "Haniix",
+    "match": [
+      "@haniix_official"
+    ],
+    "category": "life",
+    "en": "Brand partnership",
+    "es": "Colaboración de marca"
+  },
+  {
+    "brand": "Taqueria De Diez",
+    "match": [
+      "#taqueriadediez",
+      "@taqueriade10"
+    ],
+    "category": "food",
+    "en": "Restaurant feature",
+    "es": "Reseña de restaurante"
+  },
+  {
+    "brand": "Jett's Pizza",
+    "match": [
+      "@jettspizza",
+      "@jetspizza"
+    ],
+    "category": "food",
+    "en": "Restaurant feature",
+    "es": "Reseña de restaurante"
+  },
+  {
+    "brand": "Mad Hippie",
+    "match": [
+      "@madhippiebeauty",
+      "@madhippie_atx"
+    ],
+    "category": "beauty",
+    "en": "Skincare",
+    "es": "Cuidado de la piel"
+  }
 ]

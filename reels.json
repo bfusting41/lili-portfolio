@@ -1,10 +1,39 @@
 {
   "use_guesses": true,
-  "skincare": [],
-  "haircare": [],
-  "makeup": [],
-  "travel": [],
-  "hospitality": [],
+  "only_picks": [
+    "skincare",
+    "haircare",
+    "makeup",
+    "travel"
+  ],
+  "skincare": [
+    "https://www.instagram.com/reel/Df7y9M2ycvG/",
+    "https://www.instagram.com/reel/DexmdiTtMzk/",
+    "https://www.instagram.com/reel/DeQZSElt7Xr/",
+    "https://www.instagram.com/reel/Dc_b_KkSAaZ/"
+  ],
+  "haircare": [
+    "https://www.instagram.com/reel/DcJ-1G_h3qY/",
+    "https://www.instagram.com/reel/DfifN12tptB/"
+  ],
+  "makeup": [
+    "https://www.instagram.com/reel/Dbq5hXNJbJZ/",
+    "https://www.instagram.com/reel/Df372k_Sx01/",
+    "https://www.instagram.com/reel/DgA23hhyqBq/",
+    "https://www.instagram.com/reel/Dc2f08aN10K/",
+    "https://www.instagram.com/reel/DaeBzoWNwHo/",
+    "https://www.instagram.com/reel/DW0AAEzja1o/"
+  ],
+  "travel": [
+    "https://www.instagram.com/reel/DNY_pnOSnea/",
+    "https://www.instagram.com/reel/DO9xLaADTvm/",
+    "https://www.instagram.com/reel/DNT6sDfyXhA/",
+    "https://www.instagram.com/reel/DWDINFQjW3D/"
+  ],
+  "hospitality": [
+    "https://www.instagram.com/reel/DefnfMqN3wZ/",
+    "https://www.instagram.com/reel/DgGa7DEt3Z1/"
+  ],
   "lifestyle": [],
   "none": []
 }

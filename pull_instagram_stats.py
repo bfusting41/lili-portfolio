@@ -304,7 +304,13 @@ for c in CAMPAIGNS:
         # hashtags are ignored: she often hashtags brands on personal posts just for reach; a real brand post @tags or names them
         text = lambda m: re.sub(r"#[^\s#]+", " ", (m.get("caption") or "").lower())
         # a term listed WITH a "#" (e.g. "#pinkpartner") is a hashtag she uses for that brand, so it's matched as a hashtag
-        hit = lambda m, t: (t in (m.get("caption") or "").lower()) if t.startswith("#") else (t in text(m))
+        # handles ("@brand") match with or without the "@" (the API often drops it), as a whole word so "@heb" can't hit "hebrew"
+        def hit(m, t):
+            if t.startswith("#"):
+                return t in (m.get("caption") or "").lower()
+            if t.startswith("@"):
+                return re.search(r"(?<![a-z0-9_.])@?" + re.escape(t[1:]) + r"(?![a-z0-9_])", text(m)) is not None
+            return t in text(m)
         ids = [m["id"] for m in all_media if on_profile(m) and any(hit(m, t) for t in terms)]
     skip = {post_key(x) for x in c.get("exclude", [])}
     if skip:
@@ -330,7 +336,9 @@ CAT_WORDS = {
                     "pancakes", "cafe", "coffee", "matcha", "cocktail", "cocktails", "wine", "prosecco", "hotel", "suite",
                     "staycation", "resort", "spa", "toastique", "acquabistecca", "acqua bistecca", "jettspizza", "yachtclubatx",
                     "capebottleroom", "hoteltrinityatx", "jpspancakecompany", "taqueriade10", "taqueriadediez", "heb",
-                    "bellissimaprosecco", "comida", "restaurante"],
+                    "bellissimaprosecco", "comida", "restaurante",
+                    "food", "eats", "dish", "dessert", "drinks", "happy hour", "seafood", "sushi", "burger", "steak",
+                    "pasta", "breakfast", "bakery", "bites", "desayuno", "cena", "postre"],
     "lifestyle": ["outfit", "ootd", "fit check", "style", "fashion", "day in my life", "vlog", "weekend",
                   "gym", "workout", "vspink", "#pinkpartner", "zeelool", "glasses", "eyewear", "haniix_official",
                   "victoriassecret", "victoria's secret", "victoria’s secret", "fashion show"],
@@ -358,6 +366,7 @@ except Exception as e:
     REELS_CFG = {}
 picked = {post_key(x): c for c in CATS + ["none"] for x in REELS_CFG.get(c, [])}
 use_guesses = REELS_CFG.get("use_guesses", True)
+only_picks = set(REELS_CFG.get("only_picks", []))  # categories that show ONLY the links Lili listed (no guesses)
 reel_cat, reel_cat_source = {}, {}
 for m in all_media:
     k1, k2 = m["id"], shortcode_of(m)
@@ -367,7 +376,7 @@ for m in all_media:
             reel_cat[m["id"]], reel_cat_source[m["id"]] = c, "Lili"
     elif use_guesses and on_profile(m) and m.get("media_product_type") == "REELS":
         c = guess_cat(m.get("caption"))
-        if c:
+        if c and c not in only_picks:
             reel_cat[m["id"]], reel_cat_source[m["id"]] = c, "guess"
 
 # old posts barely change, so: newest posts and campaign posts every day, everything once a week (and on the very first run)
