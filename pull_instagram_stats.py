@@ -398,7 +398,8 @@ for i, m in enumerate(all_media):
     # cover images only for posts shown on the site (Instagram's image links expire after a few days)
     thumb_file = None
     thumb_url = m.get("thumbnail_url") or m.get("media_url")
-    shelf = m["id"] in reel_cat  # thumbnails for shelf reels are fetched after we know which ones make the top of each shelf
+    # category reels get their cover after we know which ones make each tab's top 12 (brand and pinned posts always get one now)
+    shelf = m["id"] in reel_cat and not ({m["id"], shortcode[0]} & (CAMPAIGN_IDS | set(PINNED)))
     if (shown or (is_campaign and not shelf)) and thumb_url and (m.get("thumbnail_url") or m.get("media_type") != "VIDEO"):
         try:
             img = requests.get(thumb_url, timeout=30)
@@ -419,7 +420,9 @@ for i, m in enumerate(all_media):
         "posted": posted,
         "thumb": thumb_file,
         # direct video link for the site's player; Instagram's links expire after a few days, so this is refreshed every run
-        "video": m.get("media_url") if m.get("media_type") == "VIDEO" else None,
+        # Lili's own copy in videos/<code>.mp4 wins: Instagram gives no video link for reels with licensed music
+        "video": (f"videos/{shortcode[0]}.mp4" if shortcode[0] and Path(f"videos/{shortcode[0]}.mp4").exists()
+                  else m.get("media_url") if m.get("media_type") == "VIDEO" else None),
         "refreshed": bool(refresh),
         "on_profile": on_profile(m),
         "_turl": thumb_url if (m.get("thumbnail_url") or m.get("media_type") != "VIDEO") else None,
@@ -738,6 +741,11 @@ for c in CATS:
             print(f"      {'*' if it['picked'] else ' '} {it['permalink']}  {it['views']:,} views  — {it['title'][:50]}")
     else:
         print(f"    {c}: no reels yet")
+no_vid = [it for c in CATS if c in shelves for it in shelves[c]["items"] if not it["video"] and it["media_type"] == "VIDEO"]
+print(f"  Reels on the site with no video file (they open Instagram's player and don't preview; to fix one, upload the reel to "
+      f"videos/ named <code>.mp4, e.g. videos/DSTxMCvDQcW.mp4): {len(no_vid)}")
+for it in no_vid:
+    print(f"      {it['permalink']}  -> videos/{it['permalink'].rstrip('/').split('/')[-1]}.mp4")
 none_reels = [p for p in public_posts if p["type"] == "REELS" and p["id"] not in reel_cat]
 print(f"  Reels with no category (kept off the site): {len(none_reels)}"
       + (", e.g. " + ", ".join(p["permalink"] for p in none_reels[:5]) if none_reels else ""))
