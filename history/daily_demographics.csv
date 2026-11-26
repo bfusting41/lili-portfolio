@@ -112,35 +112,36 @@ date,audience,dimension,value,count,share
 2026-11-26,followers,city,"Trujillo Alto, Trujillo Alto",9,0.3
 2026-11-26,followers,city,"Sonsonate, Sonsonate Department",9,0.3
 2026-11-26,followers,city,"Vallejo, California",9,0.3
-2026-11-26,followers,age,25-34,2928,55.3
-2026-11-26,followers,age,35-44,1377,26.0
-2026-11-26,followers,age,45-54,479,9.1
+2026-11-26,followers,city,"Finca El Espino, La Libertad Department",10,0.4
+2026-11-26,followers,age,25-34,2936,55.2
+2026-11-26,followers,age,35-44,1390,26.1
+2026-11-26,followers,age,45-54,483,9.1
 2026-11-26,followers,age,18-24,303,5.7
-2026-11-26,followers,age,55-64,135,2.6
-2026-11-26,followers,age,65+,62,1.2
+2026-11-26,followers,age,55-64,135,2.5
+2026-11-26,followers,age,65+,63,1.2
 2026-11-26,followers,age,13-17,8,0.2
-2026-11-26,followers,gender,M,3148,59.5
-2026-11-26,followers,gender,F,1352,25.5
-2026-11-26,followers,gender,U,792,15.0
-2026-11-26,followers,city,"San Salvador, San Salvador Department",906,34.1
-2026-11-26,followers,city,"Santa Tecla, La Libertad Department",341,12.8
+2026-11-26,followers,gender,M,3168,59.6
+2026-11-26,followers,gender,F,1353,25.4
+2026-11-26,followers,gender,U,797,15.0
+2026-11-26,followers,city,"San Salvador, San Salvador Department",906,34.0
+2026-11-26,followers,city,"Santa Tecla, La Libertad Department",342,12.8
 2026-11-26,followers,city,"Antiguo Cuscatlán, La Libertad Department",155,5.8
-2026-11-26,followers,city,"Mejicanos, San Salvador Department",129,4.9
+2026-11-26,followers,city,"Mejicanos, San Salvador Department",129,4.8
 2026-11-26,followers,city,"New York, New York",81,3.0
-2026-11-26,followers,city,"San Juan, San Juan",64,2.4
-2026-11-26,followers,city,"Austin, Texas",63,2.4
-2026-11-26,followers,city,"Los Angeles, California",49,1.8
+2026-11-26,followers,city,"Austin, Texas",66,2.5
+2026-11-26,followers,city,"San Juan, San Juan",65,2.4
+2026-11-26,followers,city,"Los Angeles, California",50,1.9
 2026-11-26,followers,city,"Soyapango, San Salvador Department",47,1.8
-2026-11-26,followers,city,"Santa Ana, Santa Ana Department",44,1.7
+2026-11-26,followers,city,"Santa Ana, Santa Ana Department",44,1.6
 2026-11-26,followers,city,"Apopa, San Salvador Department",43,1.6
 2026-11-26,followers,city,"San Miguel, San Miguel Department",43,1.6
 2026-11-26,followers,city,"Colón, La Libertad Department",42,1.6
 2026-11-26,followers,city,"Washington D.C., Washington, District of Columbia",42,1.6
-2026-11-26,followers,city,"Houston, Texas",38,1.4
+2026-11-26,followers,city,"Houston, Texas",40,1.5
 2026-11-26,followers,city,"Opico, La Libertad Department",37,1.4
 2026-11-26,followers,city,"Delgado, San Salvador Department",31,1.2
 2026-11-26,followers,city,"Chicago, Illinois",31,1.2
-2026-11-26,followers,city,"Bayamon, Bayamón",29,1.1
+2026-11-26,followers,city,"Bayamon, Bayamón",30,1.1
 2026-11-26,followers,city,"San José Villanueva, La Libertad Department",29,1.1
 2026-11-26,followers,city,"Zaragoza, La Libertad Department",26,1.0
 2026-11-26,followers,city,"Nuevo Cuscatlán, La Libertad Department",25,0.9
@@ -150,23 +151,23 @@ date,audience,dimension,value,count,share
 2026-11-26,followers,city,"San Antonio, Texas",22,0.8
 2026-11-26,followers,city,"San Marcos, San Salvador Department",22,0.8
 2026-11-26,followers,city,"Madrid, Comunidad de Madrid",21,0.8
-2026-11-26,followers,city,"Ilopango, San Salvador Department",20,0.8
+2026-11-26,followers,city,"Ilopango, San Salvador Department",20,0.7
 2026-11-26,followers,city,"Panama City, Panamá Province",19,0.7
 2026-11-26,followers,city,"Philadelphia, Pennsylvania",18,0.7
+2026-11-26,followers,city,"Ponce, Ponce",18,0.7
 2026-11-26,followers,city,"Carolina, Carolina",17,0.6
-2026-11-26,followers,city,"Ponce, Ponce",17,0.6
 2026-11-26,followers,city,"Tegucigalpa, Francisco Morazán Department",14,0.5
 2026-11-26,followers,city,"Escalón, San Salvador Department",13,0.5
 2026-11-26,followers,city,"Mexico City, Distrito Federal",13,0.5
-2026-11-26,followers,city,"Ahuachapán, Ahuachapán Department",12,0.5
-2026-11-26,followers,city,"Caguas, Caguas",12,0.5
-2026-11-26,followers,city,"Miami, Florida",12,0.5
+2026-11-26,followers,city,"Ahuachapán, Ahuachapán Department",12,0.4
+2026-11-26,followers,city,"Caguas, Caguas",12,0.4
+2026-11-26,followers,city,"Miami, Florida",12,0.4
 2026-11-26,followers,city,"Fort Worth, Texas",11,0.4
 2026-11-26,followers,city,"Conchagua, La Unión Department",10,0.4
 2026-11-26,followers,city,"El Paso, Texas",10,0.4
 2026-11-26,followers,city,"Usulután, Usulután Department",10,0.4
+2026-11-26,followers,city,"Vega Alta, Vega Alta",10,0.4
 2026-11-26,followers,city,"Santo Domingo de los Colorados, Santo Domingo de los Tsáchilas Province",10,0.4
-2026-11-26,followers,city,"Finca El Espino, La Libertad Department",10,0.4
 2026-11-26,engaged,age,25-34,1965,44.0
 2026-11-26,engaged,age,35-44,1033,23.1
 2026-11-26,engaged,age,18-24,739,16.5
