@@ -43,6 +43,7 @@ HISTORY_DIR = Path("history")  # dated copies kept forever, for the future Stati
 CAMPAIGNS_FILE = Path("campaigns.json")  # brand campaigns shown on the site; edit this file to add or remove one
 HIDDEN_FILE = Path("hidden.json")        # optional: list of post IDs to keep off the website (still kept in history)
 SHOWN_FILE = Path("shown.json")          # optional: trial reels she later shared to followers (links or IDs) — count them as on her profile
+CORRECTIONS_FILE = Path("corrections.json")  # optional: numbers Lili checked in her app for posts the API undercounts
 PINNED_FILE = Path("pinned.json")        # optional: her pinned posts (links or IDs) for the phones at the top of the site
 
 
@@ -299,7 +300,12 @@ for c in CAMPAIGNS:
     if named:
         ids = [m["id"] for m in all_media if m["id"] in named or shortcode_of(m) in named]
     else:
-        ids = [m["id"] for m in all_media if on_profile(m) and any(t in (m.get("caption") or "").lower() for t in terms)]
+        # hashtags are ignored: she often hashtags brands on personal posts just for reach; a real brand post @tags or names them
+        text = lambda m: re.sub(r"#[^\s#]+", " ", (m.get("caption") or "").lower())
+        ids = [m["id"] for m in all_media if on_profile(m) and any(t.lstrip("#") in text(m) for t in terms)]
+    skip = {post_key(x) for x in c.get("exclude", [])}
+    if skip:
+        ids = [i for i in ids if i not in skip and shortcode_of(next(m for m in all_media if m["id"] == i)) not in skip]
     campaign_ids.append(ids)
 CAMPAIGN_IDS = {i for ids in campaign_ids for i in ids}
 
@@ -370,6 +376,42 @@ for i, m in enumerate(all_media):
     })
 
 public_posts = [p for p in all_posts if p["on_profile"]]
+# ---------- 4a. corrections from her app (for posts Instagram's API undercounts) ----------
+# corrections.json: [{"post": link, "as_of": "YYYY-MM-DD", "likes": 4369, "views": 128000}] (comments optional).
+# Shown value = her checked number + whatever the API has added since that date, so it keeps growing every day.
+# The raw API numbers are still what goes into history/, so each day's growth is measured from real API data.
+try:
+    CORRECTIONS = json.loads(CORRECTIONS_FILE.read_text(encoding="utf-8")) if CORRECTIONS_FILE.exists() else []
+except Exception as e:
+    print(f"  ! corrections.json could not be read ({e}); ignoring it")
+    CORRECTIONS = []
+FIELDS = ("likes", "views", "comments")
+for p in all_posts:
+    p["api"] = {f: p[f] for f in FIELDS}
+if CORRECTIONS:
+    past = []
+    if (HISTORY_DIR / "daily_posts.csv").exists():
+        with (HISTORY_DIR / "daily_posts.csv").open(newline="", encoding="utf-8") as f:
+            past = list(csv.DictReader(f))
+    print("  Corrections from her app (+ API growth since):")
+    for c in CORRECTIONS:
+        key = post_key(c.get("post", ""))
+        p = next((q for q in all_posts if q["id"] == key or q["shortcode"] == key), None)
+        if not p:
+            print(f"  ! correction for {c.get('post')} - post not found")
+            continue
+        as_of = str(c.get("as_of", ""))
+        rows = sorted((r for r in past if r.get("post_id") == p["id"] and r.get("date", "") >= as_of), key=lambda r: r["date"])
+        base = {f: int(float(rows[0][f])) if rows and rows[0].get(f) not in (None, "") else p["api"][f] for f in FIELDS}
+        parts = []
+        for f in FIELDS:
+            if isinstance(c.get(f), (int, float)):
+                growth = max(0, p["api"][f] - base[f])
+                p[f] = int(c[f]) + growth
+                parts.append(f"{f} {int(c[f]):,} + {growth:,} = {p[f]:,}")
+        p["corrected"] = True
+        print(f"      {p['permalink']} (checked {as_of}): " + " · ".join(parts))
+
 posts = public_posts[:DISPLAY_POSTS]  # what the website shows: newest posts that are actually on her profile
 
 # ---------- 4b. brand campaigns: every matching post on her profile, added up per brand ----------
@@ -535,7 +577,7 @@ upsert_csv(HISTORY_DIR / "daily_account.csv", [{
 # 3) one row per post per day, so each post's growth curve builds up over time (campaign posts included every day)
 upsert_csv(HISTORY_DIR / "daily_posts.csv", [{
     "date": today, "post_id": p["id"], "posted": p["posted"], "type": p["type"], "on_profile": p["on_profile"],
-    "views": p["views"], "reach": p["reach"], "likes": p["likes"], "likes_organic": p["likes_organic"], "comments": p["comments"],
+    "views": p["api"]["views"], "reach": p["reach"], "likes": p["api"]["likes"], "likes_organic": p["likes_organic"], "comments": p["api"]["comments"],
     "saves": p["saves"], "shares": p["shares"], "interactions": p["interactions"],
     "avg_watch_s": p["avg_watch_s"], "total_watch_min": p["total_watch_min"],
 } for p in all_posts if p["refreshed"]], ["date", "post_id"])
