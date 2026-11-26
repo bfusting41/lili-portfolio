@@ -233,14 +233,17 @@ for who, metric, extra in (("followers", "follower_demographics", {}),
 
 # ---------- 4. every post, plus per-post stats ----------
 print("Pulling her full post list...")
+# total_like_count includes likes from ads/boosts made from the post (like_count leaves those out).
+# If Instagram ever rejects that field, fall back to the plain list so the run still works.
+BASE_FIELDS = "id,caption,media_type,media_product_type,is_shared_to_feed,permalink,thumbnail_url,media_url,timestamp,like_count,comments_count"
+fields = BASE_FIELDS + ",total_like_count"
 all_media, after = [], None
 while True:
-    page = call(
-        f"{IG_ID}/media",
-        fields="id,caption,media_type,media_product_type,is_shared_to_feed,permalink,thumbnail_url,media_url,timestamp,like_count,comments_count",
-        limit=100,
-        **({"after": after} if after else {}),
-    )
+    page = call(f"{IG_ID}/media", fields=fields, limit=100, **({"after": after} if after else {}))
+    if not page and not all_media and fields != BASE_FIELDS:
+        print("  ! total_like_count not available; using like_count (leaves out likes from ads)")
+        fields = BASE_FIELDS
+        continue
     if not page:
         break
     all_media += page.get("data", [])
@@ -333,7 +336,8 @@ for i, m in enumerate(all_media):
         "on_profile": on_profile(m),
         "shortcode": shortcode[0],
         "shared_to_feed": m.get("is_shared_to_feed"),
-        "likes": m.get("like_count", 0),
+        "likes": m.get("total_like_count") or m.get("like_count", 0),  # incl. likes from ads/boosts
+        "likes_organic": m.get("like_count", 0),
         "comments": m.get("comments_count", 0),
         "views": stats.get("views", 0),
         "reach": stats.get("reach", 0),
@@ -510,7 +514,7 @@ upsert_csv(HISTORY_DIR / "daily_account.csv", [{
 # 3) one row per post per day, so each post's growth curve builds up over time (campaign posts included every day)
 upsert_csv(HISTORY_DIR / "daily_posts.csv", [{
     "date": today, "post_id": p["id"], "posted": p["posted"], "type": p["type"], "on_profile": p["on_profile"],
-    "views": p["views"], "reach": p["reach"], "likes": p["likes"], "comments": p["comments"],
+    "views": p["views"], "reach": p["reach"], "likes": p["likes"], "likes_organic": p["likes_organic"], "comments": p["comments"],
     "saves": p["saves"], "shares": p["shares"], "interactions": p["interactions"],
     "avg_watch_s": p["avg_watch_s"], "total_watch_min": p["total_watch_min"],
 } for p in all_posts if p["refreshed"]], ["date", "post_id"])
@@ -556,6 +560,10 @@ if account_30d:
 top = engaged_by_country or followers_by_country
 if top:
     print("  Top countries: " + ", ".join(f"{r['country']} {r['share']}%" for r in top[:5]))
+boosted = [p for p in all_posts if p["likes"] > p["likes_organic"]]
+if boosted:
+    print(f"  {len(boosted)} posts have extra likes from ads/boosts (counted in the totals), e.g. "
+          + ", ".join(f"{p['permalink']} {p['likes_organic']:,} -> {p['likes']:,}" for p in boosted[:3]))
 for c in campaigns:
     print(f"  Campaign {c['brand']}: {c['post_count']} post(s), {c['views']:,} views, {c['likes']:,} likes, {c['comments']:,} comments")
     for link in c["post_links"]:
