@@ -416,7 +416,7 @@ function hero(){
   /* Three phones: Lili's photos (or her pinned posts from stats.json), drawn art as a last resort.
      Spot order left, centre, right = pinned 1, 2, 3; the centre phone is drawn last so it sits in front. */
   /* Lili's chosen photos (lili-hero-1/2/3.jpg); if they're ever removed, the phones fall back to her pinned posts */
-  const HERO_PHOTOS=["lili-hero-1.jpg","lili-hero-2.jpg","lili-hero-3.jpg"];
+  const HERO_PHOTOS=[]; /* e.g. ["lili-hero-1.jpg","lili-hero-2.jpg","lili-hero-3.jpg"] to use photos instead of her pinned posts */
   const live=HERO_PHOTOS.length?HERO_PHOTOS.map(t=>({thumb:t})):(LIVE&&Array.isArray(LIVE.pinned)?LIVE.pinned.filter(p=>p&&p.thumb):[]);
   const spots=[[-12,30,58,"travel"],[0,135,22,"beauty"],[12,240,58,"events"]];
   const phone=(i)=>{const [rot,x,y,c]=spots[i],pic=live[i];
