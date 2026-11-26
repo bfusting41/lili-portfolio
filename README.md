@@ -35,13 +35,13 @@ lilimagana.com is registered at Cloudflare and points to GitHub Pages: 4 A recor
 
 ## Brand results (campaigns.json)
 
-Each brand is found from her own posts: the script looks for posts **on her profile** (trial reels skipped) whose caption contains any of the `match` words, and adds up their views, likes and comments. **Hashtags are ignored** — she often hashtags brands on personal posts for reach, so only an @tag or the brand's name in the caption counts. Likes include likes from ads/boosts (Instagram's `total_like_count`).
+Each brand is found from her own posts: the script looks for posts **on her profile** (trial reels skipped) whose caption contains any of the `match` words, and adds up their views, likes and comments. **Hashtags are ignored unless you list them** — she often hashtags brands on personal posts for reach, so normally only an @tag or the brand's name counts. A term written with a `#` in `match` (e.g. `"#pinkpartner"`) is a hashtag she uses for that brand, and it does count. Likes include likes from ads/boosts (Instagram's `total_like_count`).
 
 ```json
 {"brand": "Skyscanner", "match": ["skyscanner"], "category": "travel", "en": "Travel storytelling", "es": "Historia de viaje"}
 ```
 
-- `match` — lowercase words or handles to look for, e.g. `"@brandhandle"` or the brand name. Partial matches count (`"zeelool"` also matches `@zeelool_official`). Include the curly-apostrophe spelling for names like Victoria’s Secret.
+- `match` — lowercase words, handles or hashtags to look for, e.g. `"@brandhandle"`, the brand name, or `"#brandhashtag"`. Partial matches count (`"zeelool"` also matches `@zeelool_official`). Include the curly-apostrophe spelling for names like Victoria’s Secret.
 - `"exclude": [links]` — leave specific posts out of that brand.
 - `"posts": [links]` — name the exact posts instead of matching captions.
 - `en` / `es` — the short label under the brand name.

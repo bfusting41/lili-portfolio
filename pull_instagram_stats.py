@@ -302,7 +302,9 @@ for c in CAMPAIGNS:
     else:
         # hashtags are ignored: she often hashtags brands on personal posts just for reach; a real brand post @tags or names them
         text = lambda m: re.sub(r"#[^\s#]+", " ", (m.get("caption") or "").lower())
-        ids = [m["id"] for m in all_media if on_profile(m) and any(t.lstrip("#") in text(m) for t in terms)]
+        # a term listed WITH a "#" (e.g. "#pinkpartner") is a hashtag she uses for that brand, so it's matched as a hashtag
+        hit = lambda m, t: (t in (m.get("caption") or "").lower()) if t.startswith("#") else (t in text(m))
+        ids = [m["id"] for m in all_media if on_profile(m) and any(hit(m, t) for t in terms)]
     skip = {post_key(x) for x in c.get("exclude", [])}
     if skip:
         ids = [i for i in ids if i not in skip and shortcode_of(next(m for m in all_media if m["id"] == i)) not in skip]
