@@ -223,3 +223,113 @@ date,audience,dimension,value,count,share
 2026-11-26,engaged,city,"Round Rock, Texas",9,0.7
 2026-11-26,engaged,city,"Nuevo Cuscatlán, La Libertad Department",9,0.7
 2026-11-26,engaged,city,"Sacramento, California",9,0.7
+2026-11-27,followers,age,25-34,2936,55.2
+2026-11-27,followers,age,35-44,1390,26.1
+2026-11-27,followers,age,45-54,483,9.1
+2026-11-27,followers,age,18-24,303,5.7
+2026-11-27,followers,age,55-64,135,2.5
+2026-11-27,followers,age,65+,63,1.2
+2026-11-27,followers,age,13-17,8,0.2
+2026-11-27,followers,gender,M,3168,59.6
+2026-11-27,followers,gender,F,1353,25.4
+2026-11-27,followers,gender,U,797,15.0
+2026-11-27,followers,city,"San Salvador, San Salvador Department",906,34.0
+2026-11-27,followers,city,"Santa Tecla, La Libertad Department",342,12.8
+2026-11-27,followers,city,"Antiguo Cuscatlán, La Libertad Department",155,5.8
+2026-11-27,followers,city,"Mejicanos, San Salvador Department",129,4.8
+2026-11-27,followers,city,"New York, New York",81,3.0
+2026-11-27,followers,city,"Austin, Texas",66,2.5
+2026-11-27,followers,city,"San Juan, San Juan",65,2.4
+2026-11-27,followers,city,"Los Angeles, California",50,1.9
+2026-11-27,followers,city,"Soyapango, San Salvador Department",47,1.8
+2026-11-27,followers,city,"Santa Ana, Santa Ana Department",44,1.6
+2026-11-27,followers,city,"Apopa, San Salvador Department",43,1.6
+2026-11-27,followers,city,"San Miguel, San Miguel Department",43,1.6
+2026-11-27,followers,city,"Colón, La Libertad Department",42,1.6
+2026-11-27,followers,city,"Washington D.C., Washington, District of Columbia",42,1.6
+2026-11-27,followers,city,"Houston, Texas",40,1.5
+2026-11-27,followers,city,"Opico, La Libertad Department",37,1.4
+2026-11-27,followers,city,"Delgado, San Salvador Department",31,1.2
+2026-11-27,followers,city,"Chicago, Illinois",31,1.2
+2026-11-27,followers,city,"Bayamon, Bayamón",30,1.1
+2026-11-27,followers,city,"San José Villanueva, La Libertad Department",29,1.1
+2026-11-27,followers,city,"Zaragoza, La Libertad Department",26,1.0
+2026-11-27,followers,city,"Nuevo Cuscatlán, La Libertad Department",25,0.9
+2026-11-27,followers,city,"Guatemala City, Guatemala Department",24,0.9
+2026-11-27,followers,city,"Arlington, Virginia",23,0.9
+2026-11-27,followers,city,"Dallas, Texas",23,0.9
+2026-11-27,followers,city,"San Antonio, Texas",22,0.8
+2026-11-27,followers,city,"San Marcos, San Salvador Department",22,0.8
+2026-11-27,followers,city,"Madrid, Comunidad de Madrid",21,0.8
+2026-11-27,followers,city,"Ilopango, San Salvador Department",20,0.7
+2026-11-27,followers,city,"Panama City, Panamá Province",19,0.7
+2026-11-27,followers,city,"Philadelphia, Pennsylvania",18,0.7
+2026-11-27,followers,city,"Ponce, Ponce",18,0.7
+2026-11-27,followers,city,"Carolina, Carolina",17,0.6
+2026-11-27,followers,city,"Tegucigalpa, Francisco Morazán Department",14,0.5
+2026-11-27,followers,city,"Escalón, San Salvador Department",13,0.5
+2026-11-27,followers,city,"Mexico City, Distrito Federal",13,0.5
+2026-11-27,followers,city,"Ahuachapán, Ahuachapán Department",12,0.4
+2026-11-27,followers,city,"Caguas, Caguas",12,0.4
+2026-11-27,followers,city,"Miami, Florida",12,0.4
+2026-11-27,followers,city,"Fort Worth, Texas",11,0.4
+2026-11-27,followers,city,"Conchagua, La Unión Department",10,0.4
+2026-11-27,followers,city,"El Paso, Texas",10,0.4
+2026-11-27,followers,city,"Usulután, Usulután Department",10,0.4
+2026-11-27,followers,city,"Vega Alta, Vega Alta",10,0.4
+2026-11-27,followers,city,"Santo Domingo de los Colorados, Santo Domingo de los Tsáchilas Province",10,0.4
+2026-11-27,engaged,age,25-34,1965,44.0
+2026-11-27,engaged,age,35-44,1033,23.1
+2026-11-27,engaged,age,18-24,739,16.5
+2026-11-27,engaged,age,45-54,415,9.3
+2026-11-27,engaged,age,55-64,143,3.2
+2026-11-27,engaged,age,13-17,107,2.4
+2026-11-27,engaged,age,65+,67,1.5
+2026-11-27,engaged,gender,M,2125,47.5
+2026-11-27,engaged,gender,F,1631,36.5
+2026-11-27,engaged,gender,U,713,16.0
+2026-11-27,engaged,city,"Austin, Texas",190,14.9
+2026-11-27,engaged,city,"San Salvador, San Salvador Department",152,11.9
+2026-11-27,engaged,city,"New York, New York",83,6.5
+2026-11-27,engaged,city,"Santa Tecla, La Libertad Department",72,5.6
+2026-11-27,engaged,city,"Houston, Texas",56,4.4
+2026-11-27,engaged,city,"Los Angeles, California",53,4.2
+2026-11-27,engaged,city,"Washington D.C., Washington, District of Columbia",53,4.2
+2026-11-27,engaged,city,"San Juan, San Juan",45,3.5
+2026-11-27,engaged,city,"Mejicanos, San Salvador Department",35,2.7
+2026-11-27,engaged,city,"Mexico City, Distrito Federal",33,2.6
+2026-11-27,engaged,city,"Dallas, Texas",31,2.4
+2026-11-27,engaged,city,"San Antonio, Texas",31,2.4
+2026-11-27,engaged,city,"Chicago, Illinois",30,2.4
+2026-11-27,engaged,city,"Antiguo Cuscatlán, La Libertad Department",30,2.4
+2026-11-27,engaged,city,"Bayamon, Bayamón",24,1.9
+2026-11-27,engaged,city,"Carolina, Carolina",21,1.6
+2026-11-27,engaged,city,"Philadelphia, Pennsylvania",20,1.6
+2026-11-27,engaged,city,"Phoenix, Arizona",18,1.4
+2026-11-27,engaged,city,"Caguas, Caguas",15,1.2
+2026-11-27,engaged,city,"Santiago, Santiago Metropolitan Region",15,1.2
+2026-11-27,engaged,city,"Miami, Florida",15,1.2
+2026-11-27,engaged,city,"Leander, Texas",13,1.0
+2026-11-27,engaged,city,"Baltimore, Maryland",13,1.0
+2026-11-27,engaged,city,"Arlington, Virginia",13,1.0
+2026-11-27,engaged,city,"Ponce, Ponce",13,1.0
+2026-11-27,engaged,city,"El Paso, Texas",12,0.9
+2026-11-27,engaged,city,"Yasuj, Kohgiluyeh and Boyer-Ahmad Province",12,0.9
+2026-11-27,engaged,city,"Orocovis, Orocovis",12,0.9
+2026-11-27,engaged,city,"Milwaukee, Wisconsin",11,0.9
+2026-11-27,engaged,city,"Del Valle, Texas",11,0.9
+2026-11-27,engaged,city,"Lima, Lima Region",11,0.9
+2026-11-27,engaged,city,"Denver, Colorado",11,0.9
+2026-11-27,engaged,city,"Guaynabo, Guaynabo",11,0.9
+2026-11-27,engaged,city,"Toronto, Ontario",10,0.8
+2026-11-27,engaged,city,"Charlotte, North Carolina",10,0.8
+2026-11-27,engaged,city,"San Diego, California",10,0.8
+2026-11-27,engaged,city,"Alexandria, Virginia",9,0.7
+2026-11-27,engaged,city,"Apopa, San Salvador Department",9,0.7
+2026-11-27,engaged,city,"Memphis, Tennessee",9,0.7
+2026-11-27,engaged,city,"Odessa, Texas",9,0.7
+2026-11-27,engaged,city,"Aldine, Texas",9,0.7
+2026-11-27,engaged,city,"Indianapolis, Indiana",9,0.7
+2026-11-27,engaged,city,"Round Rock, Texas",9,0.7
+2026-11-27,engaged,city,"Nuevo Cuscatlán, La Libertad Department",9,0.7
+2026-11-27,engaged,city,"Sacramento, California",9,0.7
