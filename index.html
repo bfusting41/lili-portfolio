@@ -245,6 +245,21 @@ footer.foot{padding:48px max(5vw,16px) 30px;color:var(--mute);font-size:14px;bac
 .ticks li{position:relative;padding-left:26px;line-height:1.5}
 .ticks li::before{content:"";position:absolute;left:4px;top:.45em;width:10px;height:6px;border-left:2px solid var(--rose);border-bottom:2px solid var(--rose);transform:rotate(-45deg)}
 @media(max-width:760px){.about,.two-col{grid-template-columns:minmax(0,1fr)}.aphoto{max-width:360px}}
+.spec{display:inline-grid;gap:3px;background:#fff;border-radius:16px;padding:12px 16px;margin:0 0 20px;box-shadow:inset 0 0 0 1px rgba(209,77,120,.2)}
+.spec b{font:600 12.5px/1.2 "DM Sans",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--rose)}
+.spec span{font-size:14.5px;color:var(--ink)}
+.pretty{margin-top:48px;background:#fff;border-radius:28px;padding:clamp(22px,3.5vw,40px);box-shadow:0 24px 50px -34px rgba(150,40,80,.55)}
+.pretty h3{font-size:clamp(24px,3vw,30px);margin:0 0 22px}
+.incl{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,3vw,40px)}
+.incl h4{font:600 13px/1 "DM Sans",sans-serif;letter-spacing:.1em;text-transform:uppercase;margin:0 0 14px}
+.incl .yes h4{color:var(--rose)}.incl .no h4{color:var(--mute)}
+.incl ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.incl li{position:relative;padding-left:30px;line-height:1.5;font-size:15.5px}
+.incl li::before{position:absolute;left:0;top:-.05em;width:21px;height:21px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700}
+.incl .yes li::before{content:"✓";background:var(--soft);color:var(--rose)}
+.incl .no li{color:var(--mute)}
+.incl .no li::before{content:"✕";background:#f1eef0;color:#8a7a82;font-size:11px}
+@media(max-width:760px){.incl{grid-template-columns:1fr}}
 /* Media kit */
 .mk-bar{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
 .mk{background:#fff;border-radius:30px;padding:clamp(22px,4vw,48px);box-shadow:0 26px 60px -34px rgba(150,40,80,.55);max-width:980px;margin:0 auto}
@@ -319,6 +334,11 @@ footer.foot{padding:48px max(5vw,16px) 30px;color:var(--mute);font-size:14px;bac
   .mk-stats,.mk-cats{grid-template-columns:repeat(6,minmax(0,1fr))!important}
   .mk-brands{grid-template-columns:repeat(3,minmax(0,1fr))!important}
   .mk-quotes{grid-template-columns:1fr 1fr!important}
+  .mk-sec.mk-grid2:has(#mkSvc){grid-template-columns:2.2fr 1fr!important;gap:18px}
+  #mkSvc{columns:2}
+  .mk-quotes figure{padding:8px 11px!important}
+  .mk-sec{margin-top:7px!important;padding-top:7px!important}
+  .mk-top{gap:16px!important}
   .mk-sec{margin-top:9px!important;padding-top:8px}
   .mk-sec h3{margin-bottom:6px}
   .mk-top{margin-bottom:-2px}
@@ -570,6 +590,7 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
       <div class="acopy rv">
         <h2 id="abH">Hi, I'm Lili</h2>
         <p class="alede">A Salvadoran creator living in Austin, Texas, sharing beauty, lifestyle, food and travel in English and Spanish.</p>
+        <div class="spec"><b>UGC Creator &amp; Paid Ad Specialist</b><span>UGC &amp; paid ads for beauty &amp; family brands</span></div>
         <p>I grew up in San Salvador and went to an English-immersion school from a young age, which is where my love for U.S. culture began. Today I call Austin home.</p>
         <p>I've always loved taking photos of the little things: the details, moments and memories that make everyday life feel special. I'm also a girly girl at heart. I love makeup, getting dressed up, and watching beauty tutorials to try something new. And I love traveling, exploring new places, and finding delicious spots to eat along the way.</p>
         <p>I bring all of that into the content I create, in both English and Spanish, sharing beauty, lifestyle, food and the places I love with an audience across the U.S. and Latin America. My goal is to create content that feels personal, pretty, and true to real life.</p>
@@ -589,9 +610,40 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
           <li>Instagram Reels, Stories and carousels</li>
           <li>TikTok videos</li>
           <li>UGC photos and video for your own channels</li>
+          <li>UGC and paid-ad creative for beauty and family brands</li>
           <li>Raw footage available on request</li>
           <li>Restaurant, hotel and event coverage in Austin</li>
         </ul>
+      </div>
+    </div>
+    <div class="pretty rv">
+      <h3>Not just a pretty video…</h3>
+      <div class="incl">
+        <div class="yes">
+          <h4>What my videos include</h4>
+          <ul>
+            <li>In-depth research into your product, audience and competitors</li>
+            <li>A specific angle chosen for your target customer</li>
+            <li>Premium, well-lit shots that make your brand look its best</li>
+            <li>Scroll-stopping hooks, with variations to test if needed</li>
+            <li>Pacing and visuals that keep viewers watching until the end</li>
+            <li>Real problem-to-solution storytelling</li>
+            <li>Natural, conversational delivery</li>
+            <li>Edits built for paid: split screens, captions, a clear CTA</li>
+          </ul>
+        </div>
+        <div class="no">
+          <h4>What they don't include</h4>
+          <ul>
+            <li>Stiff, overly scripted reads</li>
+            <li>A pretty video with no marketing logic</li>
+            <li>Blurry or poorly lit footage</li>
+            <li>Weak or slow hooks</li>
+            <li>Generic claims that could fit any brand</li>
+            <li>Endless product b-roll with no story</li>
+            <li>Trends that don't fit your brand</li>
+          </ul>
+        </div>
       </div>
     </div>
     <div class="cta rv" style="margin-top:30px"><a class="btn" href="#contact">Work with me</a><a class="btn ghost" href="#media-kit">See my media kit</a></div>
@@ -1038,7 +1090,7 @@ function renderKit(){
   const rest=cl.slice(6).map(x=>x.brand);
   $("mkAlso").textContent=(rest.length?"Also: "+rest.join(", ")+", and many more.":"…and many more.");
   $("mkQuotes").innerHTML=TESTIMONIALS.filter((q,i)=>i<3).map(q=>`<figure><blockquote>“${esc(q.en)}”</blockquote><figcaption>${esc(q.brand)}</figcaption></figure>`).join("");
-  $("mkSvc").innerHTML=t.svc.map(x=>`<li>${esc(x[0])}</li>`).join("")+"<li>Content in English, Spanish or both</li>";
+  $("mkSvc").innerHTML=t.svc.map(x=>`<li>${esc(x[0])}</li>`).join("")+"<li>UGC &amp; paid ads for beauty &amp; family brands</li><li>Content in English, Spanish or both</li>";
   $("mkUpd").textContent=LIVE&&LIVE.updated?"Figures update daily from Instagram · last updated "+new Date(LIVE.updated).toLocaleDateString("en",{month:"long",day:"numeric",year:"numeric"})+" · lilimagana.com/#media-kit":"Figures update daily from Instagram.";
 }
 let kitFile=false;
