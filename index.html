@@ -119,6 +119,9 @@ header.small .nav{max-width:920px;padding:6px 6px 6px 18px;box-shadow:inset 0 1.
 .name{font-size:clamp(60px,8.6vw,124px);font-style:italic;line-height:.92}.name span{display:block;font-style:normal;color:var(--rose)}
 .lede{font-size:clamp(18px,1.8vw,21px);max-width:30em;margin-top:18px}
 .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.htitle{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin:16px 0 4px}
+.htitle b{font:600 13px/1 "DM Sans",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:linear-gradient(180deg,#e46b93,#c8436d);padding:8px 13px;border-radius:99px;box-shadow:0 6px 14px -8px rgba(200,67,109,.8)}
+.htitle span{font-size:14.5px;color:var(--mute)}
 .socials{display:flex;gap:6px;margin-top:20px;margin-left:-8px}
 .soc{position:relative;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;color:var(--ink);transition:color .3s,background .3s}
 .soc svg{width:21px;height:21px}
@@ -250,7 +253,8 @@ footer.foot{padding:48px max(5vw,16px) 30px;color:var(--mute);font-size:14px;bac
 .spec b{font:600 12.5px/1.2 "DM Sans",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--rose)}
 .spec span{font-size:14.5px;color:var(--ink)}
 .pretty{margin-top:48px;background:#fff;border-radius:28px;padding:clamp(22px,3.5vw,40px);box-shadow:0 24px 50px -34px rgba(150,40,80,.55)}
-.pretty h3{font-size:clamp(24px,3vw,30px);margin:0 0 22px}
+.pretty h3{font-size:clamp(24px,3vw,30px);margin:0 0 10px}
+.pretty .pp{color:var(--mute);font-size:16px;line-height:1.6;margin:0 0 24px;max-width:640px}
 .incl{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,3vw,40px)}
 .incl h4{font:600 13px/1 "DM Sans",sans-serif;letter-spacing:.1em;text-transform:uppercase;margin:0 0 14px}
 .incl .yes h4{color:var(--rose)}.incl .no h4{color:var(--mute)}
@@ -452,6 +456,7 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
   <div class="wrap">
     <div class="copy">
       <h1 class="name rv">Lili <span>Magaña</span></h1>
+      <p class="htitle rv"><b>UGC &amp; Paid Ad Creator</b><span>Beauty · Skincare · Lifestyle · Hospitality</span></p>
       <p class="lede rv" data-t="lede">Beauty and live-event creator. I turn launches, race weekends, hotels and dinners into short videos people actually watch to the end.</p>
       <div class="socials rv" id="socials" aria-label="Social accounts"></div>
       <div class="cta rv">
@@ -596,7 +601,7 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
       <div class="acopy rv">
         <h2 id="abH">Hi, I'm Lili</h2>
         <p class="alede">A Salvadoran creator living in Austin, Texas, sharing beauty, lifestyle, food and travel in English and Spanish.</p>
-        <div class="spec"><b>UGC Creator &amp; Paid Ad Specialist</b><span>UGC &amp; paid ads for beauty &amp; family brands</span></div>
+        <div class="spec"><b>UGC &amp; Paid Ad Creator</b><span>Beauty, skincare, lifestyle and hospitality, in English and Spanish</span></div>
         <p>I grew up in San Salvador and went to an English-immersion school from a young age, which is where my love for U.S. culture began. Today I call Austin home.</p>
         <p>I've always loved taking photos of the little things: the details, moments and memories that make everyday life feel special. I'm also a girly girl at heart. I love makeup, getting dressed up, and watching beauty tutorials to try something new. And I love traveling, exploring new places, and finding delicious spots to eat along the way.</p>
         <p>I bring all of that into the content I create, in both English and Spanish, sharing beauty, lifestyle, food and the places I love with an audience across the U.S. and Latin America. My goal is to create content that feels personal, pretty, and true to real life.</p>
@@ -616,38 +621,39 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
           <li>Instagram Reels, Stories and carousels</li>
           <li>TikTok videos</li>
           <li>UGC photos and video for your own channels</li>
-          <li>UGC and paid-ad creative for beauty and family brands</li>
+          <li>UGC and ad-ready videos for beauty, skincare, lifestyle and hospitality brands</li>
           <li>Raw footage available on request</li>
           <li>Restaurant, hotel and event coverage in Austin</li>
         </ul>
       </div>
     </div>
     <div class="pretty rv">
-      <h3>Not just a pretty video…</h3>
+      <h3>Pretty, with a purpose</h3>
+      <p class="pp">Beautiful is where I start, not where I stop. Every video is made to get your product noticed by the right people and to make them want it.</p>
       <div class="incl">
         <div class="yes">
-          <h4>What my videos include</h4>
+          <h4>What you'll get</h4>
           <ul>
-            <li>In-depth research into your product, audience and competitors</li>
-            <li>A specific angle chosen for your target customer</li>
-            <li>Premium, well-lit shots that make your brand look its best</li>
-            <li>Scroll-stopping hooks, with variations to test if needed</li>
-            <li>Pacing and visuals that keep viewers watching until the end</li>
-            <li>Real problem-to-solution storytelling</li>
-            <li>Natural, conversational delivery</li>
-            <li>Edits built for paid: split screens, captions, a clear CTA</li>
+            <li>I get to know your product, your customer and what's already out there before I film</li>
+            <li>An angle picked for the person you want to reach</li>
+            <li>Soft, flattering light and clean shots that show your product at its best</li>
+            <li>An opening that makes people stop scrolling, plus a few versions to test</li>
+            <li>A rhythm that keeps people watching to the very end</li>
+            <li>Honest before-and-after moments that show what your product really does</li>
+            <li>Relaxed, real talk in English, Spanish or both</li>
+            <li>Ad-ready edits with captions, split screens and a clear next step when you need them</li>
           </ul>
         </div>
         <div class="no">
-          <h4>What they don't include</h4>
+          <h4>What you won't</h4>
           <ul>
-            <li>Stiff, overly scripted reads</li>
-            <li>A pretty video with no marketing logic</li>
-            <li>Blurry or poorly lit footage</li>
-            <li>Weak or slow hooks</li>
-            <li>Generic claims that could fit any brand</li>
-            <li>Endless product b-roll with no story</li>
-            <li>Trends that don't fit your brand</li>
+            <li>Lines read off a script like a commercial</li>
+            <li>Cute visuals with no reason behind them</li>
+            <li>Dark, grainy or shaky footage</li>
+            <li>Slow intros that lose people in the first seconds</li>
+            <li>Claims that could be about any brand</li>
+            <li>Product shot after product shot with no story</li>
+            <li>Trends that don't feel like you</li>
           </ul>
         </div>
       </div>
@@ -681,7 +687,7 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
       <section class="mk-sec"><h3>Brand partnerships</h3><div class="mk-brands" id="mkBrands"></div><p class="mk-sub" id="mkAlso"></p></section>
       <section class="mk-sec"><h3>What brands say</h3><div class="mk-quotes" id="mkQuotes"></div></section>
       <section class="mk-sec mk-grid2">
-        <div><h3>Services</h3><ul class="ticks" id="mkSvc"></ul><p class="mk-sub mk-incl"><b>Every video includes:</b> a researched angle for your customer · premium, well-lit shots · scroll-stopping hooks to test · problem-to-solution storytelling · edits built for paid.</p></div>
+        <div><h3>Services</h3><ul class="ticks" id="mkSvc"></ul><p class="mk-sub mk-incl"><b>Every video includes:</b> an angle picked for your customer · soft, flattering light · an opening that stops the scroll (plus versions to test) · honest before-and-after storytelling · ad-ready edits.</p></div>
         <div><h3>Rates</h3><p class="mk-rates">Available on request. Every partnership is tailored to the brand, deliverables and timeline.</p>
           <h3 class="mk-ch" style="margin-top:20px">Contact</h3>
           <p class="mk-contact"><a href="mailto:Lilimagana19@gmail.com">Lilimagana19@gmail.com</a><br><a href="https://lilimagana.com">lilimagana.com</a><br><a href="https://www.instagram.com/lilimagana16/">instagram.com/lilimagana16</a></p></div>
@@ -796,13 +802,13 @@ en:{navWork:"Work",navRes:"Results",navAud:"Audience",resH:"Brand results",resP:
 cats:{beauty:"Beauty",events:"Events",travel:"Travel",food:"Restaurants",hosp:"Hospitality",life:"Lifestyle"},
 stats:[["Instagram followers","and growing"],["Average views","per reel, latest 24 posts"],["Engagement rate","per post, vs followers"],["Posts per month","last 90 days"],["Views","last 30 days"],["Accounts reached","last 30 days"]],live:"Live from Instagram, updated ",watch:"Watch on Instagram",other:"Other",reel:"Reel",
 countries:["USA","El Salvador","Mexico","Guatemala","Other"],
-svc:[["Beauty reviews and tutorials","Honest first impressions, get-ready-with-me videos and before-and-after looks, filmed in natural light."],["Live event coverage","Race weekends, launches and galas captured from arrival to after-party, posted the same day."],["Hotels and restaurants","Stays and tasting menus told as a story: the room, the view, the plate, the people."],["UGC for your channels","Polished vertical video you own and can run as ads or on your own page, in English or Spanish."],["UGC & paid ads","UGC creator and paid ad specialist for beauty and family brands: a researched angle, scroll-stopping hooks with variations to test, and edits built for paid."]],
+svc:[["Beauty reviews and tutorials","Honest first impressions, get-ready-with-me videos and before-and-after looks, filmed in natural light."],["Live event coverage","Race weekends, launches and galas captured from arrival to after-party, posted the same day."],["Hotels and restaurants","Stays and tasting menus told as a story: the room, the view, the plate, the people."],["UGC for your channels","Polished vertical video you own and can run as ads or on your own page, in English or Spanish."],["UGC & paid ads","Ad-ready videos for beauty, skincare, lifestyle and hospitality brands: a clear angle, openings made to stop the scroll (with versions to test) and edits ready to run, in English or Spanish."]],
 types:["Beauty or skincare","Event coverage","Hotel or travel","Restaurant","Content for your channels","UGC or paid ads","Something else"]},
 es:{navWork:"Trabajo",navRes:"Resultados",navAud:"Audiencia",resH:"Resultados con marcas",resP:"Números en vivo de sus publicaciones con marcas en Instagram, actualizados cada mañana.",total:" vistas en todas sus campañas con marcas",posts:"publicaciones",moreBrands:"…y muchas colaboraciones más, desde favoritos locales de Austin hasta marcas nacionales de belleza.",calloutLive:(top,share,rest,restShare)=>`El ${share}% de su audiencia activa está en ${top} y otro ${restShare}% en ${rest}, así que cada campaña puede ir en inglés, en español o en ambos.`,likes:"me gusta",comments:"comentarios",navSvc:"Colaboraciones",navContact:"Contacto",mHome:"Inicio",mAbout:"Sobre mí",mWork:"Trabajo",mRes:"Resultados con marcas",mTest:"Testimonios",mStats:"Estadísticas",mPhotos:"Fotos",mKit:"Media Kit",mContact:"Contacto",soon:"Pronto",back:"← Volver al inicio",phH:"Fotos",phP:"Algunas favoritas: belleza, estilo, comida y los lugares de por medio.",tsH:"Lo que dicen las marcas",tsP:"Comentarios de marcas después de trabajar juntas, en sus propias palabras.",recentH:"Campañas aprobadas recientemente",photoL:"Foto",lede:"Creadora de belleza y eventos en vivo. Convierto lanzamientos, fines de semana de carreras, hoteles y cenas en videos cortos que la gente ve hasta el final.",ctaWork:"Trabaja conmigo",ctaReels:"Ver mis reels",f1:"Desde Austin, Texas",f2:"Crea en inglés y español",f3:"Audiencia: EE. UU. y Latinoamérica",workH:"Trabajo destacado",workP:"Elige una categoría para filtrar. Sus reels con mejor desempeño aparecen primero; toca cualquiera para ver los detalles.",sampleWork:"Reels y vistas de muestra hasta que se agreguen sus videos reales.",audH:"Una audiencia bilingüe en las Américas",topC:"Países con mayor interacción",callout:"La mayor parte de su audiencia activa está en EE. UU., y casi una cuarta parte en El Salvador, Puerto Rico y México, así que cada campaña puede ir en inglés, en español o en ambos.",sampleAud:"Cifras de muestra; se reemplazarán con sus números reales de Instagram y TikTok.",svcH:"Formas de colaborar",svcP:"Cada colaboración es a la medida. Las tarifas se comparten a solicitud.",brandsH:"Marcas y lugares con los que ha trabajado",cH:"Creemos algo juntos",cP:"Cuéntame sobre tu lanzamiento, lugar o evento. Te responderé con ideas y tarifas en dos días hábiles.",c1:"Correo:",fH:"Solicitud de colaboración",fName:"Tu nombre",fBrand:"Marca o lugar",fEmail:"Correo",fType:"Tipo de proyecto",fDate:"Fecha del proyecto",fDate2:"Fecha final (opcional)",needDate:"Elige la fecha del proyecto (y una fecha final posterior).",fMsg:"Cuéntame más",fSend:"Enviar solicitud",dH:"¡Gracias! Aquí está tu solicitud.",dCopy:"Copiar texto",copied:"Copiado",dNote:"Tu app de correo debería abrirse con este mensaje para Lilimagana19@gmail.com. Si no, copia el texto y envíaselo.",foot:"Belleza · Estilo de vida · Comida · Viajes · Hotelería",dVid:"Su video se reproducirá aquí cuando se suba.",vidFail:"Este video no se puede reproducir aquí ahora. Míralo en Instagram.",playL:"Reproducir o pausar",seekL:"Posición del video",muteL:"Silenciar",volL:"Volumen",need:"Agrega tu nombre y un correo válido.",sending:"Enviando…",sentH:"¡Gracias! Tu solicitud fue enviada.",sentP:n=>`Lili te responderá a ${n} en dos días hábiles.`,sendFail:"No se pudo enviar en este momento. Aquí está tu mensaje para que se lo envíes por correo.",views:"vistas",logo:"Logo de marca",all:"Todo",shelf:{skincare:"Cuidado de la piel",hospitality:"Hotelería y restaurantes",travel:"Viajes y apps",makeup:"Belleza",lifestyle:"Estilo de vida",haircare:"Cuidado del cabello"},fmts:{ps:"Problema → solución",ts:"Testimonio",ex:"Experiencia",st:"Estilo personal"},sReels:"reels",sReel:"reel",sAvg:"promedio",sEng:"interacción",prevL:"Reels anteriores",nextL:"Más reels",
 cats:{beauty:"Belleza",events:"Eventos",travel:"Viajes",food:"Restaurantes",hosp:"Hotelería",life:"Estilo de vida"},
 stats:[["Seguidores en Instagram","y creciendo"],["Vistas promedio","por reel, últimas 24 publicaciones"],["Tasa de interacción","por publicación, vs seguidores"],["Publicaciones al mes","últimos 90 días"],["Vistas","últimos 30 días"],["Cuentas alcanzadas","últimos 30 días"]],live:"En vivo desde Instagram, actualizado ",watch:"Ver en Instagram",other:"Otros",reel:"Reel",
 countries:["EE. UU.","El Salvador","México","Guatemala","Otros"],
-svc:[["Reseñas y tutoriales de belleza","Primeras impresiones honestas, videos de arréglate conmigo y looks de antes y después, con luz natural."],["Cobertura de eventos en vivo","Carreras, lanzamientos y galas desde la llegada hasta el after, publicados el mismo día."],["Hoteles y restaurantes","Estancias y menús de degustación contados como historia: la habitación, la vista, el plato, la gente."],["UGC para tus canales","Video vertical pulido que es tuyo para usar en anuncios o en tu página, en inglés o español."],["UGC y anuncios pagados","Creadora UGC y especialista en anuncios pagados para marcas de belleza y familia: un ángulo investigado, ganchos que detienen el scroll con variaciones para probar y ediciones hechas para pauta."]],
+svc:[["Reseñas y tutoriales de belleza","Primeras impresiones honestas, videos de arréglate conmigo y looks de antes y después, con luz natural."],["Cobertura de eventos en vivo","Carreras, lanzamientos y galas desde la llegada hasta el after, publicados el mismo día."],["Hoteles y restaurantes","Estancias y menús de degustación contados como historia: la habitación, la vista, el plato, la gente."],["UGC para tus canales","Video vertical pulido que es tuyo para usar en anuncios o en tu página, en inglés o español."],["UGC y anuncios pagados","Videos listos para anuncios de marcas de belleza, cuidado de la piel, estilo de vida y hotelería: un ángulo claro, inicios que detienen el scroll (con versiones para probar) y ediciones listas para publicar, en inglés o español."]],
 types:["Belleza o cuidado de la piel","Cobertura de evento","Hotel o viaje","Restaurante","Contenido para tus canales","UGC o anuncios pagados","Otro"]}
 };
 const STATS=["5.5K","1.8K","1.83%","8","251K","69.5K"];
