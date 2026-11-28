@@ -222,7 +222,84 @@ textarea{min-height:110px;resize:vertical}
 .done.on{display:block}
 .done pre{white-space:pre-wrap;font:14px/1.5 "DM Sans",sans-serif;margin:10px 0}
 .flags{display:flex;flex-direction:column;gap:12px;margin-top:22px}
-footer{padding:28px max(5vw,16px);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--mute);font-size:14px}
+footer.foot{padding:48px max(5vw,16px) 30px;color:var(--mute);font-size:14px;background:#fff5f8;border-top:1px solid rgba(209,77,120,.1)}
+.fwrap{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:28px}
+.fcol p{margin:8px 0 10px}.fcol .mark{font-size:24px;color:var(--ink)}
+.fmail{color:var(--ink);text-decoration:none}.fmail:hover{color:var(--rose)}
+.fsoc{display:flex;gap:2px;margin:10px 0 0 -10px}
+.flinks{display:grid;align-content:start;gap:10px}
+.flinks a{color:var(--ink);text-decoration:none;width:fit-content}.flinks a:hover{color:var(--rose)}
+.flegal{max-width:1240px;margin:32px auto 0;padding-top:18px;border-top:1px solid rgba(209,77,120,.14);font-size:12.5px;line-height:1.6}
+.flegal p{margin:2px 0}
+@media(max-width:760px){.fwrap{grid-template-columns:1fr 1fr}.fcol{grid-column:1/-1}}
+/* About */
+.about{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(24px,4vw,56px);align-items:center;margin-top:14px}
+.aphoto img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:28px;box-shadow:0 24px 48px -28px rgba(150,40,80,.6);display:block;background:var(--soft)}
+.acopy p{font-size:17px;line-height:1.7;margin:0 0 14px}
+.acopy .alede{font:italic 400 21px/1.5 "Fraunces",Georgia,serif;color:var(--rose);margin:10px 0 20px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,4vw,48px);margin-top:44px}
+.two-col h3{font-size:22px;margin-bottom:14px}
+.rchips a{background:#fff;border-radius:99px;padding:9px 15px;font-size:14px;text-decoration:none;color:var(--ink);box-shadow:inset 0 0 0 1px rgba(209,77,120,.18);transition:background .3s}
+.rchips a:hover{background:var(--soft)}
+.ticks{list-style:none;padding:0;margin:0;display:grid;gap:9px}
+.ticks li{position:relative;padding-left:26px;line-height:1.5}
+.ticks li::before{content:"";position:absolute;left:4px;top:.45em;width:10px;height:6px;border-left:2px solid var(--rose);border-bottom:2px solid var(--rose);transform:rotate(-45deg)}
+@media(max-width:760px){.about,.two-col{grid-template-columns:minmax(0,1fr)}.aphoto{max-width:360px}}
+/* Media kit */
+.mk-bar{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.mk{background:#fff;border-radius:30px;padding:clamp(22px,4vw,48px);box-shadow:0 26px 60px -34px rgba(150,40,80,.55);max-width:980px;margin:0 auto}
+.mk-top{display:grid;grid-template-columns:170px minmax(0,1fr);gap:28px;align-items:center}
+.mk-photo{width:170px;aspect-ratio:3/4;object-fit:cover;border-radius:22px;background:var(--soft)}
+.mk-eyebrow{font:600 12px/1 "DM Sans",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--rose);margin:0 0 8px}
+.mk-top h2{font-size:clamp(34px,5vw,52px);margin:0}
+.mk-top h2::after{display:none}
+.mk-handle{color:var(--mute);margin:6px 0 12px}
+.mk-bio{font-size:16px;line-height:1.65;margin:0}
+.mk-sec{margin-top:34px;padding-top:26px;border-top:1px solid rgba(209,77,120,.12)}
+.mk-sec h3{font-size:20px;margin:0 0 14px}
+.mk-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.mk-stats div{background:#fff5f8;border-radius:18px;padding:16px 18px}
+.mk-stats b{display:block;font:600 30px/1.1 "Fraunces",Georgia,serif;color:var(--ink)}
+.mk-stats span{font-size:13px;color:var(--mute)}
+.mk-grid2{display:grid;grid-template-columns:1fr 1fr;gap:34px}
+.mk-row{display:grid;grid-template-columns:8.5em minmax(0,1fr) 3em;gap:10px;align-items:center;font-size:14px;margin:7px 0}
+.mk-row i{height:8px;border-radius:9px;background:#fbe1e9;overflow:hidden}.mk-row em{display:block;height:100%;background:var(--rose);border-radius:9px}
+.mk-row b{text-align:right;font-weight:600}
+.mk-sub{color:var(--mute);font-size:13.5px;margin:10px 0 0}
+.mk-cats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.mk-cats div,.mk-brands div{background:#fff5f8;border-radius:18px;padding:14px 16px;display:grid;gap:5px;align-content:start}
+.mk-cats .fmt{width:fit-content;font-size:10px;padding:4px 8px}
+.mk-cats b,.mk-brands b{font-weight:600;color:var(--ink)}
+.mk-cats span,.mk-brands span{font-size:13px;color:var(--mute)}
+.mk-brands{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.mk-quotes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.mk-quotes figure{margin:0;background:#fff5f8;border-radius:18px;padding:16px}
+.mk-quotes blockquote{margin:0;font:400 15px/1.55 "Fraunces",Georgia,serif}
+.mk-quotes figcaption{margin-top:8px;font-size:13px;font-weight:600}
+.mk-rates{margin:0;line-height:1.6}
+.mk-contact{line-height:1.9;margin:0}.mk-contact a{color:var(--ink)}
+.mk-foot{margin:30px 0 0;color:var(--mute);font-size:12px;text-align:center}
+@media(max-width:760px){.mk-top{grid-template-columns:1fr}.mk-photo{width:150px}.mk-stats,.mk-cats,.mk-brands{grid-template-columns:1fr 1fr}.mk-grid2,.mk-quotes{grid-template-columns:1fr}}
+/* Legal pages */
+.narrow{max-width:760px}
+.legal h3{font-size:21px;margin:30px 0 8px}
+.legal p,.legal li{font-size:16px;line-height:1.7}
+.legal ul{padding-left:20px}
+.legal a{color:var(--rose)}
+/* Print: the media kit becomes a clean PDF */
+@media print{
+  @page{size:letter;margin:12mm}
+  html,body{background:#fff!important}
+  body *{visibility:hidden}
+  #media-kit,#media-kit *{visibility:visible}
+  #media-kit{position:absolute;left:0;top:0;width:100%;padding:0!important;background:none!important;min-height:0}
+  .no-print,header,footer,#home{display:none!important}
+  .mk{box-shadow:none;padding:0;border-radius:0;max-width:none}
+  .mk-sec{margin-top:16px;padding-top:12px;break-inside:avoid}
+  .mk-stats b{font-size:24px}
+  .js .rv{opacity:1!important;transform:none!important}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
 dialog{border:0;border-radius:30px;padding:0;max-width:min(720px,94vw);width:100%;background:var(--card);color:var(--ink)}
 dialog::backdrop{background:rgba(30,10,20,.6)}
 .dlg{display:grid;grid-template-columns:minmax(0,280px) minmax(0,1fr);gap:22px;padding:20px;align-items:start}
@@ -292,13 +369,13 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
       <button class="burger" id="menuBtn" aria-expanded="false" aria-controls="menuPanel" aria-label="Menu"><span></span><span></span><span></span></button>
       <div class="mpanel" id="menuPanel" hidden>
         <a href="#top" data-t="mHome">Home</a>
-        <button type="button" class="soon-i"><span data-t="mAbout">About</span><em data-t="soon">Soon</em></button>
+        <a href="#about" data-t="mAbout">About</a>
         <a href="#work" data-t="mWork">Work</a>
         <a href="#results" data-t="mRes">Brand Results</a>
         <a href="#testimonials" data-t="mTest">Testimonials</a>
         <button type="button" class="soon-i"><span data-t="mStats">Analytics</span><em data-t="soon">Soon</em></button>
         <a href="#photos" data-t="mPhotos">Photos</a>
-        <button type="button" class="soon-i"><span data-t="mKit">Media Kit</span><em data-t="soon">Soon</em></button>
+        <a href="#media-kit" data-t="mKit">Media Kit</a>
         <a href="#contact" data-t="mContact">Contact</a>
         <div class="msoc" id="menuSoc"></div>
       </div>
@@ -450,6 +527,130 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
   </div>
 </section>
 
+
+<section class="band page" id="about" hidden aria-labelledby="abH">
+  <div class="wrap">
+    <a class="back" href="#top">← Back to home</a>
+    <div class="about">
+      <div class="aphoto rv"><img id="aboutImg" alt="Lili Magaña holding a bouquet of tulips in a flower field"></div>
+      <div class="acopy rv">
+        <h2 id="abH">Hi, I'm Lili</h2>
+        <p class="alede">A Salvadoran creator living in Austin, Texas, sharing beauty, lifestyle, food and travel in English and Spanish.</p>
+        <p>I've always loved taking photos of the little things: the details, moments and memories that make everyday life feel special. I'm also a girly girl at heart. I love makeup, getting dressed up, and watching beauty tutorials to try something new. And I love traveling, exploring new places, and finding delicious spots to eat along the way.</p>
+        <p>I bring all of that into the content I create, in both English and Spanish, sharing beauty, lifestyle, food and the places I love with an audience across the U.S. and Latin America. My goal is to create content that feels personal, pretty, and true to real life.</p>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="rv">
+        <h3>What I create</h3>
+        <div class="rchips">
+          <a href="#work">Skincare</a><a href="#work">Beauty</a><a href="#work">Hospitality</a><a href="#work">Travel &amp; Apps</a><a href="#work">Lifestyle</a><a href="#work">Haircare</a>
+        </div>
+      </div>
+      <div class="rv">
+        <h3>Working with me</h3>
+        <ul class="ticks">
+          <li>Content in English, Spanish or both</li>
+          <li>Instagram Reels, Stories and carousels</li>
+          <li>TikTok videos</li>
+          <li>UGC photos and video for your own channels</li>
+          <li>Raw footage available on request</li>
+          <li>Restaurant, hotel and event coverage in Austin</li>
+        </ul>
+      </div>
+    </div>
+    <div class="cta rv" style="margin-top:30px"><a class="btn" href="#contact">Work with me</a><a class="btn ghost" href="#media-kit">See my media kit</a></div>
+  </div>
+</section>
+
+<section class="band page" id="media-kit" hidden aria-labelledby="mkH">
+  <div class="wrap">
+    <div class="mk-bar no-print">
+      <a class="back" href="#top">← Back to home</a>
+      <div class="cta" style="margin:0"><button class="btn" type="button" id="mkPrint">Download PDF</button><a class="btn ghost" href="mailto:Lilimagana19@gmail.com?subject=Collaboration%20inquiry">Email Lili</a></div>
+    </div>
+    <article class="mk" id="mk">
+      <div class="mk-top">
+        <img class="mk-photo" id="mkImg" alt="Lili Magaña">
+        <div>
+          <p class="mk-eyebrow">Media kit</p>
+          <h2 id="mkH">Lili Magaña</h2>
+          <p class="mk-handle">@lilimagana16 · Austin, Texas · English &amp; Spanish</p>
+          <p class="mk-bio">Salvadoran creator based in Austin, sharing beauty, lifestyle, food and travel in English and Spanish. Her content feels personal, polished and true to real life, and reaches an engaged audience across the U.S. and Latin America.</p>
+        </div>
+      </div>
+      <section class="mk-sec"><h3>Instagram at a glance</h3><div class="mk-stats" id="mkStats"></div></section>
+      <section class="mk-sec mk-grid2">
+        <div><h3>Where her audience is</h3><div id="mkCountries"></div><p class="mk-sub" id="mkCities"></p></div>
+        <div><h3>Who they are</h3><div id="mkAge"></div><p class="mk-sub" id="mkGender"></p></div>
+      </section>
+      <section class="mk-sec"><h3>What she creates</h3><div class="mk-cats" id="mkCats"></div></section>
+      <section class="mk-sec"><h3>Brand partnerships</h3><div class="mk-brands" id="mkBrands"></div><p class="mk-sub" id="mkAlso"></p></section>
+      <section class="mk-sec"><h3>What brands say</h3><div class="mk-quotes" id="mkQuotes"></div></section>
+      <section class="mk-sec mk-grid2">
+        <div><h3>Services</h3><ul class="ticks" id="mkSvc"></ul></div>
+        <div><h3>Rates</h3><p class="mk-rates">Available on request. Every partnership is tailored to the brand, deliverables and timeline.</p>
+          <h3 style="margin-top:20px">Contact</h3>
+          <p class="mk-contact"><a href="mailto:Lilimagana19@gmail.com">Lilimagana19@gmail.com</a><br><a href="https://lilimagana.com">lilimagana.com</a><br><a href="https://www.instagram.com/lilimagana16/">instagram.com/lilimagana16</a></p></div>
+      </section>
+      <p class="mk-foot" id="mkUpd">Figures update daily from Instagram.</p>
+    </article>
+  </div>
+</section>
+
+<section class="band page legal" id="privacy" hidden aria-labelledby="pvH">
+  <div class="wrap narrow">
+    <a class="back" href="#top">← Back to home</a>
+    <h2 id="pvH">Privacy Policy</h2>
+    <p class="mk-sub">Last updated November 28, 2026</p>
+    <p>This policy explains what information lilimagana.com collects and how it is used. The site is run by Lili Magaña in Austin, Texas. Questions can be sent to <a href="mailto:Lilimagana19@gmail.com">Lilimagana19@gmail.com</a>.</p>
+    <h3>What we collect</h3>
+    <p>The only personal information we collect is what you choose to type into the collaboration inquiry form: your name, brand or venue, email address, type of project, date or timeframe, and your message. You don't need an account, and browsing the site doesn't require giving us anything.</p>
+    <h3>How it's used</h3>
+    <p>Your inquiry is used only to reply to you about a possible collaboration. We never sell, rent or share it for marketing, and we don't add you to a mailing list.</p>
+    <h3>How your inquiry is delivered</h3>
+    <p>When you press "Send inquiry", the form is delivered to Lili's email inbox through <a href="https://web3forms.com/privacy" target="_blank" rel="noopener">Web3Forms</a>, a form-to-email service. After that, it is kept in Lili's email account for as long as needed to follow up on the inquiry.</p>
+    <h3>Cookies and tracking</h3>
+    <p>This site does not use cookies, analytics or advertising trackers. It remembers your language choice in your own browser so the page opens in the same language next time; that setting never leaves your device.</p>
+    <h3>Other services the site uses</h3>
+    <ul>
+      <li>The site is hosted by <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub Pages</a>, which may log technical details such as your IP address for security.</li>
+      <li>Fonts are loaded from <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Fonts</a>, which receives your IP address when the fonts load.</li>
+      <li>Some reels play through Instagram's own embedded player. When you open one, Instagram (Meta) loads content and may set its own cookies under <a href="https://privacycenter.instagram.com/policy" target="_blank" rel="noopener">Instagram's privacy policy</a>.</li>
+      <li>Links to Instagram and other sites are covered by those sites' own policies.</li>
+    </ul>
+    <h3>Your choices</h3>
+    <p>You can ask what we have from your inquiry, ask us to correct it, or ask us to delete it, by emailing <a href="mailto:Lilimagana19@gmail.com">Lilimagana19@gmail.com</a>.</p>
+    <h3>Children</h3>
+    <p>This site is meant for brands and businesses and is not directed to children under 13. We don't knowingly collect information from children.</p>
+    <h3>Changes</h3>
+    <p>If this policy changes, the new version will be posted on this page with a new "last updated" date.</p>
+  </div>
+</section>
+
+<section class="band page legal" id="terms" hidden aria-labelledby="tmH">
+  <div class="wrap narrow">
+    <a class="back" href="#top">← Back to home</a>
+    <h2 id="tmH">Terms of Use</h2>
+    <p class="mk-sub">Last updated November 28, 2026</p>
+    <p>By using lilimagana.com you agree to these terms. If you have questions, email <a href="mailto:Lilimagana19@gmail.com">Lilimagana19@gmail.com</a>.</p>
+    <h3>Content ownership</h3>
+    <p>All photos, videos, text and other content on this site are owned by Lili Magaña unless noted otherwise. You may not copy, download, repost, edit or use them, including for advertising or commercial purposes, without written permission. Sharing a link to the site or to her public Instagram posts is always welcome.</p>
+    <h3>Brand names and trademarks</h3>
+    <p>Brand names and logos shown on this site belong to their respective owners. They are used only to describe past collaborations and do not imply ongoing endorsement or partnership.</p>
+    <h3>Statistics</h3>
+    <p>Audience and performance figures come from Instagram and are updated automatically each day. They are provided for general information, may differ slightly from what the Instagram app shows at a given moment, and are not a guarantee of future results.</p>
+    <h3>Testimonials</h3>
+    <p>Brand testimonials are excerpts from messages brands sent after working with Lili. Individual results vary by campaign.</p>
+    <h3>Links to other sites</h3>
+    <p>This site links to Instagram and other websites that we don't control. We're not responsible for their content or practices.</p>
+    <h3>No warranty</h3>
+    <p>The site is provided "as is". We do our best to keep it accurate and available, but we can't promise it will always be error-free or online.</p>
+    <h3>Changes</h3>
+    <p>These terms may be updated from time to time; the latest version will always be on this page.</p>
+  </div>
+</section>
+
 <dialog id="lb" aria-label="Photo">
   <button class="lbx" id="lbClose" aria-label="Close">×</button>
   <button class="lbn lbp" id="lbPrev" aria-label="Previous photo">‹</button>
@@ -458,9 +659,25 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
   <p class="lbc" id="lbCount"></p>
 </dialog>
 
-<footer>
-  <span>© 2026 Lili Magaña</span>
-  <span data-t="foot">Beauty · Events · Travel · Food · Hospitality</span>
+<footer class="foot">
+  <div class="fwrap">
+    <div class="fcol">
+      <a class="mark" href="#top">Lili Magaña</a>
+      <p data-t="foot">Beauty · Lifestyle · Food · Travel · Hospitality</p>
+      <a class="fmail" href="mailto:Lilimagana19@gmail.com">Lilimagana19@gmail.com</a>
+      <div class="fsoc" id="footSoc"></div>
+    </div>
+    <nav class="flinks" aria-label="Site">
+      <a href="#work">Work</a><a href="#about">About</a><a href="#photos">Photos</a><a href="#testimonials">Testimonials</a><a href="#media-kit">Media Kit</a><a href="#contact">Contact</a>
+    </nav>
+    <nav class="flinks" aria-label="Legal">
+      <a href="#privacy">Privacy Policy</a><a href="#terms">Terms of Use</a>
+    </nav>
+  </div>
+  <div class="flegal">
+    <p>© <span id="yr">2026</span> Lili Magaña. All rights reserved.</p>
+    <p>All photos and videos © Lili Magaña. Brand names and logos belong to their respective owners and are shown only to describe past collaborations.</p>
+  </div>
 </footer>
 
 <dialog id="dlg">
@@ -481,13 +698,13 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
 <script>
 {
 const T={
-en:{navWork:"Work",navRes:"Results",navAud:"Audience",resH:"Brand results",resP:"Live numbers from her brand posts on Instagram, updated every morning.",total:" views across all her brand campaigns",posts:"posts",moreBrands:"…and many more partnerships, from local Austin favorites to national beauty brands.",calloutLive:(top,share,rest,restShare)=>`${share}% of her engaged audience is in ${top}, and another ${restShare}% is in ${rest}, so campaigns can run in English, Spanish or both.`,likes:"likes",comments:"comments",navSvc:"Collaborations",navContact:"Contact",mHome:"Home",mAbout:"About",mWork:"Work",mRes:"Brand Results",mTest:"Testimonials",mStats:"Analytics",mPhotos:"Photos",mKit:"Media Kit",mContact:"Contact",soon:"Soon",back:"← Back to home",phH:"Photos",phP:"A few favorites: beauty, style, food and the places in between.",tsH:"What brands say",tsP:"Notes from brands after working together, in their own words.",recentH:"Recently approved campaigns",photoL:"Photo",lede:"Beauty and live-event creator. I turn launches, race weekends, hotels and dinners into short videos people actually watch to the end.",ctaWork:"Work with me",ctaReels:"Watch my reels",f1:"Based in Austin, Texas",f2:"Creates in English and Spanish",f3:"Audience: USA and Latin America",workH:"Selected work",workP:"Pick a category to filter. Her best-performing reels show first; tap any reel to see the details.",sampleWork:"Sample reels and view counts shown until her real videos are added.",audH:"A bilingual audience across the Americas",topC:"Top countries by engagement",callout:"Most of her engaged audience is in the USA, and nearly a quarter is in El Salvador, Puerto Rico and Mexico, so campaigns can run in English, Spanish or both.",sampleAud:"Sample figures shown; these will be replaced with her live Instagram and TikTok numbers.",svcH:"Ways to collaborate",svcP:"Every partnership is tailored. Rates are shared on request.",brandsH:"Brands and venues she has worked with",cH:"Let's create something together",cP:"Tell me about your launch, venue or event. I'll reply with ideas and rates within two business days.",c1:"Email:",fH:"Collaboration inquiry",fName:"Your name",fBrand:"Brand or venue",fEmail:"Email",fType:"Type of project",fDate:"Date or timeframe",fMsg:"Tell me about it",fSend:"Send inquiry",dH:"Thanks! Here is your inquiry.",dCopy:"Copy text",copied:"Copied",dNote:"Your email app should open with this message to Lilimagana19@gmail.com. If it doesn't, copy the text and email it to her.",foot:"Beauty · Events · Travel · Food · Hospitality",dVid:"Her video will play here once it's uploaded.",vidFail:"This video can't play here right now. Watch it on Instagram instead.",playL:"Play or pause",seekL:"Video position",muteL:"Mute",volL:"Volume",need:"Please add your name and a valid email.",sending:"Sending…",sentH:"Thank you! Your inquiry was sent.",sentP:n=>`Lili will reply to ${n} within two business days.`,sendFail:"Sorry, it couldn't be sent just now. Here's your message so you can email it to her instead.",views:"views",logo:"Partner logo",all:"All",shelf:{skincare:"Skincare",hospitality:"Hospitality",travel:"Travel & Apps",makeup:"Beauty",lifestyle:"Lifestyle",haircare:"Haircare"},fmts:{ps:"Problem → solution",ts:"Testimonial",ex:"Experience",st:"Personal style"},sReels:"reels",sReel:"reel",sAvg:"avg",sEng:"engagement",prevL:"Previous reels",nextL:"More reels",
+en:{navWork:"Work",navRes:"Results",navAud:"Audience",resH:"Brand results",resP:"Live numbers from her brand posts on Instagram, updated every morning.",total:" views across all her brand campaigns",posts:"posts",moreBrands:"…and many more partnerships, from local Austin favorites to national beauty brands.",calloutLive:(top,share,rest,restShare)=>`${share}% of her engaged audience is in ${top}, and another ${restShare}% is in ${rest}, so campaigns can run in English, Spanish or both.`,likes:"likes",comments:"comments",navSvc:"Collaborations",navContact:"Contact",mHome:"Home",mAbout:"About",mWork:"Work",mRes:"Brand Results",mTest:"Testimonials",mStats:"Analytics",mPhotos:"Photos",mKit:"Media Kit",mContact:"Contact",soon:"Soon",back:"← Back to home",phH:"Photos",phP:"A few favorites: beauty, style, food and the places in between.",tsH:"What brands say",tsP:"Notes from brands after working together, in their own words.",recentH:"Recently approved campaigns",photoL:"Photo",lede:"Beauty and live-event creator. I turn launches, race weekends, hotels and dinners into short videos people actually watch to the end.",ctaWork:"Work with me",ctaReels:"Watch my reels",f1:"Based in Austin, Texas",f2:"Creates in English and Spanish",f3:"Audience: USA and Latin America",workH:"Selected work",workP:"Pick a category to filter. Her best-performing reels show first; tap any reel to see the details.",sampleWork:"Sample reels and view counts shown until her real videos are added.",audH:"A bilingual audience across the Americas",topC:"Top countries by engagement",callout:"Most of her engaged audience is in the USA, and nearly a quarter is in El Salvador, Puerto Rico and Mexico, so campaigns can run in English, Spanish or both.",sampleAud:"Sample figures shown; these will be replaced with her live Instagram and TikTok numbers.",svcH:"Ways to collaborate",svcP:"Every partnership is tailored. Rates are shared on request.",brandsH:"Brands and venues she has worked with",cH:"Let's create something together",cP:"Tell me about your launch, venue or event. I'll reply with ideas and rates within two business days.",c1:"Email:",fH:"Collaboration inquiry",fName:"Your name",fBrand:"Brand or venue",fEmail:"Email",fType:"Type of project",fDate:"Date or timeframe",fMsg:"Tell me about it",fSend:"Send inquiry",dH:"Thanks! Here is your inquiry.",dCopy:"Copy text",copied:"Copied",dNote:"Your email app should open with this message to Lilimagana19@gmail.com. If it doesn't, copy the text and email it to her.",foot:"Beauty · Lifestyle · Food · Travel · Hospitality",dVid:"Her video will play here once it's uploaded.",vidFail:"This video can't play here right now. Watch it on Instagram instead.",playL:"Play or pause",seekL:"Video position",muteL:"Mute",volL:"Volume",need:"Please add your name and a valid email.",sending:"Sending…",sentH:"Thank you! Your inquiry was sent.",sentP:n=>`Lili will reply to ${n} within two business days.`,sendFail:"Sorry, it couldn't be sent just now. Here's your message so you can email it to her instead.",views:"views",logo:"Partner logo",all:"All",shelf:{skincare:"Skincare",hospitality:"Hospitality",travel:"Travel & Apps",makeup:"Beauty",lifestyle:"Lifestyle",haircare:"Haircare"},fmts:{ps:"Problem → solution",ts:"Testimonial",ex:"Experience",st:"Personal style"},sReels:"reels",sReel:"reel",sAvg:"avg",sEng:"engagement",prevL:"Previous reels",nextL:"More reels",
 cats:{beauty:"Beauty",events:"Events",travel:"Travel",food:"Restaurants",hosp:"Hospitality",life:"Lifestyle"},
 stats:[["Instagram followers","and growing"],["Average views","per reel, latest 24 posts"],["Engagement rate","per post, vs followers"],["Posts per month","last 90 days"],["Views","last 30 days"],["Accounts reached","last 30 days"]],live:"Live from Instagram, updated ",watch:"Watch on Instagram",other:"Other",reel:"Reel",
 countries:["USA","El Salvador","Mexico","Guatemala","Other"],
 svc:[["Beauty reviews and tutorials","Honest first impressions, get-ready-with-me videos and before-and-after looks, filmed in natural light."],["Live event coverage","Race weekends, launches and galas captured from arrival to after-party, posted the same day."],["Hotels and restaurants","Stays and tasting menus told as a story: the room, the view, the plate, the people."],["UGC for your channels","Polished vertical video you own and can run as ads or on your own page, in English or Spanish."]],
 types:["Beauty or skincare","Event coverage","Hotel or travel","Restaurant","Content for your channels","Something else"]},
-es:{navWork:"Trabajo",navRes:"Resultados",navAud:"Audiencia",resH:"Resultados con marcas",resP:"Números en vivo de sus publicaciones con marcas en Instagram, actualizados cada mañana.",total:" vistas en todas sus campañas con marcas",posts:"publicaciones",moreBrands:"…y muchas colaboraciones más, desde favoritos locales de Austin hasta marcas nacionales de belleza.",calloutLive:(top,share,rest,restShare)=>`El ${share}% de su audiencia activa está en ${top} y otro ${restShare}% en ${rest}, así que cada campaña puede ir en inglés, en español o en ambos.`,likes:"me gusta",comments:"comentarios",navSvc:"Colaboraciones",navContact:"Contacto",mHome:"Inicio",mAbout:"Sobre mí",mWork:"Trabajo",mRes:"Resultados con marcas",mTest:"Testimonios",mStats:"Estadísticas",mPhotos:"Fotos",mKit:"Media Kit",mContact:"Contacto",soon:"Pronto",back:"← Volver al inicio",phH:"Fotos",phP:"Algunas favoritas: belleza, estilo, comida y los lugares de por medio.",tsH:"Lo que dicen las marcas",tsP:"Comentarios de marcas después de trabajar juntas, en sus propias palabras.",recentH:"Campañas aprobadas recientemente",photoL:"Foto",lede:"Creadora de belleza y eventos en vivo. Convierto lanzamientos, fines de semana de carreras, hoteles y cenas en videos cortos que la gente ve hasta el final.",ctaWork:"Trabaja conmigo",ctaReels:"Ver mis reels",f1:"Desde Austin, Texas",f2:"Crea en inglés y español",f3:"Audiencia: EE. UU. y Latinoamérica",workH:"Trabajo destacado",workP:"Elige una categoría para filtrar. Sus reels con mejor desempeño aparecen primero; toca cualquiera para ver los detalles.",sampleWork:"Reels y vistas de muestra hasta que se agreguen sus videos reales.",audH:"Una audiencia bilingüe en las Américas",topC:"Países con mayor interacción",callout:"La mayor parte de su audiencia activa está en EE. UU., y casi una cuarta parte en El Salvador, Puerto Rico y México, así que cada campaña puede ir en inglés, en español o en ambos.",sampleAud:"Cifras de muestra; se reemplazarán con sus números reales de Instagram y TikTok.",svcH:"Formas de colaborar",svcP:"Cada colaboración es a la medida. Las tarifas se comparten a solicitud.",brandsH:"Marcas y lugares con los que ha trabajado",cH:"Creemos algo juntos",cP:"Cuéntame sobre tu lanzamiento, lugar o evento. Te responderé con ideas y tarifas en dos días hábiles.",c1:"Correo:",fH:"Solicitud de colaboración",fName:"Tu nombre",fBrand:"Marca o lugar",fEmail:"Correo",fType:"Tipo de proyecto",fDate:"Fecha o plazo",fMsg:"Cuéntame más",fSend:"Enviar solicitud",dH:"¡Gracias! Aquí está tu solicitud.",dCopy:"Copiar texto",copied:"Copiado",dNote:"Tu app de correo debería abrirse con este mensaje para Lilimagana19@gmail.com. Si no, copia el texto y envíaselo.",foot:"Belleza · Eventos · Viajes · Comida · Hotelería",dVid:"Su video se reproducirá aquí cuando se suba.",vidFail:"Este video no se puede reproducir aquí ahora. Míralo en Instagram.",playL:"Reproducir o pausar",seekL:"Posición del video",muteL:"Silenciar",volL:"Volumen",need:"Agrega tu nombre y un correo válido.",sending:"Enviando…",sentH:"¡Gracias! Tu solicitud fue enviada.",sentP:n=>`Lili te responderá a ${n} en dos días hábiles.`,sendFail:"No se pudo enviar en este momento. Aquí está tu mensaje para que se lo envíes por correo.",views:"vistas",logo:"Logo de marca",all:"Todo",shelf:{skincare:"Cuidado de la piel",hospitality:"Hotelería y restaurantes",travel:"Viajes y apps",makeup:"Belleza",lifestyle:"Estilo de vida",haircare:"Cuidado del cabello"},fmts:{ps:"Problema → solución",ts:"Testimonio",ex:"Experiencia",st:"Estilo personal"},sReels:"reels",sReel:"reel",sAvg:"promedio",sEng:"interacción",prevL:"Reels anteriores",nextL:"Más reels",
+es:{navWork:"Trabajo",navRes:"Resultados",navAud:"Audiencia",resH:"Resultados con marcas",resP:"Números en vivo de sus publicaciones con marcas en Instagram, actualizados cada mañana.",total:" vistas en todas sus campañas con marcas",posts:"publicaciones",moreBrands:"…y muchas colaboraciones más, desde favoritos locales de Austin hasta marcas nacionales de belleza.",calloutLive:(top,share,rest,restShare)=>`El ${share}% de su audiencia activa está en ${top} y otro ${restShare}% en ${rest}, así que cada campaña puede ir en inglés, en español o en ambos.`,likes:"me gusta",comments:"comentarios",navSvc:"Colaboraciones",navContact:"Contacto",mHome:"Inicio",mAbout:"Sobre mí",mWork:"Trabajo",mRes:"Resultados con marcas",mTest:"Testimonios",mStats:"Estadísticas",mPhotos:"Fotos",mKit:"Media Kit",mContact:"Contacto",soon:"Pronto",back:"← Volver al inicio",phH:"Fotos",phP:"Algunas favoritas: belleza, estilo, comida y los lugares de por medio.",tsH:"Lo que dicen las marcas",tsP:"Comentarios de marcas después de trabajar juntas, en sus propias palabras.",recentH:"Campañas aprobadas recientemente",photoL:"Foto",lede:"Creadora de belleza y eventos en vivo. Convierto lanzamientos, fines de semana de carreras, hoteles y cenas en videos cortos que la gente ve hasta el final.",ctaWork:"Trabaja conmigo",ctaReels:"Ver mis reels",f1:"Desde Austin, Texas",f2:"Crea en inglés y español",f3:"Audiencia: EE. UU. y Latinoamérica",workH:"Trabajo destacado",workP:"Elige una categoría para filtrar. Sus reels con mejor desempeño aparecen primero; toca cualquiera para ver los detalles.",sampleWork:"Reels y vistas de muestra hasta que se agreguen sus videos reales.",audH:"Una audiencia bilingüe en las Américas",topC:"Países con mayor interacción",callout:"La mayor parte de su audiencia activa está en EE. UU., y casi una cuarta parte en El Salvador, Puerto Rico y México, así que cada campaña puede ir en inglés, en español o en ambos.",sampleAud:"Cifras de muestra; se reemplazarán con sus números reales de Instagram y TikTok.",svcH:"Formas de colaborar",svcP:"Cada colaboración es a la medida. Las tarifas se comparten a solicitud.",brandsH:"Marcas y lugares con los que ha trabajado",cH:"Creemos algo juntos",cP:"Cuéntame sobre tu lanzamiento, lugar o evento. Te responderé con ideas y tarifas en dos días hábiles.",c1:"Correo:",fH:"Solicitud de colaboración",fName:"Tu nombre",fBrand:"Marca o lugar",fEmail:"Correo",fType:"Tipo de proyecto",fDate:"Fecha o plazo",fMsg:"Cuéntame más",fSend:"Enviar solicitud",dH:"¡Gracias! Aquí está tu solicitud.",dCopy:"Copiar texto",copied:"Copiado",dNote:"Tu app de correo debería abrirse con este mensaje para Lilimagana19@gmail.com. Si no, copia el texto y envíaselo.",foot:"Belleza · Estilo de vida · Comida · Viajes · Hotelería",dVid:"Su video se reproducirá aquí cuando se suba.",vidFail:"Este video no se puede reproducir aquí ahora. Míralo en Instagram.",playL:"Reproducir o pausar",seekL:"Posición del video",muteL:"Silenciar",volL:"Volumen",need:"Agrega tu nombre y un correo válido.",sending:"Enviando…",sentH:"¡Gracias! Tu solicitud fue enviada.",sentP:n=>`Lili te responderá a ${n} en dos días hábiles.`,sendFail:"No se pudo enviar en este momento. Aquí está tu mensaje para que se lo envíes por correo.",views:"vistas",logo:"Logo de marca",all:"Todo",shelf:{skincare:"Cuidado de la piel",hospitality:"Hotelería y restaurantes",travel:"Viajes y apps",makeup:"Belleza",lifestyle:"Estilo de vida",haircare:"Cuidado del cabello"},fmts:{ps:"Problema → solución",ts:"Testimonio",ex:"Experiencia",st:"Estilo personal"},sReels:"reels",sReel:"reel",sAvg:"promedio",sEng:"interacción",prevL:"Reels anteriores",nextL:"Más reels",
 cats:{beauty:"Belleza",events:"Eventos",travel:"Viajes",food:"Restaurantes",hosp:"Hotelería",life:"Estilo de vida"},
 stats:[["Seguidores en Instagram","y creciendo"],["Vistas promedio","por reel, últimas 24 publicaciones"],["Tasa de interacción","por publicación, vs seguidores"],["Publicaciones al mes","últimos 90 días"],["Vistas","últimos 30 días"],["Cuentas alcanzadas","últimos 30 días"]],live:"En vivo desde Instagram, actualizado ",watch:"Ver en Instagram",other:"Otros",reel:"Reel",
 countries:["EE. UU.","El Salvador","México","Guatemala","Otros"],
@@ -710,6 +927,8 @@ const SOCIAL=[
 $("socials").innerHTML=SOCIAL.map((x,i)=>x.url
   ?`<a class="soc" href="${esc(x.url)}" target="_blank" rel="noopener" aria-label="${x.name}">${x.icon}</a>`
   :`<button type="button" class="soc soon" data-i="${i}" aria-label="${x.name} (coming soon)" style="border:0;background:none;cursor:pointer">${x.icon}<span class="ltip" role="status"></span></button>`).join("");
+$("footSoc").innerHTML=$("socials").innerHTML;$("yr").textContent=new Date().getFullYear();
+$("footSoc").addEventListener("click",e=>{const b=e.target.closest(".soon");if(!b)return;const tip=b.querySelector(".ltip");tip.textContent=SOCIAL[+b.dataset.i].name+" coming soon";tip.classList.add("on");clearTimeout(b._t);b._t=setTimeout(()=>tip.classList.remove("on"),2200);});
 $("socials").addEventListener("click",e=>{const b=e.target.closest(".soon");if(!b)return;const tip=b.querySelector(".ltip");
   tip.textContent=SOCIAL[+b.dataset.i].name+" coming soon";tip.classList.add("on");clearTimeout(b._t);b._t=setTimeout(()=>tip.classList.remove("on"),2200);});
 /* hamburger menu */
@@ -756,14 +975,46 @@ function renderQuotes(){
     return `<figure class="q rv"><blockquote>${esc(q[lang]||q.en)}</blockquote><figcaption><b>${esc(q.brand)}</b><span>${esc(d)}</span></figcaption></figure>`;}).join("");
 }
 
+/* ----- About + Media Kit (live numbers from the daily script) ----- */
+const photoPath=name=>{const f=photoList().find(x=>x.split("/").pop()===name)||name;return "photos/"+f;};
+function renderAbout(){$("aboutImg").src=photoPath("p05.jpg");}
+function renderKit(){
+  const t=T[lang],A=(LIVE&&LIVE.audience)||{},hl=(LIVE&&LIVE.headline)||{},l30=(LIVE&&LIVE.last_30_days)||{},prof=(LIVE&&LIVE.profile)||{};
+  const pct=n=>{try{return new Intl.NumberFormat(lang,{maximumFractionDigits:2}).format(+n)+"%"}catch(e){return n+"%"}};
+  $("mkImg").src=photoPath("p01.jpg");
+  const st=[[prof.followers!=null?fmt(prof.followers):STATS[0],"Followers"],[hl.avg_reel_views!=null?fmt(hl.avg_reel_views):STATS[1],"Avg. views per reel"],
+    [hl.engagement_rate_pct!=null?pct(hl.engagement_rate_pct):STATS[2],"Engagement rate"],[l30.views!=null?fmt(l30.views):STATS[4],"Views, last 30 days"],
+    [l30.reach!=null?fmt(l30.reach):STATS[5],"Accounts reached, 30 days"],[hl.posts_per_month!=null?fmt(hl.posts_per_month):STATS[3],"Posts per month"]];
+  $("mkStats").innerHTML=st.map(x=>`<div><b>${esc(x[0])}</b><span>${esc(x[1])}</span></div>`).join("");
+  const bars=(rows,label)=>rows.map(r=>`<div class="mk-row"><span>${esc(label(r))}</span><i><em style="width:${Math.min(100,+r.share||0)}%"></em></i><b>${Math.round(+r.share||0)}%</b></div>`).join("");
+  const ctry=(A.engaged_by_country&&A.engaged_by_country.length?A.engaged_by_country:A.followers_by_country)||[];
+  $("mkCountries").innerHTML=ctry.length?bars(ctry.slice(0,5),r=>place(r.country)):`<p class="mk-sub">${esc(t.countries.join(", "))}</p>`;
+  const city=(A.engaged_by_city||[]).slice(0,4).map(r=>String(r.city||"").split(",")[0]);
+  $("mkCities").textContent=city.length?"Top cities: "+city.join(", "):"";
+  const age=(A.engaged_by_age&&A.engaged_by_age.length?A.engaged_by_age:A.followers_by_age)||[];
+  $("mkAge").innerHTML=age.length?bars(age.slice(0,4),r=>"Age "+r.age):"";
+  const g=(A.engaged_by_gender&&A.engaged_by_gender.length?A.engaged_by_gender:A.followers_by_gender)||[],gl={F:"women",M:"men",U:"unspecified"};
+  $("mkGender").textContent=g.length?g.filter(r=>r.gender!=="U").map(r=>`${Math.round(+r.share||0)}% ${gl[r.gender]||r.gender}`).join(" · "):"";
+  const R=LIVE&&LIVE.reels;
+  $("mkCats").innerHTML=SHELVES.filter(c=>!R||R[c]).map(c=>{const sh=R&&R[c];return `<div>${pill(FMTKEY[c],t)}<b>${esc(t.shelf[c])}</b>${sh?`<span>${fmt(sh.avg_views)} avg. views · ${fmt(sh.count)} ${sh.count==1?"reel":"reels"}</span>`:""}</div>`;}).join("");
+  const cl=(LIVE&&Array.isArray(LIVE.campaigns))?LIVE.campaigns:[];
+  $("mkBrands").innerHTML=cl.slice(0,6).map(x=>`<div><b>${esc(x.brand)}</b><span>${fmt(x.views)} views · ${fmt(x.likes)} likes${(+x.post_count||1)>1?` · ${x.post_count} posts`:""}</span></div>`).join("");
+  const rest=cl.slice(6).map(x=>x.brand);
+  $("mkAlso").textContent=rest.length?"Also: "+rest.join(", "):"";
+  $("mkQuotes").innerHTML=TESTIMONIALS.filter((q,i)=>i<3).map(q=>`<figure><blockquote>“${esc(q.en)}”</blockquote><figcaption>${esc(q.brand)}</figcaption></figure>`).join("");
+  $("mkSvc").innerHTML=t.svc.map(x=>`<li>${esc(x[0])}</li>`).join("")+"<li>Content in English, Spanish or both</li>";
+  $("mkUpd").textContent=LIVE&&LIVE.updated?"Figures update daily from Instagram · last updated "+new Date(LIVE.updated).toLocaleDateString("en",{month:"long",day:"numeric",year:"numeric"})+" · lilimagana.com/#media-kit":"Figures update daily from Instagram.";
+}
+$("mkPrint").addEventListener("click",()=>{renderKit();setTimeout(()=>print(),150);});
+
 /* ----- page switching: #photos and #testimonials are their own pages; every other link goes to the home page ----- */
-const PAGES=["photos","testimonials"];
+const PAGES=["photos","testimonials","about","media-kit","privacy","terms"];
 function route(){
   const h=decodeURIComponent(location.hash.slice(1)),pg=PAGES.includes(h)?h:null;
   const was=document.body.dataset.view||"home";
   $("home").hidden=!!pg;PAGES.forEach(p=>{$(p).hidden=p!==pg;});document.body.dataset.view=pg||"home";
   document.querySelectorAll(".mpanel a").forEach(a=>{if(a.getAttribute("href")==="#"+(pg||"top"))a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});
-  if(pg){if(pg==="photos")renderPhotos();else renderQuotes();scrollTo(0,0);watch();}
+  if(pg){({photos:renderPhotos,testimonials:renderQuotes,about:renderAbout,"media-kit":renderKit})[pg]?.();scrollTo(0,0);watch();}
   else if(was!=="home"){const el=h&&document.getElementById(h);requestAnimationFrame(()=>{if(el)el.scrollIntoView();else scrollTo(0,0);});}
 }
 addEventListener("hashchange",route);
@@ -918,7 +1169,7 @@ hero();render();
 const getJSON=u=>fetch(u,{cache:"no-store"}).then(r=>r.ok?r.json():null).catch(()=>null);
 Promise.all([getJSON("stats.json"),getJSON("categories.json")]).then(([st,cm])=>{
   if(cm&&typeof cm==="object")CATMAP=cm;
-  if(st&&st.profile){LIVE=st;render();hero();if(document.body.dataset.view==="photos"){renderPhotos();watch();}}
+  if(st&&st.profile){LIVE=st;render();hero();{const v=document.body.dataset.view;if(v==="photos"){renderPhotos();watch();}if(v==="media-kit")renderKit();if(v==="about")renderAbout();}}
 });
 }
 </script>
