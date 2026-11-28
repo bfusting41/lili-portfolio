@@ -884,7 +884,7 @@ if(!canHover&&!RM){
 $("dlg").addEventListener("click",e=>{if(e.target===$("dlg"))$("dlg").close();});
 /* Inquiry form: sent straight to Lili's inbox through Web3Forms (free form-to-email service).
    Paste the access key from the Web3Forms email between the quotes. Empty = old behaviour (opens the visitor's email app). */
-const FORM_KEY="";
+const FORM_KEY="a46f7287-c823-401f-8fe8-0215177301d4";
 function showDone(head,msg,body,showCopy){
   $("dHead").textContent=head;$("dMsg").textContent=msg||"";$("dMsg").hidden=!msg;
   $("sum").textContent=body||"";$("sum").hidden=!body;$("copy").hidden=!showCopy;$("dNoteEl").hidden=!showCopy;
