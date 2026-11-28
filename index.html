@@ -288,11 +288,12 @@ footer.foot{padding:48px max(5vw,16px) 30px;color:var(--mute);font-size:14px;bac
 .legal a{color:var(--rose)}
 /* Print: the media kit becomes a clean PDF */
 @media print{
-  @page{size:letter;margin:12mm}
+  @page{size:letter;margin:0}
   html,body{background:#fff!important}
   body *{visibility:hidden}
   #media-kit,#media-kit *{visibility:visible}
-  #media-kit{position:absolute;left:0;top:0;width:100%;padding:0!important;background:none!important;min-height:0}
+  #media-kit{position:absolute;left:0;top:0;width:100%;padding:9mm 10mm!important;box-sizing:border-box;background:none!important;min-height:0}
+  #media-kit>.wrap{max-width:none}
   .no-print,header,footer,#home{display:none!important}
   .mk{box-shadow:none;padding:0;border-radius:0;max-width:none}
   html{font-size:13px}
@@ -313,13 +314,17 @@ footer.foot{padding:48px max(5vw,16px) 30px;color:var(--mute);font-size:14px;bac
   .mk-quotes blockquote{font-size:12px;line-height:1.45}.mk-quotes figcaption{font-size:11px;margin-top:4px}
   .ticks{gap:4px}.ticks li{font-size:12px}.mk-rates,.mk-contact{font-size:12px;line-height:1.6}
   .mk-foot{margin-top:4px;font-size:9.5px}
+  .mk-top{grid-template-columns:110px minmax(0,1fr)!important}
+  .mk-grid2{grid-template-columns:1fr 1fr!important}
+  .mk-stats,.mk-cats{grid-template-columns:repeat(6,minmax(0,1fr))!important}
+  .mk-brands{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .mk-quotes{grid-template-columns:1fr 1fr!important}
   .mk-sec{margin-top:9px!important;padding-top:8px}
   .mk-sec h3{margin-bottom:6px}
   .mk-top{margin-bottom:-2px}
   .mk-bio{font-size:12px}
   .mk-printcontact{margin-top:8px!important}
   .mk-row{margin:3px 0}
-  @page{margin:10mm}
   .mk-row:nth-child(n+5){display:none}
   .mk-cats .fmt{white-space:nowrap;letter-spacing:.02em}
   .mk-sec:last-of-type{margin-top:10px}
