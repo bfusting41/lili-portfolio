@@ -749,7 +749,7 @@ types:["Belleza o cuidado de la piel","Cobertura de evento","Hotel o viaje","Res
 };
 const STATS=["5.5K","1.8K","1.83%","8","251K","69.5K"];
 let LIVE=null,CATMAP={};
-const BRANDS=["Formula 1", "Ulta Beauty", "Yves Saint Laurent", "L'Oréal", "Maybelline New York", "Garnier", "Victoria's Secret", "Morphe", "Batiste", "Skyscanner", "Victoria's Secret Beauty", "DRMTLGY", "ZEELOOL", "Toastique", "Acqua Bistecca", "Morange Collection", "Missguided", "Estée Lauder", "Coco & Eve", "PINK", "H-E-B", "Mad Hippie", "Origen Fragrances", "Hotel Trinity", "Bellissima Prosecco", "Cape Bottle Room", "Yacht Club ATX", "Taqueria De Diez", "JP's Pancake Company", "Jett's Pizza", "BT Artbox Nails", "Haniix"];
+const BRANDS=["Formula 1", "Ulta Beauty", "Yves Saint Laurent", "L'Oréal", "Maybelline New York", "Garnier", "Victoria's Secret", "Morphe", "Batiste", "Skyscanner", "Victoria's Secret Beauty", "DRMTLGY", "ZEELOOL", "Toastique", "Acqua Bistecca", "Morange Collection", "Missguided", "Estée Lauder", "Coco & Eve", "PINK", "H-E-B", "Mad Hippie", "Origen Fragrances", "Hotel Trinity", "Bellissima Prosecco", "Cape Bottle Room", "Yacht Club ATX", "Taqueria De Diez", "JP's Pancake Company", "Jett's Pizza", "BT Artbox Nails"];
 const SHARE=[38,38,9,6,9];
 const WORK=[
 {c:"beauty",v:"212K",en:["Five-minute glam for race day","Get ready with me"],es:["Glam de cinco minutos para día de carrera","Arréglate conmigo"],d:{en:"A quick, sweat-proof look built for a long day outdoors.",es:"Un look rápido y resistente al sudor para un día largo al aire libre."}},
@@ -882,7 +882,7 @@ function render(){
   const cl=LIVE&&Array.isArray(LIVE.campaigns)?LIVE.campaigns:[];
   $("results").hidden=!cl.length;document.querySelector('a[href="#results"]').hidden=!cl.length;
   $("audWave").setAttribute("fill",cl.length?"#fbe1e9":"#ffffff"); /* the wave takes the colour of whichever section sits above it */
-  $("total").textContent=fmt(cl.reduce((a,x)=>a+(+x.views||0),0))+t.total;
+  $("total").textContent=fmt(LIVE&&LIVE.campaigns_total_views!=null?LIVE.campaigns_total_views:cl.reduce((a,x)=>a+(+x.views||0),0))+t.total;
   const TOPN=9; /* best 9 brands by views; the rest are summed into the total above */
   $("cases").innerHTML=cl.slice(0,TOPN).map((x,ci)=>{const lp=livePosts().find(p=>p.id===x.id),thumb=x.thumb||(lp&&lp.thumb),perm=x.permalink||(lp&&lp.permalink);
     const pic=thumb?`<img src="${esc(thumb)}" alt="" loading="lazy">`:`<svg viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice">${motif(PAL[x.category]?x.category:"life")}</svg>`;
@@ -913,8 +913,8 @@ function pace(){ /* 1 = normal, smaller = faster. Speed in px per ms: reading ~0
 function countUp(){
   if(counted||RM)return;counted=true;
   document.querySelectorAll("#stats b").forEach((b,k)=>{
-    const fin=b.textContent,m=fin.match(/^([\d.,]+)(.*)$/);if(!m)return;
-    const raw=m[1],sep=raw.includes(",")?",":".",dec=(raw.split(/[.,]/)[1]||"").length,n=parseFloat(raw.replace(",","."));
+    const fin=b.textContent,m=fin.match(/^([\d.]+)(.*)$/);if(!m)return;
+    const raw=m[1],sep=raw.includes(",")?",":".",dec=(raw.split(/[.]/)[1]||"").length,n=parseFloat(raw.replace(",","."));
     if(!isFinite(n))return;
     const p=+(document.getElementById("stats").dataset.pace||1),dur=1600*p,start=performance.now()+k*130*p;
     if(dur<50)return; /* revealed instantly (scrolled past): just show the final number */
@@ -1041,7 +1041,12 @@ function renderKit(){
   $("mkSvc").innerHTML=t.svc.map(x=>`<li>${esc(x[0])}</li>`).join("")+"<li>Content in English, Spanish or both</li>";
   $("mkUpd").textContent=LIVE&&LIVE.updated?"Figures update daily from Instagram · last updated "+new Date(LIVE.updated).toLocaleDateString("en",{month:"long",day:"numeric",year:"numeric"})+" · lilimagana.com/#media-kit":"Figures update daily from Instagram.";
 }
-$("mkPrint").addEventListener("click",()=>{renderKit();setTimeout(()=>print(),150);});
+let kitFile=false;
+fetch("media-kit.pdf",{method:"HEAD",cache:"no-store"}).then(r=>{kitFile=r.ok&&/pdf/i.test(r.headers.get("content-type")||"pdf");}).catch(()=>{});
+$("mkPrint").addEventListener("click",()=>{
+  if(kitFile){const a=document.createElement("a");a.href="media-kit.pdf?d="+Date.now().toString(36).slice(0,-3);a.download="Lili-Magana-Media-Kit.pdf";document.body.appendChild(a);a.click();a.remove();return;}
+  renderKit();setTimeout(()=>print(),150);
+});
 
 /* ----- page switching: #photos and #testimonials are their own pages; every other link goes to the home page ----- */
 const PAGES=["photos","testimonials","about","media-kit","privacy","terms"];

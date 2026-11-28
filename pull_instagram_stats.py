@@ -340,7 +340,7 @@ CAT_WORDS = {
                     "food", "eats", "dish", "dessert", "drinks", "happy hour", "seafood", "sushi", "burger", "steak",
                     "pasta", "breakfast", "bakery", "bites", "desayuno", "cena", "postre"],
     "lifestyle": ["outfit", "ootd", "fit check", "style", "fashion", "day in my life", "vlog", "weekend",
-                  "gym", "workout", "vspink", "#pinkpartner", "zeelool", "glasses", "eyewear", "haniix_official",
+                  "gym", "workout", "vspink", "#pinkpartner", "zeelool", "glasses", "eyewear",
                   "victoriassecret", "victoria's secret", "victoria’s secret", "fashion show"],
 }
 
@@ -510,6 +510,14 @@ for c, ids in zip(CAMPAIGNS, campaign_ids):
         "_posts": sorted(ps, key=lambda p: p["views"], reverse=True),  # log only, removed before saving
     })
 campaigns.sort(key=lambda r: r["views"], reverse=True)
+# each card gets its own cover: if a brand's best post is already another (bigger) brand's cover, use its next-best post
+used_covers = set()
+for c in campaigns:
+    pick = next((p for p in c["_posts"] if p["id"] not in used_covers), c["_posts"][0])
+    used_covers.add(pick["id"])
+    c.update({"id": pick["id"], "permalink": pick["permalink"], "thumb": pick["thumb"], "video": pick["video"]})
+# total across all brand campaigns, counting a post tagged with two brands only once
+campaigns_total_views = sum(p["views"] or 0 for p in {p["id"]: p for c in campaigns for p in c["_posts"]}.values())
 print(f"  {len(campaigns)} of {len(CAMPAIGNS)} campaigns found")
 
 # brands she @mentions that aren't campaigns yet, to help spot ones worth adding
@@ -625,6 +633,7 @@ stats_out = {
         **demo,
     },
     "campaigns": [{k: v for k, v in c.items() if k != "_posts"} for c in campaigns],
+    "campaigns_total_views": campaigns_total_views,
     "reels": shelves,
     # the Photos page shows every image in photos/, in file-name order (p01.jpg, p02.jpg, ...)
     # (sub-folders count too, e.g. photos/photos/p01.jpg from a folder upload)
