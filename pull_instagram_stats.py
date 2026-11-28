@@ -627,7 +627,10 @@ stats_out = {
     "campaigns": [{k: v for k, v in c.items() if k != "_posts"} for c in campaigns],
     "reels": shelves,
     # the Photos page shows every image in photos/, in file-name order (p01.jpg, p02.jpg, ...)
-    "photos": sorted(f.name for f in Path("photos").glob("*") if f.suffix.lower() in (".jpg", ".jpeg", ".png", ".webp")) if Path("photos").is_dir() else [],
+    # (sub-folders count too, e.g. photos/photos/p01.jpg from a folder upload)
+    "photos": sorted((f.relative_to("photos").as_posix() for f in Path("photos").rglob("*")
+                      if f.is_file() and f.suffix.lower() in (".jpg", ".jpeg", ".png", ".webp")),
+                     key=lambda x: x.split("/")[-1]) if Path("photos").is_dir() else [],
     "pinned": pinned_out,
     "posts": posts,
 }
