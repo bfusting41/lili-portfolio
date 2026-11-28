@@ -579,7 +579,7 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
       <div class="rv">
         <h3>What I create</h3>
         <div class="rchips">
-          <a href="#work">Skincare</a><a href="#work">Beauty</a><a href="#work">Hospitality</a><a href="#work">Travel &amp; Apps</a><a href="#work">Lifestyle</a><a href="#work">Haircare</a>
+          <a href="#work" data-cat="skincare">Skincare</a><a href="#work" data-cat="makeup">Beauty</a><a href="#work" data-cat="hospitality">Hospitality</a><a href="#work" data-cat="travel">Travel &amp; Apps</a><a href="#work" data-cat="lifestyle">Lifestyle</a><a href="#work" data-cat="haircare">Haircare</a>
         </div>
       </div>
       <div class="rv">
@@ -1048,6 +1048,8 @@ $("mkPrint").addEventListener("click",()=>{
   renderKit();setTimeout(()=>print(),150);
 });
 
+/* category links elsewhere on the site (e.g. About → "Hospitality") open the reel grid on that tab */
+document.addEventListener("click",e=>{const a=e.target.closest("a[data-cat]");if(!a)return;filt=a.dataset.cat;render();});
 /* ----- page switching: #photos and #testimonials are their own pages; every other link goes to the home page ----- */
 const PAGES=["photos","testimonials","about","media-kit","privacy","terms"];
 function route(){
