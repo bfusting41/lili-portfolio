@@ -295,8 +295,37 @@ footer.foot{padding:48px max(5vw,16px) 30px;color:var(--mute);font-size:14px;bac
   #media-kit{position:absolute;left:0;top:0;width:100%;padding:0!important;background:none!important;min-height:0}
   .no-print,header,footer,#home{display:none!important}
   .mk{box-shadow:none;padding:0;border-radius:0;max-width:none}
-  .mk-sec{margin-top:16px;padding-top:12px;break-inside:avoid}
-  .mk-stats b{font-size:24px}
+  html{font-size:13px}
+  .mk-top{grid-template-columns:110px minmax(0,1fr);gap:18px}
+  .mk-photo{width:110px;border-radius:14px}
+  .mk-top h2{font-size:32px}.mk-handle{margin:2px 0 6px;font-size:12px}.mk-bio{font-size:12.5px;line-height:1.5}
+  .mk-sec{margin-top:12px;padding-top:10px;break-inside:avoid}
+  .mk-sec h3{font-size:15px;margin:0 0 8px}
+  .mk-stats{grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
+  .mk-stats div{padding:9px 10px;border-radius:12px}.mk-stats b{font-size:19px}.mk-stats span{font-size:10.5px;line-height:1.3;display:block}
+  .mk-grid2{gap:22px}.mk-row{font-size:11.5px;margin:4px 0;grid-template-columns:8em minmax(0,1fr) 2.6em}.mk-sub{font-size:11px;margin-top:6px}
+  .mk-cats{grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
+  .mk-cats div,.mk-brands div{padding:8px 10px;border-radius:12px;gap:3px}
+  .mk-cats b,.mk-brands b{font-size:12px}.mk-cats span,.mk-brands span{font-size:10.5px}.mk-cats .fmt{font-size:8.5px;padding:3px 6px}
+  .mk-brands{gap:6px}
+  .mk-quotes{grid-template-columns:1fr 1fr;gap:8px}.mk-quotes figure{padding:10px 12px;border-radius:12px}
+  .mk-quotes figure:nth-child(n+3){display:none}
+  .mk-quotes blockquote{font-size:12px;line-height:1.45}.mk-quotes figcaption{font-size:11px;margin-top:4px}
+  .ticks{gap:4px}.ticks li{font-size:12px}.mk-rates,.mk-contact{font-size:12px;line-height:1.6}
+  .mk-foot{margin-top:4px;font-size:9.5px}
+  .mk-sec{margin-top:9px!important;padding-top:8px}
+  .mk-sec h3{margin-bottom:6px}
+  .mk-top{margin-bottom:-2px}
+  .mk-bio{font-size:12px}
+  .mk-printcontact{margin-top:8px!important}
+  .mk-row{margin:3px 0}
+  @page{margin:10mm}
+  .mk-row:nth-child(n+5){display:none}
+  .mk-cats .fmt{white-space:nowrap;letter-spacing:.02em}
+  .mk-sec:last-of-type{margin-top:10px}
+  .ticks{columns:2;column-gap:14px;display:block}.ticks li{margin-bottom:3px;break-inside:avoid}
+  .mk-ch,.mk-contact{display:none}
+  .mk-printcontact{display:block!important;margin-top:12px;text-align:center;font-size:12px;font-weight:600;color:var(--ink)}
   .js .rv{opacity:1!important;transform:none!important}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
@@ -591,9 +620,10 @@ dialog::backdrop{background:rgba(30,10,20,.6)}
       <section class="mk-sec mk-grid2">
         <div><h3>Services</h3><ul class="ticks" id="mkSvc"></ul></div>
         <div><h3>Rates</h3><p class="mk-rates">Available on request. Every partnership is tailored to the brand, deliverables and timeline.</p>
-          <h3 style="margin-top:20px">Contact</h3>
+          <h3 class="mk-ch" style="margin-top:20px">Contact</h3>
           <p class="mk-contact"><a href="mailto:Lilimagana19@gmail.com">Lilimagana19@gmail.com</a><br><a href="https://lilimagana.com">lilimagana.com</a><br><a href="https://www.instagram.com/lilimagana16/">instagram.com/lilimagana16</a></p></div>
       </section>
+      <p class="mk-printcontact" style="display:none">Lilimagana19@gmail.com · lilimagana.com · instagram.com/lilimagana16</p>
       <p class="mk-foot" id="mkUpd">Figures update daily from Instagram.</p>
     </article>
   </div>
@@ -985,7 +1015,7 @@ function renderKit(){
   $("mkImg").src=photoPath("p01.jpg");
   const st=[[prof.followers!=null?fmt(prof.followers):STATS[0],"Followers"],[hl.avg_reel_views!=null?fmt(hl.avg_reel_views):STATS[1],"Avg. views per reel"],
     [hl.engagement_rate_pct!=null?pct(hl.engagement_rate_pct):STATS[2],"Engagement rate"],[l30.views!=null?fmt(l30.views):STATS[4],"Views, last 30 days"],
-    [l30.reach!=null?fmt(l30.reach):STATS[5],"Accounts reached, 30 days"],[hl.posts_per_month!=null?fmt(hl.posts_per_month):STATS[3],"Posts per month"]];
+    [l30.reach!=null?fmt(l30.reach):STATS[5],"Reach, last 30 days"],[hl.posts_per_month!=null?fmt(hl.posts_per_month):STATS[3],"Posts per month"]];
   $("mkStats").innerHTML=st.map(x=>`<div><b>${esc(x[0])}</b><span>${esc(x[1])}</span></div>`).join("");
   const bars=(rows,label)=>rows.map(r=>`<div class="mk-row"><span>${esc(label(r))}</span><i><em style="width:${Math.min(100,+r.share||0)}%"></em></i><b>${Math.round(+r.share||0)}%</b></div>`).join("");
   const ctry=(A.engaged_by_country&&A.engaged_by_country.length?A.engaged_by_country:A.followers_by_country)||[];
@@ -997,11 +1027,11 @@ function renderKit(){
   const g=(A.engaged_by_gender&&A.engaged_by_gender.length?A.engaged_by_gender:A.followers_by_gender)||[],gl={F:"women",M:"men",U:"unspecified"};
   $("mkGender").textContent=g.length?g.filter(r=>r.gender!=="U").map(r=>`${Math.round(+r.share||0)}% ${gl[r.gender]||r.gender}`).join(" · "):"";
   const R=LIVE&&LIVE.reels;
-  $("mkCats").innerHTML=SHELVES.filter(c=>!R||R[c]).map(c=>{const sh=R&&R[c];return `<div>${pill(FMTKEY[c],t)}<b>${esc(t.shelf[c])}</b>${sh?`<span>${fmt(sh.avg_views)} avg. views · ${fmt(sh.count)} ${sh.count==1?"reel":"reels"}</span>`:""}</div>`;}).join("");
+  $("mkCats").innerHTML=SHELVES.filter(c=>!R||R[c]).map(c=>{const sh=R&&R[c];return `<div>${pill(FMTKEY[c],t)}<b>${esc(t.shelf[c])}</b>${sh?`<span>${fmt(sh.avg_views)} avg · ${fmt(sh.count)} ${sh.count==1?"reel":"reels"}</span>`:""}</div>`;}).join("");
   const cl=(LIVE&&Array.isArray(LIVE.campaigns))?LIVE.campaigns:[];
   $("mkBrands").innerHTML=cl.slice(0,6).map(x=>`<div><b>${esc(x.brand)}</b><span>${fmt(x.views)} views · ${fmt(x.likes)} likes${(+x.post_count||1)>1?` · ${x.post_count} posts`:""}</span></div>`).join("");
   const rest=cl.slice(6).map(x=>x.brand);
-  $("mkAlso").textContent=rest.length?"Also: "+rest.join(", "):"";
+  $("mkAlso").textContent=(rest.length?"Also: "+rest.join(", ")+", and many more.":"…and many more.");
   $("mkQuotes").innerHTML=TESTIMONIALS.filter((q,i)=>i<3).map(q=>`<figure><blockquote>“${esc(q.en)}”</blockquote><figcaption>${esc(q.brand)}</figcaption></figure>`).join("");
   $("mkSvc").innerHTML=t.svc.map(x=>`<li>${esc(x[0])}</li>`).join("")+"<li>Content in English, Spanish or both</li>";
   $("mkUpd").textContent=LIVE&&LIVE.updated?"Figures update daily from Instagram · last updated "+new Date(LIVE.updated).toLocaleDateString("en",{month:"long",day:"numeric",year:"numeric"})+" · lilimagana.com/#media-kit":"Figures update daily from Instagram.";
